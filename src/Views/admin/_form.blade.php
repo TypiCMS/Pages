@@ -45,7 +45,7 @@
                 <div class="row">
 
                     <div class="col-md-6">
-                        {!! BootForm::text(trans('labels.title'), $lang.'[title]') !!}
+                        {!! BootForm::text(trans('validation.attributes.title'), $lang.'[title]') !!}
                     </div>
                     <div class="col-md-6 form-group @if($errors->has($lang.'.slug'))has-error @endif">
                         <label class="control-label" for="{{ $lang }}[slug]">@lang('validation.attributes.url')</label>
@@ -56,15 +56,15 @@
                                 <button class="btn btn-default btn-slug @if($errors->has($lang.'.slug'))btn-danger @endif" type="button">@lang('validation.attributes.generate')</button>
                             </span>
                         </div>
-                        {{ $errors->first($lang.'.slug', '<p class="help-block">:message</p>') }}
+                        {!! $errors->first($lang.'.slug', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
 
                 {!! BootForm::hidden($lang.'[uri]') !!}
 
-                {!! BootForm::checkbox(trans('labels.online'), $lang.'[status]') !!}
+                {!! BootForm::checkbox(trans('validation.attributes.online'), $lang.'[status]') !!}
 
-                {!! BootForm::textarea(trans('labels.body'), $lang.'[body]')->addClass('editor') !!}
+                {!! BootForm::textarea(trans('validation.attributes.body'), $lang.'[body]')->addClass('editor') !!}
             
             </div>
             
@@ -95,11 +95,11 @@
 
         <div class="tab-pane fade in @if ($locale == $lang)active @endif" id="meta-{{ $lang }}">
 
-            {!! BootForm::text(trans('labels.meta_title'), $lang.'[meta_title]') !!}
+            {!! BootForm::text(trans('validation.attributes.meta_title'), $lang.'[meta_title]') !!}
 
-            {!! BootForm::text(trans('labels.meta_keywords'), $lang.'[meta_keywords]') !!}
+            {!! BootForm::text(trans('validation.attributes.meta_keywords'), $lang.'[meta_keywords]') !!}
 
-            {!! BootForm::text(trans('labels.meta_description'), $lang.'[meta_description]') !!}
+            {!! BootForm::text(trans('validation.attributes.meta_description'), $lang.'[meta_description]') !!}
 
         </div>
 
@@ -112,13 +112,13 @@
     {{-- Options --}}
     <div class="tab-pane fade in" id="tab-options">
 
-        {!! BootForm::checkbox(trans('labels.is_home'), 'is_home') !!}
+        {!! BootForm::checkbox(trans('validation.attributes.is_home'), 'is_home') !!}
 
-        {!! BootForm::text(trans('labels.template'), 'template') !!}
+        {!! BootForm::text(trans('validation.attributes.template'), 'template') !!}
 
-        {!! BootForm::textarea(trans('labels.css'), 'css') !!}
+        {!! BootForm::textarea(trans('validation.attributes.css'), 'css') !!}
 
-        {!! BootForm::textarea(trans('labels.js'), 'js') !!}
+        {!! BootForm::textarea(trans('validation.attributes.js'), 'js') !!}
 
     </div>
 

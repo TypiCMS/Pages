@@ -3,10 +3,10 @@ namespace TypiCMS\Modules\Pages\Controllers;
 
 use App;
 use Config;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Notification;
 use Redirect;
-use Illuminate\Support\Str;
 use TypiCMS;
 use TypiCMS\Controllers\BasePublicController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface;
@@ -61,10 +61,10 @@ class PublicController extends BasePublicController
 
         $template = $model->template ? $model->template : $defaultTemplate ;
         try {
-            $view = view('pages.public.' . $template);
+            $view = view('pages::public.' . $template);
         } catch (InvalidArgumentException $e) {
             Notification::error('<b>Error:</b> Template “' . $template . '” not found.');
-            $view = view('pages.public.' . $defaultTemplate);
+            $view = view('pages::public.' . $defaultTemplate);
         }
 
         return $view->with(compact('children', 'model'));
@@ -95,6 +95,6 @@ class PublicController extends BasePublicController
         $this->title['parent'] = 'Choose your language';
 
         return view('core::public.langChooser')
-            ->with('locales', $locales);
+            ->with(compact('locales'));
     }
 }

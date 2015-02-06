@@ -1,4 +1,4 @@
-@extends('pages.public.master')
+@extends('pages::public.master')
 
 @section('page')
 
@@ -37,7 +37,7 @@
         </div>
 
         <div class="col-sm-8">
-            {{ $model->body }}
+            {!! $model->body !!}
             <div class="well">
                 {{ Blocks::build('block1') }}
             </div>

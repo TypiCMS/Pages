@@ -1,3 +1,5 @@
+@extends('core::public.master')
+
 @section('css')
     @if($model->css)
     <style type="text/css">
