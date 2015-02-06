@@ -1,35 +1,24 @@
 <?php
 namespace TypiCMS\Modules\Pages\Providers;
 
-use Lang;
-use View;
 use Config;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
-
-// Model
+use Illuminate\Support\ServiceProvider;
+use Lang;
+use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageTranslation;
-
-// Repo
-use TypiCMS\Modules\Pages\Repositories\EloquentPage;
-
-// Cache
+use TypiCMS\Modules\Pages\Observers\HomePageObserver;
+use TypiCMS\Modules\Pages\Observers\SortObserver;
+use TypiCMS\Modules\Pages\Observers\UriObserver;
 use TypiCMS\Modules\Pages\Repositories\CacheDecorator;
-use TypiCMS\Services\Cache\LaravelCache;
-
-// Form
+use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 use TypiCMS\Modules\Pages\Services\Form\PageForm;
 use TypiCMS\Modules\Pages\Services\Form\PageFormLaravelValidator;
-
-// Observers
 use TypiCMS\Observers\FileObserver;
-use TypiCMS\Modules\Pages\Observers\HomePageObserver;
-use TypiCMS\Modules\Pages\Observers\UriObserver;
-use TypiCMS\Modules\Pages\Observers\SortObserver;
-
-// Events
-use TypiCMS\Modules\Pages\Events\ResetChildren;
+use TypiCMS\Services\Cache\LaravelCache;
+use View;
 
 class ModuleProvider extends ServiceProvider
 {
@@ -40,9 +29,19 @@ class ModuleProvider extends ServiceProvider
         require __DIR__ . '/../routes.php';
 
         // Add dirs
-        View::addLocation(__DIR__ . '/../Views');
-        Lang::addNamespace('pages', __DIR__ . '/../lang');
-        Config::addNamespace('pages', __DIR__ . '/../config');
+        View::addNamespace('pages', __DIR__ . '/../views/');
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'pages');
+        $this->publishes([
+            __DIR__ . '/../config/' => config_path('typicms/pages'),
+        ], 'config');
+        $this->publishes([
+            __DIR__ . '/../migrations/' => base_path('/database/migrations'),
+        ], 'migrations');
+
+        AliasLoader::getInstance()->alias(
+            'Pages',
+            'TypiCMS\Modules\Pages\Facades\Facade'
+        );
 
         // Observers
         Page::observe(new FileObserver);
@@ -88,10 +87,6 @@ class ModuleProvider extends ServiceProvider
                 new PageFormLaravelValidator($app['validator']),
                 $app->make('TypiCMS\Modules\Pages\Repositories\PageInterface')
             );
-        });
-
-        $app->before(function ($request, $response) {
-            require __DIR__ . '/../breadcrumbs.php';
         });
 
     }

@@ -1,6 +1,6 @@
 @section('js')
-    {{ HTML::script(asset('//tinymce.cachefly.net/4.1/tinymce.min.js')) }}
-    {{ HTML::script(asset('js/admin/form.js')) }}
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script src="{{ asset('js/admin/form.js') }}"></script>
 @stop
 
 @section('otherSideLink')
@@ -10,9 +10,9 @@
 
 @include('core::admin._buttons-form')
 
-{{ BootForm::hidden('id') }}
-{{ BootForm::hidden('position', $model->position ? : 0) }}
-{{ BootForm::hidden('parent_id') }}
+{!! BootForm::hidden('id') !!}
+{!! BootForm::hidden('position', $model->position ? : 0) !!}
+{!! BootForm::hidden('parent_id') !!}
 
 <ul class="nav nav-tabs">
     <li class="active">
@@ -45,13 +45,13 @@
                 <div class="row">
 
                     <div class="col-md-6">
-                        {{ BootForm::text(trans('labels.title'), $lang.'[title]') }}
+                        {!! BootForm::text(trans('labels.title'), $lang.'[title]') !!}
                     </div>
                     <div class="col-md-6 form-group @if($errors->has($lang.'.slug'))has-error @endif">
-                        {{ Form::label($lang.'[slug]', trans('validation.attributes.url'), array('class' => 'control-label')) }}
+                        <label class="control-label" for="{{ $lang }}[slug]">@lang('validation.attributes.url')</label>
                         <div class="input-group">
                             <span class="input-group-addon">{{ $model->present()->parentUri($lang) }}</span>
-                            {{ Form::text($lang.'[slug]', $model->translate($lang)->slug, array('class' => 'form-control')) }}
+                            <input class="form-control" type="text" name="{{ $lang }}[slug]" id="{{ $lang }}[slug]" value="@if($model->hasTranslation($lang)){{ $model->translate($lang)->slug }}@endif">
                             <span class="input-group-btn">
                                 <button class="btn btn-default btn-slug @if($errors->has($lang.'.slug'))btn-danger @endif" type="button">@lang('validation.attributes.generate')</button>
                             </span>
@@ -60,11 +60,11 @@
                     </div>
                 </div>
 
-                {{ BootForm::hidden($lang.'[uri]') }}
+                {!! BootForm::hidden($lang.'[uri]') !!}
 
-                {{ BootForm::checkbox(trans('labels.online'), $lang.'[status]') }}
+                {!! BootForm::checkbox(trans('labels.online'), $lang.'[status]') !!}
 
-                {{ BootForm::textarea(trans('labels.body'), $lang.'[body]')->addClass('editor') }}
+                {!! BootForm::textarea(trans('labels.body'), $lang.'[body]')->addClass('editor') !!}
             
             </div>
             
@@ -95,11 +95,11 @@
 
         <div class="tab-pane fade in @if ($locale == $lang)active @endif" id="meta-{{ $lang }}">
 
-            {{ BootForm::text(trans('labels.meta_title'), $lang.'[meta_title]') }}
+            {!! BootForm::text(trans('labels.meta_title'), $lang.'[meta_title]') !!}
 
-            {{ BootForm::text(trans('labels.meta_keywords'), $lang.'[meta_keywords]') }}
+            {!! BootForm::text(trans('labels.meta_keywords'), $lang.'[meta_keywords]') !!}
 
-            {{ BootForm::text(trans('labels.meta_description'), $lang.'[meta_description]') }}
+            {!! BootForm::text(trans('labels.meta_description'), $lang.'[meta_description]') !!}
 
         </div>
 
@@ -112,13 +112,13 @@
     {{-- Options --}}
     <div class="tab-pane fade in" id="tab-options">
 
-        {{ BootForm::checkbox(trans('labels.is_home'), 'is_home') }}
+        {!! BootForm::checkbox(trans('labels.is_home'), 'is_home') !!}
 
-        {{ BootForm::text(trans('labels.template'), 'template') }}
+        {!! BootForm::text(trans('labels.template'), 'template') !!}
 
-        {{ BootForm::textarea(trans('labels.css'), 'css') }}
+        {!! BootForm::textarea(trans('labels.css'), 'css') !!}
 
-        {{ BootForm::textarea(trans('labels.js'), 'js') }}
+        {!! BootForm::textarea(trans('labels.js'), 'js') !!}
 
     </div>
 

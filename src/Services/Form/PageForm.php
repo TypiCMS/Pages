@@ -37,6 +37,9 @@ class PageForm extends AbstractForm
     public function update(array $input)
     {
         // add checkboxes data
+        foreach (Config::get('translatable.locales') as $locale) {
+            $input[$locale]['status'] = Input::get($locale.'.status', 0);
+        }
         $input['rss_enabled']      = Input::get('rss_enabled', 0);
         $input['comments_enabled'] = Input::get('comments_enabled', 0);
         $input['is_home']          = Input::get('is_home', 0);

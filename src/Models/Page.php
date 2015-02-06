@@ -75,6 +75,10 @@ class Page extends Base
      */
     public function getPublicUri($preview = false, $index = false, $lang = null)
     {
+        if (! $this->hasTranslation($lang)) {
+            return null;
+        }
+
         $lang = $lang ? : App::getLocale() ;
 
         $indexUri = '/' . $lang;
@@ -87,6 +91,10 @@ class Page extends Base
         }
 
         if ($index || $this->is_home) {
+            return $indexUri;
+        }
+
+        if (! $this->hasTranslation($lang)) {
             return $indexUri;
         }
 

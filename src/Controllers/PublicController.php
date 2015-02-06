@@ -6,7 +6,7 @@ use Config;
 use InvalidArgumentException;
 use Notification;
 use Redirect;
-use Str;
+use Illuminate\Support\Str;
 use TypiCMS;
 use TypiCMS\Controllers\BasePublicController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface;
@@ -37,7 +37,7 @@ class PublicController extends BasePublicController
             }
             $model = $this->repository->getFirstBy('is_home', 1);
         } else if (
-            in_array($uri, Config::get('app.locales')) &&
+            in_array($uri, Config::get('translatable.locales')) &&
             (Config::get('app.fallback_locale') != App::getLocale() ||
             Config::get('app.main_locale_in_url'))
         ) {
@@ -61,15 +61,13 @@ class PublicController extends BasePublicController
 
         $template = $model->template ? $model->template : $defaultTemplate ;
         try {
-            $view = View::make('pages.public.' . $template);
+            $view = view('pages.public.' . $template);
         } catch (InvalidArgumentException $e) {
             Notification::error('<b>Error:</b> Template “' . $template . '” not found.');
-            $view = View::make('pages.public.' . $defaultTemplate);
+            $view = view('pages.public.' . $defaultTemplate);
         }
 
-        $this->layout->content = $view
-            ->withChildren($children)
-            ->withModel($model);
+        return $view->with(compact('children', 'model'));
     }
 
     /**
@@ -96,7 +94,7 @@ class PublicController extends BasePublicController
 
         $this->title['parent'] = 'Choose your language';
 
-        $this->layout->content = View::make('public.langChooser')
+        return view('core::public.langChooser')
             ->with('locales', $locales);
     }
 }
