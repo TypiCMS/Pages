@@ -28,9 +28,9 @@ class ModuleProvider extends ServiceProvider
         // Add dirs
         View::addNamespace('pages', __DIR__ . '/../views/');
         $this->loadTranslationsFrom(__DIR__ . '/../lang', 'pages');
-        $this->publishes([
-            __DIR__ . '/../config/' => config_path('typicms/pages'),
-        ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/config.php', 'typicms.pages'
+        );
         $this->publishes([
             __DIR__ . '/../migrations/' => base_path('/database/migrations'),
         ], 'migrations');
