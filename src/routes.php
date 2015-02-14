@@ -7,7 +7,7 @@ Route::bind('pages', function ($value) {
 
 Route::group(
     array(
-        'namespace' => 'TypiCMS\Modules\Pages\Controllers',
+        'namespace' => 'TypiCMS\Modules\Pages\Http\Controllers',
         'prefix'    => 'admin',
     ),
     function () {
@@ -23,7 +23,7 @@ Route::group(['prefix'=>'api'], function() {
 Route::group(
     array(
         'before'    => 'visitor.publicAccess',
-        'namespace' => 'TypiCMS\Modules\Pages\Controllers',
+        'namespace' => 'TypiCMS\Modules\Pages\Http\Controllers',
     ),
     function () {
         Route::get('{uri}', 'PublicController@uri')->where('uri', '(.*)');

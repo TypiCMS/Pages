@@ -1,5 +1,5 @@
 <?php
-namespace TypiCMS\Modules\Pages\Controllers;
+namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use App;
 use Config;
@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Notification;
 use Redirect;
 use TypiCMS;
-use TypiCMS\Controllers\BasePublicController;
+use TypiCMS\Http\Controllers\BasePublicController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface;
 use View;
 

@@ -1,7 +1,7 @@
 <?php
-namespace TypiCMS\Modules\Pages\Controllers;
+namespace TypiCMS\Modules\Pages\Http\Controllers;
 
-use TypiCMS\Controllers\AdminSimpleController;
+use TypiCMS\Http\Controllers\AdminSimpleController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface;
 use TypiCMS\Modules\Pages\Services\Form\PageForm;
 
