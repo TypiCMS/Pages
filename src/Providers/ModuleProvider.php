@@ -14,8 +14,6 @@ use TypiCMS\Modules\Pages\Observers\SortObserver;
 use TypiCMS\Modules\Pages\Observers\UriObserver;
 use TypiCMS\Modules\Pages\Repositories\CacheDecorator;
 use TypiCMS\Modules\Pages\Repositories\EloquentPage;
-use TypiCMS\Modules\Pages\Services\Form\PageForm;
-use TypiCMS\Modules\Pages\Services\Form\PageFormLaravelValidator;
 use TypiCMS\Observers\FileObserver;
 use TypiCMS\Services\Cache\LaravelCache;
 use View;
@@ -82,13 +80,6 @@ class ModuleProvider extends ServiceProvider
             $laravelCache = new LaravelCache($app['cache'], ['pages', 'galleries'], 10);
 
             return new CacheDecorator($repository, $laravelCache);
-        });
-
-        $app->bind('TypiCMS\Modules\Pages\Services\Form\PageForm', function (Application $app) {
-            return new PageForm(
-                new PageFormLaravelValidator($app['validator']),
-                $app->make('TypiCMS\Modules\Pages\Repositories\PageInterface')
-            );
         });
 
     }
