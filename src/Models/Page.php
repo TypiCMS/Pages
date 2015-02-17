@@ -83,9 +83,9 @@ class Page extends Base
 
         $indexUri = '/' . $lang;
         if (
-            ! Config::get('typicms.langChooser') &&
+            ! Config::get('typicms.lang_chooser') &&
             Config::get('app.fallback_locale') == $lang &&
-            ! Config::get('app.main_locale_in_url')
+            ! config('typicms.main_locale_in_url')
         ) {
             $indexUri = '/';
         }

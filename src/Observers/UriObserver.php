@@ -23,7 +23,7 @@ class UriObserver
             $uri = $model->locale . '/' . $model->slug;
             if (
                 Config::get('app.fallback_locale') == $model->locale &&
-                ! Config::get('app.main_locale_in_url')
+                ! config('typicms.main_locale_in_url')
             ) {
                 $uri = $model->slug;
             }
@@ -76,7 +76,7 @@ class UriObserver
         }
         if (
             Config::get('app.fallback_locale') == $model->locale &&
-            ! Config::get('app.main_locale_in_url')
+            ! config('typicms.main_locale_in_url')
         ) {
             return '';
         }

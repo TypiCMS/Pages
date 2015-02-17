@@ -33,9 +33,9 @@ class ModulePresenter extends Presenter
     public function rootUri($lang)
     {
         if (
-            ! Config::get('typicms.langChooser') &&
-            Config::get('app.fallback_locale') == $lang &&
-            ! Config::get('app.main_locale_in_url')
+            ! config('typicms.lang_chooser') &&
+            config('app.fallback_locale') == $lang &&
+            ! config('typicms.main_locale_in_url')
         ) {
             return '/';
         }

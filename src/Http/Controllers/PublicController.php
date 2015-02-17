@@ -29,17 +29,17 @@ class PublicController extends BasePublicController
     public function uri($uri = null)
     {
         if ($uri == '/') {
-            if (Config::get('typicms.langChooser')) {
+            if (Config::get('typicms.lang_chooser')) {
                 return $this->langChooser();
             }
-            if (Config::get('app.main_locale_in_url')) {
+            if (config('typicms.main_locale_in_url')) {
                 return $this->redirectToBrowserLanguage();
             }
             $model = $this->repository->getFirstBy('is_home', 1);
         } else if (
             in_array($uri, Config::get('translatable.locales')) &&
             (Config::get('app.fallback_locale') != App::getLocale() ||
-            Config::get('app.main_locale_in_url'))
+            config('typicms.main_locale_in_url'))
         ) {
             $model = $this->repository->getFirstBy('is_home', 1);
         } else {
@@ -94,7 +94,7 @@ class PublicController extends BasePublicController
 
         $this->title['parent'] = 'Choose your language';
 
-        return view('core::public.langChooser')
+        return view('core::public.lang-chooser')
             ->with(compact('locales'));
     }
 }
