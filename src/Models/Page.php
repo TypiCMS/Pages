@@ -7,7 +7,7 @@ use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use TypiCMS\Models\Base;
-use TypiCMS\NestableCollection;
+use TypiCMS\NestableTrait;
 use TypiCMS\Presenters\PresentableTrait;
 use TypiCMS\Traits\Historable;
 
@@ -17,6 +17,7 @@ class Page extends Base
     use Historable;
     use Translatable;
     use PresentableTrait;
+    use NestableTrait;
 
     protected $presenter = 'TypiCMS\Modules\Pages\Presenters\ModulePresenter';
 
@@ -153,15 +154,5 @@ class Page extends Base
     public function parent()
     {
         return $this->belongsTo('TypiCMS\Modules\Pages\Models\Page', 'parent_id');
-    }
-
-    /**
-     * Pages are nestable
-     *
-     * @return NestableCollection object
-     */
-    public function newCollection(array $models = array())
-    {
-        return new NestableCollection($models, 'parent_id');
     }
 }
