@@ -1,6 +1,6 @@
 <?php
 return array(
-    'name' => 'pages',
+    'name' => 'Pages',
     'pages' => 'page|pages',
     'New'  => 'New page',
     'Edit' => 'Edit page',
