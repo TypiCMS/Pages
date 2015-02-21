@@ -18,7 +18,6 @@ class PublicController extends BasePublicController
     public function __construct(PageInterface $page)
     {
         parent::__construct($page);
-        $this->title['parent'] = Str::title(trans_choice('pages::global.pages', 2));
     }
 
     /**
@@ -49,8 +48,6 @@ class PublicController extends BasePublicController
         if (! $model) {
             App::abort('404');
         }
-
-        $this->title['parent'] = $model->title;
 
         TypiCMS::setModel($model);
 
@@ -91,9 +88,6 @@ class PublicController extends BasePublicController
     public function langChooser()
     {
         $locales = TypiCMS::getPublicLocales();
-
-        $this->title['parent'] = 'Choose your language';
-
         return view('core::public.lang-chooser')
             ->with(compact('locales'));
     }
