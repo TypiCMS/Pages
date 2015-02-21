@@ -1,5 +1,4 @@
 <?php
-namespace TypiCMS\Modules\Pages\Seeds;
 
 use Illuminate\Database\Seeder;
 

@@ -11,10 +11,6 @@
         "typicms/core": "~1.8.0"
     },
     "autoload": {
-        "classmap": [
-            "src/migrations",
-            "src/seeds"
-        ],
         "psr-4": {
             "TypiCMS\\Modules\\Pages\\": "src/"
         }
