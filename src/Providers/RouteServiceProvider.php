@@ -38,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider {
     public function map(Router $router)
     {
         $router->group(['namespace' => $this->namespace], function($router) {
+
             /**
              * Admin routes
              */
@@ -52,9 +53,8 @@ class RouteServiceProvider extends ServiceProvider {
             /**
              * Front office routes
              */
-            $router->group(['before' => 'visitor.publicAccess'], function ($router) {
-                $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
-            });
+            $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
+
         });
     }
 

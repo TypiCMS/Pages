@@ -22,7 +22,7 @@ Route::group(['prefix'=>'api'], function() {
 
 Route::group(
     array(
-        'before'    => 'visitor.publicAccess',
+        'before'    => 'visitorHasPublicAccess',
         'namespace' => 'TypiCMS\Modules\Pages\Http\Controllers',
     ),
     function () {
