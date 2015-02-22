@@ -3,20 +3,16 @@ use TypiCMS\Modules\Pages\Models\Page;
 
 class PagesControllerTest extends TestCase
 {
-    public function tearDown()
-    {
-        Mockery::close();
-    }
 
     public function testRoot()
     {
         $this->get('/');
-        $this->assertTrue($this->client->getResponse()->isOk());
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testAdminIndex()
     {
-        $this->get('admin/pages');
+        $response = $this->call('GET', 'admin/pages');
     }
 
     public function testStoreFails()
