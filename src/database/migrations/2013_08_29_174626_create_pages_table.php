@@ -25,7 +25,8 @@ class CreatePagesTable extends Migration
             $table->integer('position')->unsigned()->default(0);
             $table->integer('parent_id')->unsigned()->nullable()->default(null);
 
-            $table->tinyInteger('is_home')->default(0);
+            $table->boolean('is_home')->default(0);
+            $table->boolean('redirect')->default(0);
 
             $table->text('css')->nullable();
             $table->text('js')->nullable();
@@ -51,7 +52,7 @@ class CreatePagesTable extends Migration
             $table->string('title');
             $table->text('body');
 
-            $table->tinyInteger('status')->default(0);
+            $table->boolean('status')->default(0);
 
             $table->string('meta_title')->nullable();
             $table->string('meta_keywords')->nullable();

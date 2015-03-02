@@ -112,6 +112,8 @@
     <div class="tab-pane fade in" id="tab-options">
 
         {!! BootForm::checkbox(trans('validation.attributes.is_home'), 'is_home') !!}
+        
+        {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
 
         {!! BootForm::text(trans('validation.attributes.template'), 'template') !!}
 
