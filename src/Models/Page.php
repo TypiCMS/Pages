@@ -30,6 +30,7 @@ class Page extends Base
         'redirect',
         'css',
         'js',
+        'module',
         'template',
         'image',
         // Translatable columns

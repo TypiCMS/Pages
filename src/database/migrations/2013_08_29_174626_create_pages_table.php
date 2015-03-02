@@ -31,6 +31,7 @@ class CreatePagesTable extends Migration
             $table->text('css')->nullable();
             $table->text('js')->nullable();
 
+            $table->string('module')->nullable();
             $table->string('template')->nullable();
 
             $table->timestamps();

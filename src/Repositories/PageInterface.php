@@ -22,9 +22,9 @@ interface PageInterface extends RepositoryInterface
     public function getSubMenu($uri, $all = false);
 
     /**
-     * Get Pages to build routes
+     * Get pages linked to module to build routes
      *
-     * @return Collection
+     * @return array
      */
     public function getForRoutes();
 

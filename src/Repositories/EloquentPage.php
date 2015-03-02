@@ -4,9 +4,11 @@ namespace TypiCMS\Modules\Pages\Repositories;
 use Config;
 use DB;
 use Event;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Input;
+use Log;
 use TypiCMS\Repositories\RepositoriesAbstract;
 
 class EloquentPage extends RepositoriesAbstract implements PageInterface
@@ -94,20 +96,31 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * Get Pages to build routes
+     * Get pages linked to module to build routes
      *
-     * @return Collection
+     * @return array
      */
     public function getForRoutes()
     {
-        return DB::table('pages')
-            ->select('pages.id', 'parent_id', 'uri', 'locale')
-            ->join('page_translations', 'pages.id', '=', 'page_translations.page_id')
-            ->where('uri', '!=', '')
-            ->where('is_home', '!=', 1)
-            ->where('status', '=', 1)
-            ->orderBy('locale')
-            ->get();
+        $routes = [];
+
+        try {
+            $pages = DB::table('pages')
+                ->select('pages.id', 'uri', 'locale', 'module')
+                ->join('page_translations', 'pages.id', '=', 'page_translations.page_id')
+                ->where('uri', '!=', '')
+                ->where('module', '!=', '')
+                ->where('status', '=', 1)
+                ->get();
+
+            foreach ($pages as $page) {
+                $routes[$page->module][$page->locale] = $page->uri;
+            }
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
+
+        return $routes;
     }
 
     /**

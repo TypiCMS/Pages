@@ -60,13 +60,13 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
     }
 
     /**
-     * Get Pages to build routes
+     * Get pages linked to module to build routes
      *
-     * @return Collection
+     * @return array
      */
     public function getForRoutes()
     {
-        $cacheKey = md5(App::getLocale().'pagesForRoutes');
+        $cacheKey = md5(App::getLocale() . 'getForRoutes');
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);

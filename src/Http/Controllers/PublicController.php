@@ -49,6 +49,11 @@ class PublicController extends BasePublicController
             App::abort('404');
         }
 
+        if ($model->redirect) {
+            $childUri = $model->children->first()->uri;
+            return Redirect::to($childUri);
+        }
+
         TypiCMS::setModel($model);
 
         // get submenu

@@ -38,7 +38,7 @@ class FormRequest extends AbstractFormRequest {
         // Checkboxes
         $input['is_home']   = $this->has('is_home');
         $input['parent_id'] = $this->get('parent_id') ? : null ;
-        $input['redirect']  = $this->get('redirect') ? : null ;
+        $input['redirect']  = $this->get('redirect') ? : 0 ;
         foreach (config('translatable.locales') as $locale) {
             $input[$locale]['status'] = $this->has($locale . '.status');
         }
