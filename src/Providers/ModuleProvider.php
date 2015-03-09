@@ -66,7 +66,7 @@ class ModuleProvider extends ServiceProvider
         /**
          * Sidebar view composer
          */
-        $app->view->composer('core::admin._sidebar', 'TypiCMS\Modules\Pages\Composers\SideBarViewComposer');
+        $app->view->composer('core::admin._sidebar', 'TypiCMS\Modules\Pages\Composers\SidebarViewComposer');
 
         /**
          * Events
