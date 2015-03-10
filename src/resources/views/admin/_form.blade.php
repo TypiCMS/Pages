@@ -50,7 +50,7 @@
                         <label class="control-label" for="{{ $lang }}[slug]">@lang('validation.attributes.url')</label>
                         <div class="input-group">
                             <span class="input-group-addon">{{ $model->present()->parentUri($lang) }}</span>
-                            <input class="form-control" type="text" name="{{ $lang }}[slug]" id="{{ $lang }}[slug]" value="@if($model->hasTranslation($lang)){{ $model->translate($lang)->slug }}@endif">
+                            <input class="form-control" type="text" name="{{ $lang }}[slug]" id="{{ $lang }}[slug]" value="@if($model->hasTranslation($lang)){{ $model->translate($lang)->slug }}@endif" data-slug="{{ $lang }}[title]">
                             <span class="input-group-btn">
                                 <button class="btn btn-default btn-slug @if($errors->has($lang.'.slug'))btn-danger @endif" type="button">@lang('validation.attributes.generate')</button>
                             </span>
