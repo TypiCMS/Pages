@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "typicms/core": "~1.8.0"
+        "typicms/core": "~2.0.0"
     },
     "autoload": {
         "psr-4": {

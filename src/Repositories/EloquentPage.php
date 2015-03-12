@@ -57,7 +57,6 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
                     $query->where('status', 1);
                 }
             })
-            ->withOnlineGalleries()
             ->firstOrFail();
         return $model;
     }
@@ -128,7 +127,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      *
      * @return array
      */
-    public function getAllUris()
+    public function allUris()
     {
         return DB::table('page_translations')->lists('uri', 'id');
     }

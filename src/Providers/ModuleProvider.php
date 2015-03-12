@@ -77,7 +77,7 @@ class ModuleProvider extends ServiceProvider
          * Store all uris
          */
         $this->app->singleton('TypiCMS.pages.uris', function (Application $app) {
-            return $app->make('TypiCMS\Modules\Pages\Repositories\PageInterface')->getAllUris();
+            return $app->make('TypiCMS\Modules\Pages\Repositories\PageInterface')->allUris();
         });
 
         $app->bind('TypiCMS\Modules\Pages\Repositories\PageInterface', function (Application $app) {

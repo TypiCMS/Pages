@@ -33,5 +33,5 @@ interface PageInterface extends RepositoryInterface
      *
      * @return array
      */
-    public function getAllUris();
+    public function allUris();
 }
