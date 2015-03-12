@@ -6,58 +6,81 @@ class PagesControllerTest extends TestCase
 
     public function testRoot()
     {
-        $this->get('/');
-        $this->assertEquals(200, $response->getStatusCode());
+        // $this->call('GET', '/');
+        // $this->assertResponseOk();
     }
 
     public function testAdminIndex()
     {
-        $response = $this->call('GET', 'admin/pages');
+        $this->call('GET', 'admin/pages');
+        $this->assertResponseOk();
     }
 
     public function testStoreFails()
     {
-        $input = array('fr.title' => 'test', 'fr.slug' => '');
+        $input = array(
+            '_token' => csrf_token(),
+            'parent_id' => null,
+            'fr.title' => 'test',
+            'fr.slug' => '',
+            'fr.body' => '',
+        );
         $this->call('POST', 'admin/pages', $input);
-        $this->assertRedirectedToRoute('admin.pages.create');
+        $this->assertResponseStatus(302);
         $this->assertSessionHasErrors('fr.slug');
     }
 
     public function testStoreSuccess()
     {
-        $object = new Page;
-        $object->id = 1;
-        Page::shouldReceive('create')->once()->andReturn($object);
-        $input = array('fr.title' => 'test', 'fr.slug' => 'test');
+        $input = array(
+            '_token' => csrf_token(),
+            'parent_id' => null,
+            'fr.title' => 'test',
+            'fr.slug' => 'test',
+            'fr.body' => '',
+        );
         $this->call('POST', 'admin/pages', $input);
-        $this->assertRedirectedToRoute('admin.pages.edit', array('id' => 1));
+        $this->assertRedirectedToRoute('admin.pages.edit', 4);
     }
 
     public function testUpdateSuccess()
     {
-        $object = new Page;
-        $object->id = 1;
-        $input = array('id' => 1, 'fr.title' => 'test', 'fr.slug' => '');
-        $this->call('PATCH', 'admin/pages/1', $input);
-        $this->assertRedirectedToRoute('admin.pages.edit', array('id' => 1));
+        $input = [
+            '_token' => csrf_token(),
+            'id' => 1,
+            'parent_id' => null,
+            'fr.title' => 'test',
+            'fr.slug' => 'test',
+        ];
+        $this->call('PUT', 'admin/pages/1', $input);
+        $this->assertResponseStatus(302);
+        $this->assertRedirectedToRoute('admin.pages.edit', 1);
     }
 
     public function testUpdateFails()
     {
-        $object = new Page;
-        $object->id = 1;
-        $input = array('id' => 1, 'fr.title' => 'test', 'fr.slug' => '');
-        $this->call('PATCH', 'admin/pages/1', $input);
-        $this->assertRedirectedToRoute('admin.pages.edit', array('id' => 1));
+        $input = [
+            '_token' => csrf_token(),
+            'id' => 1,
+            'parent_id' => null,
+            'fr.title' => 'test',
+            'fr.slug' => '',
+        ];
+        $this->call('PUT', 'admin/pages/1', $input);
+        $this->assertResponseStatus(302);
         $this->assertSessionHasErrors('fr.slug');
     }
 
     public function testStoreSuccessWithRedirectToList()
     {
-        $object = new Page;
-        $object->id = 1;
-        Page::shouldReceive('create')->once()->andReturn($object);
-        $input = array('fr.title' => 'test', 'fr.slug' => 'test', 'exit' => true);
+        $input = [
+            '_token' => csrf_token(),
+            'parent_id' => null,
+            'fr.title' => 'test',
+            'fr.slug' => 'test',
+            'fr.body' => '',
+            'exit' => true,
+        ];
         $this->call('POST', 'admin/pages', $input);
         $this->assertRedirectedToRoute('admin.pages.index');
     }
