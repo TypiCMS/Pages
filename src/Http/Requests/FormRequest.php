@@ -25,28 +25,4 @@ class FormRequest extends AbstractFormRequest {
         }
         return $rules;
     }
-
-    /**
-     * Sanitize inputs
-     * 
-     * @return array
-     */
-    public function sanitize()
-    {
-        $input = $this->all();
-
-        // Checkboxes
-        $input['is_home']   = $this->has('is_home');
-        $input['parent_id'] = $this->get('parent_id') ? : null ;
-        $input['redirect']  = $this->get('redirect') ? : 0 ;
-        foreach (config('translatable.locales') as $locale) {
-            $input[$locale]['status'] = $this->has($locale . '.status');
-        }
-
-        // add relations data (default to empty array)
-        $input['galleries'] = $this->get('galleries', []);
-
-        $this->replace($input);
-        return $this->all();
-    }
 }

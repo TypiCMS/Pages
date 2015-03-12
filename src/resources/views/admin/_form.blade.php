@@ -61,6 +61,7 @@
 
                 {!! BootForm::hidden($lang.'[uri]') !!}
 
+                <input type="hidden" name="{{ $lang }}[status]" value="0">
                 {!! BootForm::checkbox(trans('validation.attributes.online'), $lang.'[status]') !!}
 
                 {!! BootForm::textarea(trans('validation.attributes.body'), $lang.'[body]')->addClass('ckeditor') !!}
@@ -111,14 +112,12 @@
     {{-- Options --}}
     <div class="tab-pane fade in" id="tab-options">
 
+        <input type="hidden" name="is_home" value="0">
         {!! BootForm::checkbox(trans('validation.attributes.is_home'), 'is_home') !!}
-        
+        <input type="hidden" name="redirect" value="0">
         {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
-
         {!! BootForm::text(trans('validation.attributes.template'), 'template') !!}
-
         {!! BootForm::textarea(trans('validation.attributes.css'), 'css') !!}
-
         {!! BootForm::textarea(trans('validation.attributes.js'), 'js') !!}
 
     </div>
