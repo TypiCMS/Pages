@@ -2,10 +2,7 @@
 
 @section('page')
 
-    <div class="row">
-
-        <div class="col-sm-4">
-
+{{--
             @if($latestNews = News::latest(3) and $latestNews->count())
             <h3>@lang('db.Latest news')</h3>
             <ul>
@@ -19,7 +16,8 @@
             </ul>
             <a href="{{ route($lang . '.news') }}" class="btn btn-default btn-xs">@lang('db.All news')</a>
             @endif
-
+--}}
+{{--
             @if($incomingEvents = Events::incoming() and $incomingEvents->count())
             <h3>@lang('db.Incoming events')</h3>
             <ul>
@@ -33,17 +31,10 @@
             </ul>
             <a href="{{ route($lang . '.events') }}" class="btn btn-default btn-xs">@lang('db.All events')</a>
             @endif
+--}}
 
-        </div>
+    {!! $model->body !!}
 
-        <div class="col-sm-8">
-            {!! $model->body !!}
-            @include('galleries::public._galleries')
-            <div class="well">
-                {{ Blocks::build('block1') }}
-            </div>
-        </div>
-
-    </div>
+    @include('galleries::public._galleries')
 
 @stop
