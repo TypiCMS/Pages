@@ -15,5 +15,6 @@
             "TypiCMS\\Modules\\Pages\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
