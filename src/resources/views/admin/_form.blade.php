@@ -116,7 +116,7 @@
         {!! BootForm::checkbox(trans('validation.attributes.is_home'), 'is_home') !!}
         <input type="hidden" name="redirect" value="0">
         {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
-        {!! BootForm::text(trans('validation.attributes.module'), 'module') !!}
+        {!! BootForm::select(trans('validation.attributes.module'), 'module', Pages::getModulesForSelect(), null, array('class' => 'form-control')) !!}
         {!! BootForm::text(trans('validation.attributes.template'), 'template') !!}
         {!! BootForm::textarea(trans('validation.attributes.css'), 'css') !!}
         {!! BootForm::textarea(trans('validation.attributes.js'), 'js') !!}
