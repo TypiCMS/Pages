@@ -1,7 +1,7 @@
 <div ng-app="typicms" ng-cloak ng-controller="ListController">
 
     <h1>
-        <a href="{{ url }}/create" class="btn-add"><i class="fa fa-plus-circle"></i><span class="sr-only" translate>New</span></a>
+        <a href="{{ route('admin.' . $module . '.create') }}" class="btn-add"><i class="fa fa-plus-circle"></i><span class="sr-only" translate>New</span></a>
         <span translate>Pages</span>
     </h1>
 
