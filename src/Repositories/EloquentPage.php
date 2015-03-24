@@ -50,7 +50,6 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     public function getFirstByUri($uri)
     {
         $model = $this->make(['translations'])
-            ->where('is_home', 0)
             ->whereHas('translations', function (Builder $query) use ($uri) {
                 $query->where('uri', $uri);
                 if (! Input::get('preview')) {
