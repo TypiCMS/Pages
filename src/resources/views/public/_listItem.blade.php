@@ -1,5 +1,5 @@
 <li id="page_{{ $child->id }}" class="{{ Request::is($child->uri) ? 'active' : '' }}">
-    <a href="/{{ $child->uri }}">
+    <a href="{{ URL::to($child->uri) }}">
         {{ $child->title }}
     </a>
     @if ($child->items)
