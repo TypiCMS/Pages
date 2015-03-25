@@ -3,7 +3,7 @@
 @section('title', $model->title . ' – ' . $websiteTitle)
 @section('ogTitle', $model->title)
 @section('description', $model->description)
-@section('image', URL::to($model->present()->thumbSrc()))
+@section('image', url($model->present()->thumbSrc()))
 @section('bodyClass', 'body-page body-page-' . $model->id)
 
 @section('css')
