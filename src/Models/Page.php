@@ -84,18 +84,7 @@ class Page extends Base
 
         $lang = $lang ? : App::getLocale() ;
 
-        $indexUri = '/' . $lang;
-        if (
-            ! Config::get('typicms.lang_chooser') &&
-            Config::get('app.fallback_locale') == $lang &&
-            ! config('typicms.main_locale_in_url')
-        ) {
-            $indexUri = '/';
-        }
-
-        if ($index || $this->is_home) {
-            return $indexUri;
-        }
+        $indexUri = '/';
 
         if (! $this->hasTranslation($lang)) {
             return $indexUri;
