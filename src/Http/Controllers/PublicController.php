@@ -93,7 +93,8 @@ class PublicController extends BasePublicController
     public function langChooser()
     {
         $homepage = $this->repository->getFirstBy('is_home', 1);
+        $locales = TypiCMS::getPublicLocales();
         return view('core::public.lang-chooser')
-            ->with(compact('homepage'));
+            ->with(compact('homepage', 'locales'));
     }
 }
