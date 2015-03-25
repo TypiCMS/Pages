@@ -13,8 +13,6 @@ class FormRequest extends AbstractFormRequest {
         ];
         foreach (config('translatable.locales') as $locale) {
             $rules[$locale . '.slug'] = [
-                'required_with:' . $locale . '.title',
-                'required_if:' . $locale . '.status,1',
                 'alpha_dash',
                 'max:255',
             ];

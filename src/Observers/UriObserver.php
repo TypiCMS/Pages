@@ -19,18 +19,18 @@ class UriObserver
         $model->uri = null;
 
         if ($model->slug) {
-
             $uri = $model->locale . '/' . $model->slug;
-            if (
-                Config::get('app.fallback_locale') == $model->locale &&
-                ! config('typicms.main_locale_in_url')
-            ) {
-                $uri = $model->slug;
-            }
-
-            $model->uri = $this->incrementWhileExists($uri);
-
+        } else {
+            $uri = $model->locale;
         }
+        if (
+            Config::get('app.fallback_locale') == $model->locale &&
+            ! config('typicms.main_locale_in_url')
+        ) {
+            $uri = $model->slug;
+        }
+
+        $model->uri = $this->incrementWhileExists($uri);
 
     }
 
@@ -43,23 +43,18 @@ class UriObserver
     public function updating(PageTranslation $model)
     {
 
-        if ($model->slug && ! is_null($model->uri)) {
+        $parentUri = $this->getParentUri($model);
 
-            $parentUri = $this->getParentUri($model);
-            if ($parentUri) {
-                $uri = $parentUri . '/' . $model->slug;
-            } else {
-                $uri = $model->slug;
+        if ($parentUri) {
+            $uri = $parentUri;
+            if ($model->slug) {
+                $uri .= '/' . $model->slug;
             }
-
-
-            $model->uri = $this->incrementWhileExists($uri, $model->id);
-
         } else {
-
-            $model->uri = null;
-
+            $uri = $model->slug;
         }
+
+        $model->uri = $this->incrementWhileExists($uri, $model->id);
 
     }
 
