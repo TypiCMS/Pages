@@ -73,13 +73,6 @@ class ModuleProvider extends ServiceProvider
          */
         $app->events->subscribe(new ResetChildren);
 
-        /**
-         * Store all uris
-         */
-        $this->app->singleton('TypiCMS.pages.uris', function (Application $app) {
-            return $app->make('TypiCMS\Modules\Pages\Repositories\PageInterface')->allUris();
-        });
-
         $app->bind('TypiCMS\Modules\Pages\Repositories\PageInterface', function (Application $app) {
             $repository = new EloquentPage(new Page);
             if (! config('typicms.cache')) {

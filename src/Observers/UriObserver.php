@@ -30,7 +30,7 @@ class UriObserver
             $uri = $model->slug;
         }
 
-        $model->uri = $this->incrementWhileExists($uri);
+        $model->uri = $this->incrementWhileExists($model, $uri);
 
     }
 
@@ -54,8 +54,7 @@ class UriObserver
             $uri = $model->slug;
         }
 
-        $model->uri = $this->incrementWhileExists($uri, $model->id);
-
+        $model->uri = $this->incrementWhileExists($model, $uri, $model->id);
     }
 
     /**
@@ -85,11 +84,10 @@ class UriObserver
      * @param  integer $id
      * @return bool
      */
-    private function uriExists($uri, $id)
+    private function uriExists($model, $uri, $id)
     {
-        $uris = app('TypiCMS.pages.uris');
-        unset($uris[$id]);
-        if (in_array($uri, $uris)) {
+        $found = $model->where('uri', $uri)->first();
+        if ($found) {
             return true;
         }
         return false;
@@ -102,13 +100,13 @@ class UriObserver
      * @param  integer $id in case of update, except this id
      * @return string
      */
-    private function incrementWhileExists($uri, $id = 0)
+    private function incrementWhileExists($model, $uri, $id = 0)
     {
         $originalUri = $uri;
 
         $i = 0;
         // Check if uri is unique
-        while ($this->uriExists($uri, $id)) {
+        while ($this->uriExists($model, $uri, $id)) {
             $i++;
             // increment uri if it exists
             $uri = $originalUri . '-' . $i;
