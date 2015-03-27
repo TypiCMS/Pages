@@ -9,6 +9,7 @@ use Lang;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageTranslation;
+use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
 use TypiCMS\Modules\Pages\Observers\SortObserver;
 use TypiCMS\Modules\Pages\Observers\UriObserver;
@@ -50,6 +51,7 @@ class ModuleProvider extends ServiceProvider
         Page::observe(new FileObserver);
         Page::observe(new HomePageObserver);
         Page::observe(new SortObserver);
+        Page::observe(new AddToMenuObserver);
         PageTranslation::observe(new UriObserver);
     }
 

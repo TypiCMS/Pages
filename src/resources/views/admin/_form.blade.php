@@ -13,36 +13,17 @@
 {!! BootForm::hidden('position')->value($model->position ? : 0) !!}
 {!! BootForm::hidden('parent_id') !!}
 
-<ul class="nav nav-tabs">
-    <li class="active">
-        <a href="#tab-main" data-target="#tab-main" data-toggle="tab">@lang('global.Content')</a>
-    </li>
-    <li>
-        <a href="#tab-files" data-target="#tab-files" data-toggle="tab">@lang('global.Files')</a>
-    </li>
-    <li>
-        <a href="#tab-meta" data-target="#tab-meta" data-toggle="tab">@lang('global.Meta')</a>
-    </li>
-    <li>
-        <a href="#tab-options" data-target="#tab-options" data-toggle="tab">@lang('global.Options')</a>
-    </li>
-</ul>
+<div class="row">
 
-<div class="tab-content">
+    <div class="col-sm-8">
 
-    {{-- Main tab --}}
-    <div class="tab-pane fade in active" id="tab-main">
-
-        @include('core::admin._tabs-lang-form', ['target' => 'content'])
+        @include('core::admin._tabs-lang', ['target' => 'content'])
 
         <div class="tab-content">
 
-        @foreach ($locales as $lang)
-
-            <div class="tab-pane fade in @if ($locale == $lang)active @endif" id="content-{{ $lang }}">
-
+            @foreach ($locales as $lang)
+            <div class="tab-pane fade in @if ($locale == $lang)active @endif" id="{{ $lang }}">
                 <div class="row">
-
                     <div class="col-md-6">
                         {!! BootForm::text(trans('validation.attributes.title'), $lang.'[title]') !!}
                     </div>
@@ -58,69 +39,32 @@
                         {!! $errors->first($lang.'.slug', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
-
                 {!! BootForm::hidden($lang.'[uri]') !!}
-
                 <input type="hidden" name="{{ $lang }}[status]" value="0">
                 {!! BootForm::checkbox(trans('validation.attributes.online'), $lang.'[status]') !!}
-
                 {!! BootForm::textarea(trans('validation.attributes.body'), $lang.'[body]')->addClass('ckeditor') !!}
-            
+                {!! BootForm::text(trans('validation.attributes.meta_title'), $lang.'[meta_title]') !!}
+                {!! BootForm::text(trans('validation.attributes.meta_keywords'), $lang.'[meta_keywords]') !!}
+                {!! BootForm::text(trans('validation.attributes.meta_description'), $lang.'[meta_description]') !!}
             </div>
-            
-        @endforeach
+            @endforeach
 
         </div>
 
     </div>
 
-    {{-- Galleries tab --}}
-    <div class="tab-pane fade in" id="tab-files">
-
-        @include('core::admin._image-fieldset', ['field' => 'image'])
-
-        @include('core::admin._galleries-fieldset')
-
-    </div>
-
-    {{-- Metadata tab --}}
-    <div class="tab-pane fade in" id="tab-meta">
-
-        @include('core::admin._tabs-lang-form', ['target' => 'meta'])
-
-        <div class="tab-content">
-
-        {{-- Headers --}}
-        @foreach ($locales as $lang)
-
-        <div class="tab-pane fade in @if ($locale == $lang)active @endif" id="meta-{{ $lang }}">
-
-            {!! BootForm::text(trans('validation.attributes.meta_title'), $lang.'[meta_title]') !!}
-
-            {!! BootForm::text(trans('validation.attributes.meta_keywords'), $lang.'[meta_keywords]') !!}
-
-            {!! BootForm::text(trans('validation.attributes.meta_description'), $lang.'[meta_description]') !!}
-
-        </div>
-
-        @endforeach
-
-        </div>
-
-    </div>
-
-    {{-- Options --}}
-    <div class="tab-pane fade in" id="tab-options">
-
+    <aside class="col-sm-4">
         <input type="hidden" name="is_home" value="0">
         {!! BootForm::checkbox(trans('validation.attributes.is_home'), 'is_home') !!}
         <input type="hidden" name="redirect" value="0">
         {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
+        @include('core::admin._image-fieldset', ['field' => 'image'])
+        @include('core::admin._galleries-fieldset')
         {!! BootForm::select(trans('validation.attributes.module'), 'module', Pages::getModulesForSelect(), null, array('class' => 'form-control')) !!}
         {!! BootForm::text(trans('validation.attributes.template'), 'template') !!}
+        {!! BootForm::select(trans('validation.attributes.add_to_menu'), 'add_to_menu', ['' => ''] + Menus::all()->lists('title', 'id'), null, array('class' => 'form-control')) !!}
         {!! BootForm::textarea(trans('validation.attributes.css'), 'css') !!}
         {!! BootForm::textarea(trans('validation.attributes.js'), 'js') !!}
-
-    </div>
+    </aside>
 
 </div>
