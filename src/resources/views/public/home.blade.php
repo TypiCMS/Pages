@@ -2,39 +2,35 @@
 
 @section('page')
 
-{{--
-            @if($latestNews = News::latest(3) and $latestNews->count())
-            <h3>@lang('db.Latest news')</h3>
-            <ul>
-                @foreach ($latestNews as $news)
-                <li>
-                    <strong>{{ $news->title }}</strong><br>
-                    <span class="date">{{ $news->present()->dateLocalized }}</span><br>
-                    <a href="{{ route($lang . '.news.slug', $news->slug) }}" class="btn btn-default btn-xs">@lang('db.More')</a>
-                </li>
-                @endforeach
-            </ul>
-            <a href="{{ route($lang . '.news') }}" class="btn btn-default btn-xs">@lang('db.All news')</a>
-            @endif
---}}
-{{--
-            @if($incomingEvents = Events::incoming() and $incomingEvents->count())
-            <h3>@lang('db.Incoming events')</h3>
-            <ul>
-                @foreach ($incomingEvents as $event)
-                <li>
-                    <strong>{{ $event->title }}</strong><br>
-                    <span class="date">{{ $event->present()->dateFromTo }}</span><br>
-                    <a href="{{ route($lang . '.events.slug', $event->slug) }}" class="btn btn-default btn-xs">@lang('db.More')</a>
-                </li>
-                @endforeach
-            </ul>
-            <a href="{{ route($lang . '.events') }}" class="btn btn-default btn-xs">@lang('db.All events')</a>
-            @endif
---}}
-
     {!! $model->body !!}
 
     @include('galleries::public._galleries')
+
+{{--
+    @if($latestNews = News::latest(3) and $latestNews->count())
+        <div class="container-news">
+            <h2>@lang('db.Latest news')</h2>
+            @include('news::public._list', ['items' => $latestNews])
+            <a href="{{ route($lang . '.news') }}" class="btn btn-default btn-xs">@lang('db.All news')</a>
+        </div>
+    @endif
+--}}
+{{--
+    @if($incomingEvents = Events::incoming() and $incomingEvents->count())
+        <div class="container-events">
+            <h3>@lang('db.Incoming events')</h3>
+            @include('events::public._list', ['items' => $incomingEvents])
+            <a href="{{ route($lang . '.events') }}" class="btn btn-default btn-xs">@lang('db.All events')</a>
+        </div>
+    @endif
+--}}
+{{--
+    @if($partners = Partners::allBy('homepage', 1) and $partners->count())
+        <div class="container-partners">
+            <h2><a href="{{ route($lang . '.partners') }}">@lang('db.Partners')</a></h2>
+            @include('partners::public._list', ['items' => $partners])
+        </div>
+    @endif
+--}}
 
 @stop
