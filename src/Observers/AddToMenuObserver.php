@@ -13,7 +13,7 @@ class AddToMenuObserver
      * @param  Model $model eloquent
      * @return void
      */
-    public function saved(Page $model)
+    public function created(Page $model)
     {
         if ($menu_id = Input::get('add_to_menu')) {
             $position = $this->getPositionFormMenu($menu_id);

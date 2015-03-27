@@ -62,7 +62,9 @@
         @include('core::admin._galleries-fieldset')
         {!! BootForm::select(trans('validation.attributes.module'), 'module', Pages::getModulesForSelect(), null, array('class' => 'form-control')) !!}
         {!! BootForm::text(trans('validation.attributes.template'), 'template') !!}
+        @if (! $model->id)
         {!! BootForm::select(trans('validation.attributes.add_to_menu'), 'add_to_menu', ['' => ''] + Menus::all()->lists('title', 'id'), null, array('class' => 'form-control')) !!}
+        @endif
         {!! BootForm::textarea(trans('validation.attributes.css'), 'css') !!}
         {!! BootForm::textarea(trans('validation.attributes.js'), 'js') !!}
     </aside>
