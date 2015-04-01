@@ -86,8 +86,12 @@ class UriObserver
      */
     private function uriExists($model, $uri, $id)
     {
-        $found = $model->where('uri', $uri)->first();
-        if ($found) {
+        $query = $model->where('uri', $uri);
+        if ($id) {
+            $query->where('id', '!=', $id);
+        }
+
+        if ($query->first()) {
             return true;
         }
         return false;
@@ -100,7 +104,7 @@ class UriObserver
      * @param  integer $id in case of update, except this id
      * @return string
      */
-    private function incrementWhileExists($model, $uri, $id = 0)
+    private function incrementWhileExists($model, $uri, $id = null)
     {
         $originalUri = $uri;
 
