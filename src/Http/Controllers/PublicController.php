@@ -80,8 +80,11 @@ class PublicController extends BasePublicController
     public function redirectToBrowserLanguage()
     {
         $locales = TypiCMS::getPublicLocales();
-        $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-        ! in_array($locale, $locales) && $locale = Config::get('app.locale');
+        $locale = Config::get('app.locale');
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+            ! in_array($locale, $locales) && $locale = Config::get('app.locale');
+        }
         return Redirect::to($locale);
     }
 
