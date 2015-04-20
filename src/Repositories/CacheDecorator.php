@@ -30,7 +30,7 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
             return $this->cache->get($cacheKey);
         }
 
-        $model = $this->repo->getFirstByUri($uri);
+        $model = $this->repo->getFirstByUri($uri, $locale);
 
         // Store in cache for next request
         $this->cache->put($cacheKey, $model);
