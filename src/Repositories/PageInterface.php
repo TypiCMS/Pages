@@ -10,9 +10,10 @@ interface PageInterface extends RepositoryInterface
      * Get a page by its uri
      *
      * @param  string                      $uri
+     * @param  string                      $locale
      * @return TypiCMS\Modules\Models\Page $model
      */
-    public function getFirstByUri($uri);
+    public function getFirstByUri($uri, $locale);
 
     /**
      * Get submenu for a page

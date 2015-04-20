@@ -1,8 +1,6 @@
 <?php
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
-use App;
-use Config;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Notification;
@@ -28,7 +26,7 @@ class PublicController extends BasePublicController
     public function uri($uri = null)
     {
         if ($uri == '/') {
-            if (Config::get('typicms.lang_chooser')) {
+            if (config('typicms.lang_chooser')) {
                 return $this->langChooser();
             }
             if (config('typicms.main_locale_in_url')) {
@@ -36,17 +34,17 @@ class PublicController extends BasePublicController
             }
             $model = $this->repository->getFirstBy('is_home', 1);
         } else if (
-            in_array($uri, Config::get('translatable.locales')) &&
-            (Config::get('app.fallback_locale') != App::getLocale() ||
+            in_array($uri, config('translatable.locales')) &&
+            (config('app.fallback_locale') != config('app.locale') ||
             config('typicms.main_locale_in_url'))
         ) {
             $model = $this->repository->getFirstBy('is_home', 1);
         } else {
-            $model = $this->repository->getFirstByUri($uri);
+            $model = $this->repository->getFirstByUri($uri, config('app.locale'));
         }
 
         if (! $model) {
-            App::abort('404');
+            abort('404');
         }
 
         if ($model->redirect) {
@@ -80,10 +78,10 @@ class PublicController extends BasePublicController
     public function redirectToBrowserLanguage()
     {
         $locales = TypiCMS::getPublicLocales();
-        $locale = Config::get('app.locale');
+        $locale = config('app.locale');
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-            ! in_array($locale, $locales) && $locale = Config::get('app.locale');
+            ! in_array($locale, $locales) && $locale = config('app.locale');
         }
         return Redirect::to($locale);
     }
