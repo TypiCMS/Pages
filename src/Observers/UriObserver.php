@@ -87,6 +87,10 @@ class UriObserver
      */
     private function incrementWhileExists($model, $uri, $id = null)
     {
+        if (! $uri) {
+            return null;
+        }
+
         $originalUri = $uri;
 
         $i = 0;
