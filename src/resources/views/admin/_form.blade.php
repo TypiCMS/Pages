@@ -60,7 +60,7 @@
         {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
         @include('core::admin._image-fieldset', ['field' => 'image'])
         @include('core::admin._galleries-fieldset')
-        {!! BootForm::select(trans('validation.attributes.module'), 'module', Pages::getModulesForSelect(), null, array('class' => 'form-control')) !!}
+        {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect(), null, array('class' => 'form-control')) !!}
         {!! BootForm::text(trans('validation.attributes.template'), 'template') !!}
         @if (! $model->id)
         {!! BootForm::select(trans('validation.attributes.add_to_menu'), 'add_to_menu', ['' => ''] + Menus::all()->lists('title', 'id'), null, array('class' => 'form-control')) !!}
