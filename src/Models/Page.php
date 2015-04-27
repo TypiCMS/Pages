@@ -103,6 +103,21 @@ class Page extends Base
         }
     }
 
+    public function uri($lang)
+    {
+        if (! $this->hasTranslation($lang)) {
+            return null;
+        }
+        $uri = $this->translate($lang)->uri;
+        if (
+            config('app.fallback_locale') != config('app.locale') ||
+            config('typicms.main_locale_in_url')
+        ) {
+            $uri = config('app.locale') . '/' . $uri;
+        }
+        return $uri;
+    }
+
     /**
      * Get uri attribute from translation table
      *
