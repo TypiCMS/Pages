@@ -25,6 +25,7 @@ class CreatePagesTable extends Migration
             $table->integer('position')->unsigned()->default(0);
             $table->integer('parent_id')->unsigned()->nullable()->default(null);
 
+            $table->boolean('private')->default(0);
             $table->boolean('is_home')->default(0);
             $table->boolean('redirect')->default(0);
 

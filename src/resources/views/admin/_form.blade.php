@@ -56,6 +56,8 @@
     <aside class="col-sm-4">
         <input type="hidden" name="is_home" value="0">
         {!! BootForm::checkbox(trans('validation.attributes.is_home'), 'is_home') !!}
+        <input type="hidden" name="private" value="0">
+        {!! BootForm::checkbox(trans('validation.attributes.private'), 'private') !!}
         <input type="hidden" name="redirect" value="0">
         {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
         @include('core::admin._image-fieldset', ['field' => 'image'])

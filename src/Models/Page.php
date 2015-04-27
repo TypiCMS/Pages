@@ -24,6 +24,7 @@ class Page extends Base
         'meta_robots_no_follow',
         'position',
         'parent_id',
+        'private',
         'is_home',
         'redirect',
         'css',
