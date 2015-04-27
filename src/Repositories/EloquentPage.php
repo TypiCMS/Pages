@@ -103,16 +103,13 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         $routes = [];
 
         try {
-            $pages = DB::table('pages')
-                ->select('pages.id', 'uri', 'locale', 'module')
-                ->join('page_translations', 'pages.id', '=', 'page_translations.page_id')
-                ->where('uri', '!=', '')
+            $pages = $this->make(['translations'])
+                ->online()
                 ->where('module', '!=', '')
-                ->where('status', '=', 1)
                 ->get();
 
             foreach ($pages as $page) {
-                $routes[$page->module][$page->locale] = $page->uri;
+                $routes[$page->module] = $page;
             }
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -133,7 +130,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
 
     /**
      * Get sort data
-     * 
+     *
      * @param  integer $position
      * @param  array   $item
      * @return array
@@ -149,7 +146,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     /**
      * Fire event to reset children’s uri
      * Only applicable on nestable collections
-     * 
+     *
      * @param  Page    $page
      * @return void|null
      */
