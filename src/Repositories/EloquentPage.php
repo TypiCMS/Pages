@@ -1,9 +1,7 @@
 <?php
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use Config;
 use DB;
-use Event;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +32,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         $this->syncRelation($model, $data, 'galleries');
 
         if ($model->save()) {
-            Event::fire('page.resetChildrenUri', [$model]);
+            event('page.resetChildrenUri', [$model]);
             return true;
         }
 
@@ -71,7 +69,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     {
         $rootUriArray = explode('/', $uri);
         $uri = $rootUriArray[0];
-        if (in_array($uri, Config::get('translatable.locales'))) {
+        if (in_array($uri, config('translatable.locales'))) {
             if (isset($rootUriArray[1])) { // i
                 $uri .= '/' . $rootUriArray[1]; // add next part of uri in locale
             }
@@ -88,7 +86,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         if (! $all) {
             $query->where('status', 1);
         }
-        $query->where('locale', Config::get('app.locale'));
+        $query->where('locale', config('app.locale'));
 
         $models = $query->order()->get()->nest();
 
@@ -154,6 +152,6 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      */
     protected function fireResetChildrenUriEvent($page)
     {
-        Event::fire('page.resetChildrenUri', [$page]);
+        event('page.resetChildrenUri', [$page]);
     }
 }
