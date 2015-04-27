@@ -33,38 +33,38 @@ class PublicController extends BasePublicController
             if (config('typicms.main_locale_in_url')) {
                 return $this->redirectToBrowserLanguage();
             }
-            $model = $this->repository->getFirstBy('is_home', 1);
+            $page = $this->repository->getFirstBy('is_home', 1);
         } else if (
             in_array($uri, config('translatable.locales')) &&
             (config('app.fallback_locale') != config('app.locale') ||
             config('typicms.main_locale_in_url'))
         ) {
-            $model = $this->repository->getFirstBy('is_home', 1);
+            $page = $this->repository->getFirstBy('is_home', 1);
         } else {
-            $model = $this->repository->getFirstByUri($uri, config('app.locale'));
+            $page = $this->repository->getFirstByUri($uri, config('app.locale'));
         }
 
-        if (! $model) {
+        if (! $page) {
             abort('404');
         }
 
-        if ($model->private && ! Sentry::check()) {
+        if ($page->private && ! Sentry::check()) {
             abort('403');
         }
 
-        if ($model->redirect) {
-            $childUri = $model->children->first()->uri;
+        if ($page->redirect) {
+            $childUri = $page->children->first()->uri;
             return Redirect::to($childUri);
         }
 
-        TypiCMS::setModel($model);
+        TypiCMS::setModel($page);
 
         // get submenu
-        $children = $this->repository->getSubMenu($model->uri);
+        $children = $this->repository->getSubMenu($page->uri);
 
         $defaultTemplate = 'default';
 
-        $template = $model->template ? $model->template : $defaultTemplate ;
+        $template = $page->template ? $page->template : $defaultTemplate ;
         try {
             $view = view('pages::public.' . $template);
         } catch (InvalidArgumentException $e) {
@@ -72,7 +72,7 @@ class PublicController extends BasePublicController
             $view = view('pages::public.' . $defaultTemplate);
         }
 
-        return $view->with(compact('children', 'model'));
+        return $view->with(compact('children', 'page'));
     }
 
     /**
