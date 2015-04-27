@@ -1,8 +1,6 @@
 <?php
 namespace TypiCMS\Modules\Pages\Models;
 
-use App;
-use Config;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -82,15 +80,14 @@ class Page extends Base
             return null;
         }
 
-        $lang = $lang ? : App::getLocale() ;
+        $lang = $lang ? : config('app.locale') ;
 
-        $indexUri = '/' . $lang;
+        $indexUri = '';
         if (
-            ! Config::get('typicms.lang_chooser') &&
-            Config::get('app.fallback_locale') == $lang &&
-            ! config('typicms.main_locale_in_url')
+            config('app.fallback_locale') != $lang ||
+            config('typicms.main_locale_in_url')
         ) {
-            $indexUri = '/';
+            $indexUri = '/' . $lang;
         }
 
         if (! $this->hasTranslation($lang)) {
@@ -103,7 +100,7 @@ class Page extends Base
         }
 
         if ($this->translate($lang)->uri) {
-            return '/' . $this->translate($lang)->uri;
+            return $indexUri . '/' . $this->translate($lang)->uri;
         }
     }
 

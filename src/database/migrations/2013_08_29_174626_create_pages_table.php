@@ -48,7 +48,7 @@ class CreatePagesTable extends Migration
             $table->string('locale')->index();
 
             $table->string('slug')->nullable();
-            $table->string('uri')->unique()->nullable();
+            $table->string('uri')->nullable();
 
             $table->string('title');
             $table->text('body');
@@ -61,7 +61,8 @@ class CreatePagesTable extends Migration
 
             $table->timestamps();
 
-            $table->unique(array('page_id', 'locale'));
+            $table->unique(['page_id', 'locale']);
+            $table->unique(['locale', 'uri']);
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
 
         });
