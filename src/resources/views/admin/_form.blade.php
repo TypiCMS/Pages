@@ -43,7 +43,6 @@
                 <input type="hidden" name="{{ $lang }}[status]" value="0">
                 {!! BootForm::checkbox(trans('validation.attributes.online'), $lang.'[status]') !!}
                 {!! BootForm::textarea(trans('validation.attributes.body'), $lang.'[body]')->addClass('ckeditor') !!}
-                {!! BootForm::text(trans('validation.attributes.meta_title'), $lang.'[meta_title]') !!}
                 {!! BootForm::text(trans('validation.attributes.meta_keywords'), $lang.'[meta_keywords]') !!}
                 {!! BootForm::text(trans('validation.attributes.meta_description'), $lang.'[meta_description]') !!}
             </div>

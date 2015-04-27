@@ -38,7 +38,6 @@ class Page extends Base
         'uri',
         'status',
         'body',
-        'meta_title',
         'meta_keywords',
         'meta_description',
     );
@@ -54,7 +53,6 @@ class Page extends Base
         'uri',
         'status',
         'body',
-        'meta_title',
         'meta_keywords',
         'meta_description',
     );

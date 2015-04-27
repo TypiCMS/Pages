@@ -17,7 +17,6 @@ class FormRequest extends AbstractFormRequest {
                 'max:255',
             ];
             $rules[$locale . '.title'] = 'max:255';
-            $rules[$locale . '.meta_title'] = 'max:255';
             $rules[$locale . '.meta_keywords'] = 'max:255';
             $rules[$locale . '.meta_description'] = 'max:255';
         }
