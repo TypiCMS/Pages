@@ -1,7 +1,6 @@
 <?php
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use DB;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -116,16 +115,6 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         }
 
         return $routes;
-    }
-
-    /**
-     * Get all uris
-     *
-     * @return array
-     */
-    public function allUris()
-    {
-        return DB::table('page_translations')->lists('uri', 'id');
     }
 
     /**

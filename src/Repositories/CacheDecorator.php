@@ -80,14 +80,4 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
 
         return $models;
     }
-
-    /**
-     * Get all uris
-     *
-     * @return array
-     */
-    public function allUris()
-    {
-        return $this->repo->allUris();
-    }
 }
