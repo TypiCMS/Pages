@@ -1,23 +1,24 @@
 @extends('core::public.master')
 
-@section('title', $model->title . ' – ' . $websiteTitle)
-@section('ogTitle', $model->title)
-@section('description', $model->description)
-@section('image', url($model->present()->thumbSrc()))
-@section('bodyClass', 'body-page body-page-' . $model->id)
+@section('title', $page->title . ' – ' . $websiteTitle)
+@section('ogTitle', $page->title)
+@section('description', $page->meta_description)
+@section('keywords', $page->meta_keywords)
+@section('image', url($page->present()->thumbSrc()))
+@section('bodyClass', 'body-page body-page-' . $page->id)
 
 @section('css')
-    @if($model->css)
+    @if($page->css)
     <style type="text/css">
-        {{ $model->css }}
+        {{ $page->css }}
     </style>
     @endif
 @stop
 
 @section('js')
-    @if($model->js)
+    @if($page->js)
     <script>
-        {{ $model->js }}
+        {{ $page->js }}
     </script>
     @endif
 @stop

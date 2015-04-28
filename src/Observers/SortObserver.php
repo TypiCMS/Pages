@@ -1,7 +1,6 @@
 <?php
 namespace TypiCMS\Modules\Pages\Observers;
 
-use Config;
 use TypiCMS\Modules\Pages\Models\Page;
 
 class SortObserver
@@ -9,7 +8,7 @@ class SortObserver
 
     /**
      * On update, update children uris
-     * 
+     *
      * @param  Page $model
      * @return void
      */
@@ -17,7 +16,7 @@ class SortObserver
     {
         if ($model->isDirty('parent_id')) {
 
-            foreach (Config::get('translatable.locales') as $locale) {
+            foreach (config('translatable.locales') as $locale) {
                 $model->translate($locale)->uri = '';
             }
 

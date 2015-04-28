@@ -25,6 +25,7 @@ class CreatePagesTable extends Migration
             $table->integer('position')->unsigned()->default(0);
             $table->integer('parent_id')->unsigned()->nullable()->default(null);
 
+            $table->boolean('private')->default(0);
             $table->boolean('is_home')->default(0);
             $table->boolean('redirect')->default(0);
 
@@ -48,7 +49,7 @@ class CreatePagesTable extends Migration
             $table->string('locale')->index();
 
             $table->string('slug')->nullable();
-            $table->string('uri')->unique()->nullable();
+            $table->string('uri')->nullable();
 
             $table->string('title');
             $table->text('body');
@@ -61,7 +62,8 @@ class CreatePagesTable extends Migration
 
             $table->timestamps();
 
-            $table->unique(array('page_id', 'locale'));
+            $table->unique(['page_id', 'locale']);
+            $table->unique(['locale', 'uri']);
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
 
         });

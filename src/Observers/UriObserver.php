@@ -9,34 +9,20 @@ class UriObserver
 
     /**
      * On create, update uri
-     * 
+     *
      * @param  PageTranslation $model
      * @return void
      */
     public function creating(PageTranslation $model)
     {
 
-        $model->uri = null;
-
-        if ($model->slug) {
-            $uri = $model->locale . '/' . $model->slug;
-        } else {
-            $uri = $model->locale;
-        }
-        if (
-            Config::get('app.fallback_locale') == $model->locale &&
-            ! config('typicms.main_locale_in_url')
-        ) {
-            $uri = $model->slug;
-        }
-
-        $model->uri = $this->incrementWhileExists($model, $uri);
+        $model->uri = $this->incrementWhileExists($model, $model->slug);
 
     }
 
     /**
      * On update, change uri
-     * 
+     *
      * @param  PageTranslation $model
      * @return void
      */
@@ -68,13 +54,7 @@ class UriObserver
         if ($parentPage = $model->page->parent) {
             return $parentPage->translate($model->locale)->uri;
         }
-        if (
-            Config::get('app.fallback_locale') == $model->locale &&
-            ! config('typicms.main_locale_in_url')
-        ) {
-            return '';
-        }
-        return $model->locale;
+        return null;
     }
 
     /**
@@ -86,7 +66,8 @@ class UriObserver
      */
     private function uriExists($model, $uri, $id)
     {
-        $query = $model->where('uri', $uri);
+        $query = $model->where('uri', $uri)
+            ->where('locale', $model->locale);
         if ($id) {
             $query->where('id', '!=', $id);
         }
@@ -99,13 +80,17 @@ class UriObserver
 
     /**
      * Add '-x' on uri if it exists in page_translations table
-     *  
+     *
      * @param  string  $uri
      * @param  integer $id in case of update, except this id
      * @return string
      */
     private function incrementWhileExists($model, $uri, $id = null)
     {
+        if (! $uri) {
+            return null;
+        }
+
         $originalUri = $uri;
 
         $i = 0;

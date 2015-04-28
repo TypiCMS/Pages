@@ -1,8 +1,7 @@
 <?php
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
-use App;
-use Config;
+use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Notification;
@@ -28,40 +27,42 @@ class PublicController extends BasePublicController
     public function uri($uri = null)
     {
         if ($uri == '/') {
-            if (Config::get('typicms.lang_chooser')) {
+            if (config('typicms.lang_chooser')) {
                 return $this->langChooser();
             }
             if (config('typicms.main_locale_in_url')) {
                 return $this->redirectToBrowserLanguage();
             }
-            $model = $this->repository->getFirstBy('is_home', 1);
+            $page = $this->repository->getFirstBy('is_home', 1);
         } else if (
-            in_array($uri, Config::get('translatable.locales')) &&
-            (Config::get('app.fallback_locale') != App::getLocale() ||
+            in_array($uri, config('translatable.locales')) &&
+            (config('app.fallback_locale') != config('app.locale') ||
             config('typicms.main_locale_in_url'))
         ) {
-            $model = $this->repository->getFirstBy('is_home', 1);
+            $page = $this->repository->getFirstBy('is_home', 1);
         } else {
-            $model = $this->repository->getFirstByUri($uri);
+            $page = $this->repository->getFirstByUri($uri, config('app.locale'));
         }
 
-        if (! $model) {
-            App::abort('404');
+        if (! $page) {
+            abort('404');
         }
 
-        if ($model->redirect) {
-            $childUri = $model->children->first()->uri;
+        if ($page->private && ! Sentry::check()) {
+            abort('403');
+        }
+
+        if ($page->redirect) {
+            $childUri = $page->children->first()->uri;
             return Redirect::to($childUri);
         }
 
-        TypiCMS::setModel($model);
-
         // get submenu
-        $children = $this->repository->getSubMenu($model->uri);
+        $children = $this->repository->getSubMenu($page->uri);
 
         $defaultTemplate = 'default';
 
-        $template = $model->template ? $model->template : $defaultTemplate ;
+        $template = $page->template ? $page->template : $defaultTemplate ;
         try {
             $view = view('pages::public.' . $template);
         } catch (InvalidArgumentException $e) {
@@ -69,7 +70,7 @@ class PublicController extends BasePublicController
             $view = view('pages::public.' . $defaultTemplate);
         }
 
-        return $view->with(compact('children', 'model'));
+        return $view->with(compact('children', 'page'));
     }
 
     /**
@@ -80,10 +81,10 @@ class PublicController extends BasePublicController
     public function redirectToBrowserLanguage()
     {
         $locales = TypiCMS::getPublicLocales();
-        $locale = Config::get('app.locale');
+        $locale = config('app.locale');
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-            ! in_array($locale, $locales) && $locale = Config::get('app.locale');
+            ! in_array($locale, $locales) && $locale = config('app.locale');
         }
         return Redirect::to($locale);
     }

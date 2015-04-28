@@ -9,7 +9,7 @@ class FormRequest extends AbstractFormRequest {
     {
         $rules = [
             'template' => 'alpha_dash|max:255',
-            'image'    => 'image|max:2000|image_size:>=500',
+            'image'    => 'image|max:2000',
         ];
         foreach (config('translatable.locales') as $locale) {
             $rules[$locale . '.slug'] = [
@@ -17,7 +17,6 @@ class FormRequest extends AbstractFormRequest {
                 'max:255',
             ];
             $rules[$locale . '.title'] = 'max:255';
-            $rules[$locale . '.meta_title'] = 'max:255';
             $rules[$locale . '.meta_keywords'] = 'max:255';
             $rules[$locale . '.meta_description'] = 'max:255';
         }

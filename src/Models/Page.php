@@ -1,8 +1,6 @@
 <?php
 namespace TypiCMS\Modules\Pages\Models;
 
-use App;
-use Config;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -26,6 +24,7 @@ class Page extends Base
         'meta_robots_no_follow',
         'position',
         'parent_id',
+        'private',
         'is_home',
         'redirect',
         'css',
@@ -39,7 +38,6 @@ class Page extends Base
         'uri',
         'status',
         'body',
-        'meta_title',
         'meta_keywords',
         'meta_description',
     );
@@ -55,7 +53,6 @@ class Page extends Base
         'uri',
         'status',
         'body',
-        'meta_title',
         'meta_keywords',
         'meta_description',
     );
@@ -71,40 +68,19 @@ class Page extends Base
         'image',
     );
 
-    /**
-     * Get public uri
-     *
-     * @return string
-     */
-    public function getPublicUri($preview = false, $index = false, $lang = null)
+    public function uri($locale)
     {
-        if (! $this->hasTranslation($lang)) {
+        if (! $this->hasTranslation($locale)) {
             return null;
         }
-
-        $lang = $lang ? : App::getLocale() ;
-
-        $indexUri = '/' . $lang;
+        $uri = $this->translate($locale)->uri;
         if (
-            ! Config::get('typicms.lang_chooser') &&
-            Config::get('app.fallback_locale') == $lang &&
-            ! config('typicms.main_locale_in_url')
+            config('app.fallback_locale') != config('app.locale') ||
+            config('typicms.main_locale_in_url')
         ) {
-            $indexUri = '/';
+            $uri = $locale . '/' . $uri;
         }
-
-        if (! $this->hasTranslation($lang)) {
-            return $indexUri;
-        }
-
-        // If model is offline and we are not in preview mode
-        if (! $preview && ! $this->translate($lang)->status) {
-            return $indexUri;
-        }
-
-        if ($this->translate($lang)->uri) {
-            return '/' . $this->translate($lang)->uri;
-        }
+        return $uri;
     }
 
     /**

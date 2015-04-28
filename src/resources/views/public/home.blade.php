@@ -2,9 +2,9 @@
 
 @section('page')
 
-    {!! $model->body !!}
+    {!! $page->body !!}
 
-    @include('galleries::public._galleries')
+    @include('galleries::public._galleries', ['model' => $page])
 
 {{--
     @if($latestNews = News::latest(3) and $latestNews->count())

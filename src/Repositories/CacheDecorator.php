@@ -19,17 +19,18 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
      * Get page by uri
      *
      * @param  string                      $uri
+     * @param  string                      $locale
      * @return TypiCMS\Modules\Models\Page $model
      */
-    public function getFirstByUri($uri)
+    public function getFirstByUri($uri, $locale)
     {
-        $cacheKey = md5(App::getLocale().'getFirstByUri.'.$uri.implode('.', Input::all()));
+        $cacheKey = md5(App::getLocale().'getFirstByUri.'.$uri.$locale.implode('.', Input::all()));
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
         }
 
-        $model = $this->repo->getFirstByUri($uri);
+        $model = $this->repo->getFirstByUri($uri, $locale);
 
         // Store in cache for next request
         $this->cache->put($cacheKey, $model);

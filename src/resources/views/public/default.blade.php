@@ -16,8 +16,8 @@
 
 
         <div class="col-sm-8">
-            {!! $model->body !!}
-            @include('galleries::public._galleries')
+            {!! $page->body !!}
+            @include('galleries::public._galleries', ['model' => $page])
         </div>
 
     </div>

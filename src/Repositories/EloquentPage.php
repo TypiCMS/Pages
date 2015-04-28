@@ -1,9 +1,7 @@
 <?php
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use Config;
 use DB;
-use Event;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +32,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         $this->syncRelation($model, $data, 'galleries');
 
         if ($model->save()) {
-            Event::fire('page.resetChildrenUri', [$model]);
+            event('page.resetChildrenUri', [$model]);
             return true;
         }
 
@@ -45,13 +43,15 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      * Get a page by its uri
      *
      * @param  string                      $uri
+     * @param  string                      $locale
      * @return TypiCMS\Modules\Models\Page $model
      */
-    public function getFirstByUri($uri)
+    public function getFirstByUri($uri, $locale)
     {
         $model = $this->make(['translations'])
-            ->whereHas('translations', function (Builder $query) use ($uri) {
-                $query->where('uri', $uri);
+            ->whereHas('translations', function (Builder $query) use ($uri, $locale) {
+                $query->where('uri', $uri)
+                    ->where('locale', $locale);
                 if (! Input::get('preview')) {
                     $query->where('status', 1);
                 }
@@ -69,7 +69,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     {
         $rootUriArray = explode('/', $uri);
         $uri = $rootUriArray[0];
-        if (in_array($uri, Config::get('translatable.locales'))) {
+        if (in_array($uri, config('translatable.locales'))) {
             if (isset($rootUriArray[1])) { // i
                 $uri .= '/' . $rootUriArray[1]; // add next part of uri in locale
             }
@@ -86,7 +86,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         if (! $all) {
             $query->where('status', 1);
         }
-        $query->where('locale', Config::get('app.locale'));
+        $query->where('locale', config('app.locale'));
 
         $models = $query->order()->get()->nest();
 
@@ -103,16 +103,13 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         $routes = [];
 
         try {
-            $pages = DB::table('pages')
-                ->select('pages.id', 'uri', 'locale', 'module')
-                ->join('page_translations', 'pages.id', '=', 'page_translations.page_id')
-                ->where('uri', '!=', '')
+            $pages = $this->make(['translations'])
+                ->online()
                 ->where('module', '!=', '')
-                ->where('status', '=', 1)
                 ->get();
 
             foreach ($pages as $page) {
-                $routes[$page->module][$page->locale] = $page->uri;
+                $routes[$page->module] = $page;
             }
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -133,7 +130,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
 
     /**
      * Get sort data
-     * 
+     *
      * @param  integer $position
      * @param  array   $item
      * @return array
@@ -149,12 +146,12 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     /**
      * Fire event to reset children’s uri
      * Only applicable on nestable collections
-     * 
+     *
      * @param  Page    $page
      * @return void|null
      */
     protected function fireResetChildrenUriEvent($page)
     {
-        Event::fire('page.resetChildrenUri', [$page]);
+        event('page.resetChildrenUri', [$page]);
     }
 }
