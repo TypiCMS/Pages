@@ -45,7 +45,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      * @param  string                      $locale
      * @return TypiCMS\Modules\Models\Page $model
      */
-    public function getFirstByUri($uri, $locale)
+    public function getFirstByUri($uri = '', $locale)
     {
         $model = $this->make(['translations'])
             ->whereHas('translations', function (Builder $query) use ($uri, $locale) {
