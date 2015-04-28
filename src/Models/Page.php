@@ -75,7 +75,7 @@ class Page extends Base
         }
         $uri = $this->translate($locale)->uri;
         if (
-            config('app.fallback_locale') != config('app.locale') ||
+            config('app.fallback_locale') != $locale ||
             config('typicms.main_locale_in_url')
         ) {
             $uri = $locale . '/' . $uri;
