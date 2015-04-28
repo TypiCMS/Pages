@@ -5,7 +5,6 @@ use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Notification;
-use Redirect;
 use TypiCMS;
 use TypiCMS\Http\Controllers\BasePublicController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface;
@@ -25,9 +24,10 @@ class PublicController extends BasePublicController
             return $this->langChooser();
         }
         if (config('typicms.main_locale_in_url')) {
-            return $this->redirectToBrowserLanguage();
+            return $this->redirectToHomepage();
         }
-        return $this->uri(null);
+        $homepage = $this->repository->getFirstBy('is_home', 1);
+        return $this->uri($homepage->uri, config('app.locale'));
     }
 
     /**
@@ -48,12 +48,12 @@ class PublicController extends BasePublicController
         }
 
         if ($page->redirect) {
-            $childUri = $page->children->first()->uri;
-            return Redirect::to($childUri);
+            $childUri = $page->children->first()->uri(config('app.locale'));
+            return redirect($childUri);
         }
 
         // get submenu
-        $children = $this->repository->getSubMenu($page->uri);
+        $children = $this->repository->getSubMenu($page->uri(config('app.locale')));
 
         $defaultTemplate = 'default';
 
@@ -69,19 +69,20 @@ class PublicController extends BasePublicController
     }
 
     /**
-     * Redirect to browser language or default locale
+     * Get browser language or default locale and redirect to homepage
      *
      * @return Redirect
      */
-    public function redirectToBrowserLanguage()
+    public function redirectToHomepage()
     {
+        $homepage = $this->repository->getFirstBy('is_home', 1);
         $locales = TypiCMS::getPublicLocales();
         $locale = config('app.locale');
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
             ! in_array($locale, $locales) && $locale = config('app.locale');
         }
-        return Redirect::to($locale);
+        return redirect($homepage->uri($locale));
     }
 
     /**
