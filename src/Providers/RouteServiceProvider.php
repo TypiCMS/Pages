@@ -59,8 +59,7 @@ class RouteServiceProvider extends ServiceProvider {
                     config('app.fallback_locale') != $locale ||
                     config('typicms.main_locale_in_url')
                 ) {
-                    $router->get('{uri}', ['prefix' => $locale, 'uses' => 'PublicController@uri'])->where('uri', '(.*)');
-                    $router->get($locale, ['uses' => 'PublicController@uri']);
+                    $router->get('{uri?}', ['prefix' => $locale, 'uses' => 'PublicController@uri'])->where('uri', '(.*)');
                 }
             }
             if (! config('typicms.main_locale_in_url')) {
