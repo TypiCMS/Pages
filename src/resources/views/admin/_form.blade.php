@@ -3,10 +3,6 @@
     <script src="{{ asset('js/admin/form.js') }}"></script>
 @stop
 
-@section('otherSideLink')
-    @include('core::admin._navbar-public-link')
-@stop
-
 @include('core::admin._buttons-form')
 
 {!! BootForm::hidden('id') !!}

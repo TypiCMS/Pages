@@ -57,8 +57,6 @@ class PublicController extends BasePublicController
             return Redirect::to($childUri);
         }
 
-        TypiCMS::setModel($page);
-
         // get submenu
         $children = $this->repository->getSubMenu($page->uri);
 

@@ -68,52 +68,17 @@ class Page extends Base
         'image',
     );
 
-    /**
-     * Get public uri
-     *
-     * @return string
-     */
-    public function getPublicUri($preview = false, $index = false, $lang = null)
+    public function uri($locale)
     {
-        if (! $this->hasTranslation($lang)) {
+        if (! $this->hasTranslation($locale)) {
             return null;
         }
-
-        $lang = $lang ? : config('app.locale') ;
-
-        $indexUri = '';
-        if (
-            config('app.fallback_locale') != $lang ||
-            config('typicms.main_locale_in_url')
-        ) {
-            $indexUri = '/' . $lang;
-        }
-
-        if (! $this->hasTranslation($lang)) {
-            return $indexUri;
-        }
-
-        // If model is offline and we are not in preview mode
-        if (! $preview && ! $this->translate($lang)->status) {
-            return $indexUri;
-        }
-
-        if ($this->translate($lang)->uri) {
-            return $indexUri . '/' . $this->translate($lang)->uri;
-        }
-    }
-
-    public function uri($lang)
-    {
-        if (! $this->hasTranslation($lang)) {
-            return null;
-        }
-        $uri = $this->translate($lang)->uri;
+        $uri = $this->translate($locale)->uri;
         if (
             config('app.fallback_locale') != config('app.locale') ||
             config('typicms.main_locale_in_url')
         ) {
-            $uri = config('app.locale') . '/' . $uri;
+            $uri = $locale . '/' . $uri;
         }
         return $uri;
     }
