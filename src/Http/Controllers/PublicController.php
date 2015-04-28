@@ -19,6 +19,17 @@ class PublicController extends BasePublicController
         parent::__construct($page);
     }
 
+    public function root()
+    {
+        if (config('typicms.lang_chooser')) {
+            return $this->langChooser();
+        }
+        if (config('typicms.main_locale_in_url')) {
+            return $this->redirectToBrowserLanguage();
+        }
+        return $this->uri(null);
+    }
+
     /**
      * Page uri : lang/slug
      *
@@ -26,23 +37,7 @@ class PublicController extends BasePublicController
      */
     public function uri($uri = null)
     {
-        if ($uri == '/') {
-            if (config('typicms.lang_chooser')) {
-                return $this->langChooser();
-            }
-            if (config('typicms.main_locale_in_url')) {
-                return $this->redirectToBrowserLanguage();
-            }
-            $page = $this->repository->getFirstBy('is_home', 1);
-        } else if (
-            in_array($uri, config('translatable.locales')) &&
-            (config('app.fallback_locale') != config('app.locale') ||
-            config('typicms.main_locale_in_url'))
-        ) {
-            $page = $this->repository->getFirstBy('is_home', 1);
-        } else {
-            $page = $this->repository->getFirstByUri($uri, config('app.locale'));
-        }
+        $page = $this->repository->getFirstByUri($uri, config('app.locale'));
 
         if (! $page) {
             abort('404');
