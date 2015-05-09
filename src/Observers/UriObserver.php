@@ -1,7 +1,6 @@
 <?php
 namespace TypiCMS\Modules\Pages\Observers;
 
-use Illuminate\Database\Eloquent\Model;
 use TypiCMS\Modules\Pages\Models\PageTranslation;
 
 class UriObserver
