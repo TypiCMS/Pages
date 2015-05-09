@@ -1,11 +1,9 @@
 <?php
 namespace TypiCMS\Modules\Pages\Providers;
 
-use Config;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Lang;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageTranslation;
@@ -17,7 +15,6 @@ use TypiCMS\Modules\Pages\Repositories\CacheDecorator;
 use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 use TypiCMS\Observers\FileObserver;
 use TypiCMS\Services\Cache\LaravelCache;
-use View;
 
 class ModuleProvider extends ServiceProvider
 {

@@ -2,7 +2,6 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Cartalyst\Sentry\Facades\Laravel\Sentry;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Notification;
 use TypiCMS;
