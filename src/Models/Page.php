@@ -68,6 +68,12 @@ class Page extends Base
         'image',
     );
 
+    /**
+     * Get front office uri
+     *
+     * @param  string $locale
+     * @return string
+     */
     public function uri($locale)
     {
         if (! $this->hasTranslation($locale)) {
