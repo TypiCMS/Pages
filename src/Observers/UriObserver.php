@@ -1,7 +1,7 @@
 <?php
 namespace TypiCMS\Modules\Pages\Observers;
 
-use Config;
+use Illuminate\Database\Eloquent\Model;
 use TypiCMS\Modules\Pages\Models\PageTranslation;
 
 class UriObserver
@@ -58,13 +58,14 @@ class UriObserver
     }
 
     /**
-     * Check if uri exists in all uris array
+     * Check if uri exists
      *
-     * @param  string  $uri
-     * @param  integer $id
+     * @param  PageTranslation $model
+     * @param  string          $uri
+     * @param  integer         $id
      * @return bool
      */
-    private function uriExists($model, $uri, $id)
+    private function uriExists(PageTranslation $model, $uri, $id)
     {
         $query = $model->where('uri', $uri)
             ->where('locale', $model->locale);
@@ -81,11 +82,12 @@ class UriObserver
     /**
      * Add '-x' on uri if it exists in page_translations table
      *
-     * @param  string  $uri
-     * @param  integer $id in case of update, except this id
-     * @return string
+     * @param  PageTranslation $model
+     * @param  string          $uri
+     * @param  integer         $id
+     * @return string|null
      */
-    private function incrementWhileExists($model, $uri, $id = null)
+    private function incrementWhileExists(PageTranslation $model, $uri, $id = null)
     {
         if (! $uri) {
             return null;
