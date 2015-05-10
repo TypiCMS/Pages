@@ -13,8 +13,8 @@ use TypiCMS\Modules\Pages\Observers\SortObserver;
 use TypiCMS\Modules\Pages\Observers\UriObserver;
 use TypiCMS\Modules\Pages\Repositories\CacheDecorator;
 use TypiCMS\Modules\Pages\Repositories\EloquentPage;
-use TypiCMS\Observers\FileObserver;
-use TypiCMS\Services\Cache\LaravelCache;
+use TypiCMS\Modules\Core\Observers\FileObserver;
+use TypiCMS\Modules\Core\Services\Cache\LaravelCache;
 
 class ModuleProvider extends ServiceProvider
 {

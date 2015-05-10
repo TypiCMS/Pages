@@ -1,7 +1,7 @@
 <?php
 namespace TypiCMS\Modules\Pages\Models;
 
-use TypiCMS\Models\BaseTranslation;
+use TypiCMS\Modules\Core\Models\BaseTranslation;
 
 class PageTranslation extends BaseTranslation
 {

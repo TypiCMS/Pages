@@ -2,7 +2,7 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Response;
-use TypiCMS\Http\Controllers\BaseApiController;
+use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface as Repository;
 
 class ApiController extends BaseApiController

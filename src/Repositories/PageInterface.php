@@ -1,7 +1,7 @@
 <?php
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use TypiCMS\Repositories\RepositoryInterface;
+use TypiCMS\Modules\Core\Repositories\RepositoryInterface;
 
 interface PageInterface extends RepositoryInterface
 {

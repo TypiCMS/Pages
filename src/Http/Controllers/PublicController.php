@@ -5,7 +5,7 @@ use Cartalyst\Sentry\Facades\Laravel\Sentry;
 use InvalidArgumentException;
 use Notification;
 use TypiCMS;
-use TypiCMS\Http\Controllers\BasePublicController;
+use TypiCMS\Modules\Core\Http\Controllers\BasePublicController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface;
 use View;
 
