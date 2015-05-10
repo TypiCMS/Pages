@@ -1,8 +1,7 @@
 <?php
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use App;
-use Input;
+use Illuminate\Support\Facades\Input;
 use TypiCMS\Modules\Core\Repositories\CacheAbstractDecorator;
 use TypiCMS\Modules\Core\Services\Cache\CacheInterface;
 
@@ -24,7 +23,7 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
      */
     public function getFirstByUri($uri, $locale)
     {
-        $cacheKey = md5(App::getLocale().'getFirstByUri.'.$uri.$locale.implode('.', Input::all()));
+        $cacheKey = md5(config('app.locale').'getFirstByUri.'.$uri.$locale.implode('.', Input::all()));
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
@@ -46,7 +45,7 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
      */
     public function getSubMenu($uri, $all = false)
     {
-        $cacheKey = md5(App::getLocale().'getSubMenu.'.$uri.$all);
+        $cacheKey = md5(config('app.locale').'getSubMenu.'.$uri.$all);
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
@@ -67,7 +66,7 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
      */
     public function getForRoutes()
     {
-        $cacheKey = md5(App::getLocale() . 'getForRoutes');
+        $cacheKey = md5(config('app.locale') . 'getForRoutes');
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
