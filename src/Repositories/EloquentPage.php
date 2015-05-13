@@ -4,7 +4,7 @@ namespace TypiCMS\Modules\Pages\Repositories;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Input;
+use Illuminate\Support\Facades\Input;
 use Log;
 use TypiCMS\Modules\Core\Repositories\RepositoriesAbstract;
 
