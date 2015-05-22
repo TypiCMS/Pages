@@ -1,7 +1,7 @@
 <?php
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
-use Cartalyst\Sentry\Facades\Laravel\Sentry;
+use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 use Notification;
 use TypiCMS;
@@ -42,7 +42,7 @@ class PublicController extends BasePublicController
             abort('404');
         }
 
-        if ($page->private && ! Sentry::check()) {
+        if ($page->private && ! Auth::check()) {
             abort('403');
         }
 
