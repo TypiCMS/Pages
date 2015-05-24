@@ -19,7 +19,7 @@ class SidebarViewComposer extends BaseSidebarViewComposer
                 $item->route('admin.pages.index');
                 $item->append('admin.pages.create');
                 $item->authorize(
-                    $this->user->hasAccess('pages.index')
+                    $this->auth->hasAccess('pages.index')
                 );
             });
         });
