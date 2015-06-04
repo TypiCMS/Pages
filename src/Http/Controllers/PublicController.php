@@ -2,12 +2,11 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
-use Notification;
 use TypiCMS;
 use TypiCMS\Modules\Core\Http\Controllers\BasePublicController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface;
-use View;
 
 class PublicController extends BasePublicController
 {
@@ -60,7 +59,7 @@ class PublicController extends BasePublicController
         try {
             $view = view('pages::public.' . $template);
         } catch (InvalidArgumentException $e) {
-            Notification::error('<b>Error:</b> Template “' . $template . '” not found.');
+            Log::info('<b>Error:</b> Template “' . $template . '” not found.');
             $view = view('pages::public.' . $defaultTemplate);
         }
 
