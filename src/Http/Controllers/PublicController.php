@@ -51,7 +51,7 @@ class PublicController extends BasePublicController
         }
 
         // get submenu
-        $children = $this->repository->getSubMenu($page->uri(config('app.locale')));
+        $children = $this->repository->getSubMenu($page->uri);
 
         $defaultTemplate = 'default';
 
