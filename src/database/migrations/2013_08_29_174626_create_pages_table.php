@@ -43,7 +43,7 @@ class CreatePagesTable extends Migration
         Schema::create('page_translations', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->integer('page_id')->unsigned();
 
             $table->string('locale')->index();
