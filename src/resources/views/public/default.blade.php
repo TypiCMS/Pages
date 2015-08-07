@@ -16,7 +16,7 @@
 
 
         <div class="col-sm-8">
-            {!! $page->body !!}
+            {!! $page->present()->body !!}
             @include('galleries::public._galleries', ['model' => $page])
         </div>
 

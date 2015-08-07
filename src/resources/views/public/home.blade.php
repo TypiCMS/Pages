@@ -2,7 +2,7 @@
 
 @section('page')
 
-    {!! $page->body !!}
+    {!! $page->present()->body !!}
 
     @include('galleries::public._galleries', ['model' => $page])
 
