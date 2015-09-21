@@ -35,7 +35,7 @@ class PublicController extends BasePublicController
      */
     public function uri($uri = null)
     {
-        $page = $this->repository->getFirstByUri($uri, config('app.locale'));
+        $page = $this->repository->getFirstByUri($uri, config('app.locale'), ['translations', 'galleries']);
 
         if (! $page) {
             abort('404');
