@@ -46,7 +46,7 @@ class PublicController extends BasePublicController
         }
 
         if ($page->redirect) {
-            $childUri = $page->children->first()->uri(config('app.locale'));
+            $childUri = $page->children->first()->uri();
             return redirect($childUri);
         }
 

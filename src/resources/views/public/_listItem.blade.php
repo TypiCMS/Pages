@@ -1,5 +1,5 @@
-<li id="page_{{ $child->id }}" class="{{ Request::is($child->uri(config('app.locale'))) ? 'active' : '' }}">
-    <a href="{{ url($child->uri(config('app.locale'))) }}">
+<li id="page_{{ $child->id }}" class="{{ Request::is($child->uri()) ? 'active' : '' }}">
+    <a href="{{ url($child->uri()) }}">
         {{ $child->title }}
     </a>
     @if ($child->items)

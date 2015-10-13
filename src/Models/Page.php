@@ -74,8 +74,9 @@ class Page extends Base
      * @param  string $locale
      * @return string
      */
-    public function uri($locale)
+    public function uri($locale = null)
     {
+        $locale = $locale ? : config('app.locale');
         if (! $this->hasTranslation($locale)) {
             return null;
         }
@@ -84,9 +85,9 @@ class Page extends Base
             config('app.fallback_locale') != $locale ||
             config('typicms.main_locale_in_url')
         ) {
-            $uri = $locale . '/' . $uri;
+            $uri = $uri ? $locale . '/' . $uri : $locale;
         }
-        return $uri;
+        return $uri ? : '/';
     }
 
     /**
