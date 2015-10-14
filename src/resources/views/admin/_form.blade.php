@@ -55,6 +55,8 @@
         {!! BootForm::checkbox(trans('validation.attributes.private'), 'private') !!}
         <input type="hidden" name="redirect" value="0">
         {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
+        <input type="hidden" name="no_cache" value="0">
+        {!! BootForm::checkbox(trans('validation.attributes.don’t generate HTML cache'), 'no_cache') !!}
         @include('core::admin._image-fieldset', ['field' => 'image'])
         @include('core::admin._galleries-fieldset')
         {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect(), null, array('class' => 'form-control')) !!}

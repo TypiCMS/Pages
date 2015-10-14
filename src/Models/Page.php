@@ -27,6 +27,7 @@ class Page extends Base
         'private',
         'is_home',
         'redirect',
+        'no_cache',
         'css',
         'js',
         'module',
@@ -67,6 +68,16 @@ class Page extends Base
     public $attachments = array(
         'image',
     );
+
+    /**
+     * Is this page cacheable?
+     *
+     * @return boolean
+     */
+    public function cacheable()
+    {
+        return !$this->no_cache;
+    }
 
     /**
      * Get front office uri
