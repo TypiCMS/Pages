@@ -28,6 +28,7 @@ class CreatePagesTable extends Migration
             $table->boolean('private')->default(0);
             $table->boolean('is_home')->default(0);
             $table->boolean('redirect')->default(0);
+            $table->boolean('no_cache')->default(0);
 
             $table->text('css')->nullable();
             $table->text('js')->nullable();
