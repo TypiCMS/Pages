@@ -2,7 +2,6 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use TypiCMS;
 use TypiCMS\Modules\Core\Http\Controllers\BasePublicController;
@@ -37,11 +36,11 @@ class PublicController extends BasePublicController
     {
         $page = $this->repository->getFirstByUri($uri, config('app.locale'), ['translations', 'galleries']);
 
-        if (! $page) {
+        if (!$page) {
             abort('404');
         }
 
-        if ($page->private && ! Auth::check()) {
+        if ($page->private && !Auth::check()) {
             abort('403');
         }
 
@@ -53,17 +52,15 @@ class PublicController extends BasePublicController
         // get submenu
         $children = $this->repository->getSubMenu($page->uri);
 
-        $defaultTemplate = 'default';
+        $templateDir = 'pages::public.';
+        $template = $page->template;
 
-        $template = $page->template ? $page->template : $defaultTemplate ;
-        try {
-            $view = view('pages::public.' . $template);
-        } catch (InvalidArgumentException $e) {
-            Log::info('<b>Error:</b> Template “' . $template . '” not found.');
-            $view = view('pages::public.' . $defaultTemplate);
+        if (!view()->exists($templateDir . $template)) {
+            info('Template ' . $template . ' not found, switching to default template.');
+            $template = 'default';
         }
 
-        return $view->with(compact('children', 'page'));
+        return view($templateDir . $template, compact('children', 'page'));
     }
 
     /**
@@ -78,7 +75,7 @@ class PublicController extends BasePublicController
         $locale = config('app.locale');
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-            ! in_array($locale, $locales) && $locale = config('app.locale');
+            !in_array($locale, $locales) && $locale = config('app.locale');
         }
         return redirect($homepage->uri($locale));
     }
