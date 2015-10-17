@@ -87,7 +87,7 @@ class Page extends Base
      */
     public function uri($locale = null)
     {
-        $locale = $locale ? : config('app.locale');
+        $locale = $locale ?: config('app.locale');
         if (! $this->hasTranslation($locale)) {
             return null;
         }
@@ -98,7 +98,7 @@ class Page extends Base
         ) {
             $uri = $uri ? $locale . '/' . $uri : $locale;
         }
-        return $uri ? : '/';
+        return $uri ?: '/';
     }
 
     /**

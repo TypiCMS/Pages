@@ -6,7 +6,7 @@
 @include('core::admin._buttons-form')
 
 {!! BootForm::hidden('id') !!}
-{!! BootForm::hidden('position')->value($model->position ? : 0) !!}
+{!! BootForm::hidden('position')->value($model->position ?: 0) !!}
 {!! BootForm::hidden('parent_id') !!}
 
 <div class="row">

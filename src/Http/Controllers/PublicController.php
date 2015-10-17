@@ -38,7 +38,7 @@ class PublicController extends BasePublicController
         $children = $this->repository->getSubMenu($page->uri);
 
         $templateDir = 'pages::public.';
-        $template = $page->template ? : 'default';
+        $template = $page->template ?: 'default';
 
         if (!view()->exists($templateDir . $template)) {
             info('Template ' . $template . ' not found, switching to default template.');

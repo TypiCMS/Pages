@@ -37,7 +37,7 @@ class AdminController extends BaseAdminController
     public function update($model, FormRequest $request)
     {
         $data = $request->all();
-        $data['parent_id'] = $data['parent_id'] ? : null ;
+        $data['parent_id'] = $data['parent_id'] ?: null;
         $this->repository->update($data);
         return $this->redirect($request, $model);
     }
