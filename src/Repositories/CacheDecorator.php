@@ -1,4 +1,5 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Repositories;
 
 use Illuminate\Support\Facades\Input;
@@ -7,7 +8,6 @@ use TypiCMS\Modules\Core\Services\Cache\CacheInterface;
 
 class CacheDecorator extends CacheAbstractDecorator implements PageInterface
 {
-
     public function __construct(PageInterface $repo, CacheInterface $cache)
     {
         $this->repo = $repo;
@@ -15,16 +15,17 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
     }
 
     /**
-     * Get a page by its uri
+     * Get a page by its uri.
      *
      * @param string $uri
      * @param string $locale
-     * @param array $with
+     * @param array  $with
+     *
      * @return TypiCMS\Modules\Models\Page $model
      */
-    public function getFirstByUri($uri, $locale, array $with = array())
+    public function getFirstByUri($uri, $locale, array $with = [])
     {
-        $cacheKey = md5(config('app.locale') . 'getFirstByUri.' . $uri . $locale . implode('.', $with) . implode('.', Input::all()));
+        $cacheKey = md5(config('app.locale').'getFirstByUri.'.$uri.$locale.implode('.', $with).implode('.', Input::all()));
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
@@ -38,9 +39,8 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
         return $model;
     }
 
-
     /**
-     * Get submenu for a page
+     * Get submenu for a page.
      *
      * @return Collection
      */
@@ -61,13 +61,13 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
     }
 
     /**
-     * Get pages linked to module to build routes
+     * Get pages linked to module to build routes.
      *
      * @return array
      */
     public function getForRoutes()
     {
-        $cacheKey = md5(config('app.locale') . 'getForRoutes');
+        $cacheKey = md5(config('app.locale').'getForRoutes');
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);

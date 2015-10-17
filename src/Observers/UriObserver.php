@@ -1,39 +1,38 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Observers;
 
 use TypiCMS\Modules\Pages\Models\PageTranslation;
 
 class UriObserver
 {
-
     /**
-     * On create, update uri
+     * On create, update uri.
      *
-     * @param  PageTranslation $model
+     * @param PageTranslation $model
+     *
      * @return void
      */
     public function creating(PageTranslation $model)
     {
-
         $model->uri = $this->incrementWhileExists($model, $model->slug);
-
     }
 
     /**
-     * On update, change uri
+     * On update, change uri.
      *
-     * @param  PageTranslation $model
+     * @param PageTranslation $model
+     *
      * @return void
      */
     public function updating(PageTranslation $model)
     {
-
         $parentUri = $this->getParentUri($model);
 
         if ($parentUri) {
             $uri = $parentUri;
             if ($model->slug) {
-                $uri .= '/' . $model->slug;
+                $uri .= '/'.$model->slug;
             }
         } else {
             $uri = $model->slug;
@@ -43,9 +42,10 @@ class UriObserver
     }
 
     /**
-     * Get parent page’s URI
+     * Get parent page’s URI.
      *
-     * @param  PageTranslation $model
+     * @param PageTranslation $model
+     *
      * @return string
      */
     private function getParentUri(PageTranslation $model)
@@ -53,15 +53,17 @@ class UriObserver
         if ($parentPage = $model->page->parent) {
             return $parentPage->translate($model->locale)->uri;
         }
-        return null;
+
+        return;
     }
 
     /**
-     * Check if uri exists
+     * Check if uri exists.
      *
-     * @param  PageTranslation $model
-     * @param  string          $uri
-     * @param  integer         $id
+     * @param PageTranslation $model
+     * @param string          $uri
+     * @param int             $id
+     *
      * @return bool
      */
     private function uriExists(PageTranslation $model, $uri, $id)
@@ -75,21 +77,23 @@ class UriObserver
         if ($query->first()) {
             return true;
         }
+
         return false;
     }
 
     /**
-     * Add '-x' on uri if it exists in page_translations table
+     * Add '-x' on uri if it exists in page_translations table.
      *
-     * @param  PageTranslation $model
-     * @param  string          $uri
-     * @param  integer         $id
+     * @param PageTranslation $model
+     * @param string          $uri
+     * @param int             $id
+     *
      * @return string|null
      */
     private function incrementWhileExists(PageTranslation $model, $uri, $id = null)
     {
         if (!$uri) {
-            return null;
+            return;
         }
 
         $originalUri = $uri;
@@ -99,7 +103,7 @@ class UriObserver
         while ($this->uriExists($model, $uri, $id)) {
             $i++;
             // increment uri if it exists
-            $uri = $originalUri . '-' . $i;
+            $uri = $originalUri.'-'.$i;
         }
 
         return $uri;

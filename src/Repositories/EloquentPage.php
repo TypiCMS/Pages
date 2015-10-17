@@ -1,4 +1,5 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Repositories;
 
 use Exception;
@@ -10,17 +11,17 @@ use TypiCMS\Modules\Core\Repositories\RepositoriesAbstract;
 
 class EloquentPage extends RepositoriesAbstract implements PageInterface
 {
-
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
 
     /**
-     * Update an existing model
+     * Update an existing model.
      *
      * @param array  Data needed for model update
-     * @return boolean
+     *
+     * @return bool
      */
     public function update(array $data)
     {
@@ -32,6 +33,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
 
         if ($model->save()) {
             event('page.resetChildrenUri', [$model]);
+
             return true;
         }
 
@@ -39,14 +41,15 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * Get a page by its uri
+     * Get a page by its uri.
      *
      * @param string $uri
      * @param string $locale
-     * @param array $with
+     * @param array  $with
+     *
      * @return TypiCMS\Modules\Models\Page $model
      */
-    public function getFirstByUri($uri = '', $locale, array $with = array())
+    public function getFirstByUri($uri = '', $locale, array $with = [])
     {
         $model = $this->make($with)
             ->whereHas('translations', function (Builder $query) use ($uri, $locale) {
@@ -57,11 +60,12 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
                 }
             })
             ->firstOrFail();
+
         return $model;
     }
 
     /**
-     * Get submenu for a page
+     * Get submenu for a page.
      *
      * @return Collection
      */
@@ -71,7 +75,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         $uri = $rootUriArray[0];
         if (in_array($uri, config('translatable.locales'))) {
             if (isset($rootUriArray[1])) { // i
-                $uri .= '/' . $rootUriArray[1]; // add next part of uri in locale
+                $uri .= '/'.$rootUriArray[1]; // add next part of uri in locale
             }
         }
 
@@ -94,7 +98,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * Get pages linked to module to build routes
+     * Get pages linked to module to build routes.
      *
      * @return array
      */
@@ -119,25 +123,27 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * Get sort data
+     * Get sort data.
      *
-     * @param  integer $position
-     * @param  array   $item
+     * @param int   $position
+     * @param array $item
+     *
      * @return array
      */
     protected function getSortData($position, $item)
     {
         return [
-            'position' => $position,
-            'parent_id' => $item['parent_id']
+            'position'  => $position,
+            'parent_id' => $item['parent_id'],
         ];
     }
 
     /**
      * Fire event to reset children’s uri
-     * Only applicable on nestable collections
+     * Only applicable on nestable collections.
      *
-     * @param  Page    $page
+     * @param Page $page
+     *
      * @return void|null
      */
     protected function fireResetChildrenUriEvent($page)

@@ -1,16 +1,18 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Events;
 
 use Illuminate\Events\Dispatcher;
 use TypiCMS\Modules\Pages\Models\Page;
 
-class ResetChildren {
-
+class ResetChildren
+{
     /**
      * Recursive method for emptying children’s uri
-     * UriObserver will rebuild uris
+     * UriObserver will rebuild uris.
      *
-     * @param  Page $page
+     * @param Page $page
+     *
      * @return void
      */
     public function resetChildrenUri(Page $page)
@@ -31,7 +33,8 @@ class ResetChildren {
     /**
      * Register the listeners for the subscriber.
      *
-     * @param  Dispatcher  $events
+     * @param Dispatcher $events
+     *
      * @return array
      */
     public function subscribe(Dispatcher $events)

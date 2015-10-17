@@ -1,4 +1,5 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
@@ -14,11 +15,12 @@ class ApiController extends BaseApiController
 
     /**
      * List models
-     * GET /admin/model
+     * GET /admin/model.
      */
     public function index()
     {
         $models = $this->repository->allNested([], true);
+
         return response()->json($models, 200);
     }
 
@@ -30,7 +32,8 @@ class ApiController extends BaseApiController
     public function store()
     {
         $model = $this->repository->create(Input::all());
-        $error = $model ? false : true ;
+        $error = $model ? false : true;
+
         return response()->json([
             'error' => $error,
             'model' => $model,
@@ -41,11 +44,13 @@ class ApiController extends BaseApiController
      * Update the specified resource in storage.
      *
      * @param  $model
-     * @return boolean
+     *
+     * @return bool
      */
     public function update($model)
     {
-        $error = $this->repository->update(Input::all()) ? false : true ;
+        $error = $this->repository->update(Input::all()) ? false : true;
+
         return response()->json([
             'error' => $error,
         ], 200);

@@ -1,4 +1,5 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
@@ -8,14 +9,13 @@ use TypiCMS\Modules\Pages\Repositories\PageInterface;
 
 class PublicController extends BasePublicController
 {
-
     public function __construct(PageInterface $page)
     {
         parent::__construct($page);
     }
 
     /**
-     * Page uri : lang/slug
+     * Page uri : lang/slug.
      *
      * @return void
      */
@@ -31,6 +31,7 @@ class PublicController extends BasePublicController
 
         if ($page->redirect) {
             $childUri = $page->children->first()->uri();
+
             return redirect($childUri);
         }
 
@@ -40,16 +41,16 @@ class PublicController extends BasePublicController
         $templateDir = 'pages::public.';
         $template = $page->template ?: 'default';
 
-        if (!view()->exists($templateDir . $template)) {
-            info('Template ' . $template . ' not found, switching to default template.');
+        if (!view()->exists($templateDir.$template)) {
+            info('Template '.$template.' not found, switching to default template.');
             $template = 'default';
         }
 
-        return response()->view($templateDir . $template, compact('children', 'page'));
+        return response()->view($templateDir.$template, compact('children', 'page'));
     }
 
     /**
-     * Get browser language or default locale and redirect to homepage
+     * Get browser language or default locale and redirect to homepage.
      *
      * @return Redirect
      */
@@ -62,11 +63,12 @@ class PublicController extends BasePublicController
             $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
             !in_array($locale, $locales) && $locale = config('app.locale');
         }
+
         return redirect($homepage->uri($locale));
     }
 
     /**
-     * Display the lang chooser
+     * Display the lang chooser.
      *
      * @return void
      */
@@ -74,6 +76,7 @@ class PublicController extends BasePublicController
     {
         $homepage = $this->repository->getFirstBy('is_home', 1);
         $locales = TypiCMS::getPublicLocales();
+
         return view('core::public.lang-chooser')
             ->with(compact('homepage', 'locales'));
     }
