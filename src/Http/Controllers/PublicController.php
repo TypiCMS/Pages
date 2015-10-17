@@ -14,27 +14,13 @@ class PublicController extends BasePublicController
         parent::__construct($page);
     }
 
-    public function root()
-    {
-        if (config('typicms.lang_chooser')) {
-            return $this->langChooser();
-        }
-        if (config('typicms.main_locale_in_url')) {
-            return $this->redirectToHomepage();
-        }
-        $homepage = $this->repository->getFirstBy('is_home', 1);
-        return $this->uri($homepage->uri, config('app.locale'));
-    }
-
     /**
      * Page uri : lang/slug
      *
      * @return void
      */
-    public function uri($uri = null)
+    public function uri($page = null)
     {
-        $page = $this->repository->getFirstByUri($uri, config('app.locale'), ['translations', 'galleries']);
-
         if (!$page) {
             abort('404');
         }
@@ -52,7 +38,7 @@ class PublicController extends BasePublicController
         $children = $this->repository->getSubMenu($page->uri);
 
         $templateDir = 'pages::public.';
-        $template = $page->template;
+        $template = $page->template ? : 'default';
 
         if (!view()->exists($templateDir . $template)) {
             info('Template ' . $template . ' not found, switching to default template.');

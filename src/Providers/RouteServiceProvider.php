@@ -4,6 +4,7 @@ namespace TypiCMS\Modules\Pages\Providers;
 use Config;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Pages;
 
 class RouteServiceProvider extends ServiceProvider {
 
@@ -27,6 +28,26 @@ class RouteServiceProvider extends ServiceProvider {
         parent::boot($router);
 
         $router->model('pages', 'TypiCMS\Modules\Pages\Models\Page');
+
+        $router->bind('uri', function($uri) {
+
+            if ($uri === '/') {
+                return Pages::getFirstBy('is_home', 1);
+            }
+
+            // Only locale in url
+            if (
+                in_array($uri, config('translatable.locales')) &&
+                (
+                    config('app.fallback_locale') != $uri ||
+                    config('typicms.main_locale_in_url')
+                )
+            ) {
+                return Pages::getFirstBy('is_home', 1);
+            }
+
+            return Pages::getFirstByUri($uri, config('app.locale'), ['translations', 'galleries']);
+        });
     }
 
     /**
@@ -53,19 +74,20 @@ class RouteServiceProvider extends ServiceProvider {
             /**
              * Front office routes
              */
-            $router->get('/', 'PublicController@root');
+            if (config('typicms.lang_chooser')) {
+                $router->get('/', 'PublicController@langChooser');
+            } else if (config('typicms.main_locale_in_url')) {
+                $router->get('/', 'PublicController@redirectToHomepage');
+            }
             foreach (config('translatable.locales') as $locale) {
                 if (
                     config('app.fallback_locale') != $locale ||
                     config('typicms.main_locale_in_url')
                 ) {
-                    $router->get('{uri?}', ['prefix' => $locale, 'uses' => 'PublicController@uri'])->where('uri', '(.*)');
+                    $router->get('{uri}', ['prefix' => $locale, 'uses' => 'PublicController@uri'])->where('uri', '(.*)');
                 }
             }
-            if (! config('typicms.main_locale_in_url')) {
-                $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
-            }
-
+            $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
         });
     }
 
