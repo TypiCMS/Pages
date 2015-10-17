@@ -2,7 +2,6 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use InvalidArgumentException;
 use TypiCMS;
 use TypiCMS\Modules\Core\Http\Controllers\BasePublicController;
 use TypiCMS\Modules\Pages\Repositories\PageInterface;
@@ -60,7 +59,9 @@ class PublicController extends BasePublicController
             $template = 'default';
         }
 
-        return view($templateDir . $template, compact('children', 'page'));
+        return response()
+            ->view($templateDir . $template, compact('children', 'page'))
+            ->header('typicms-no-cache', $page->no_cache);
     }
 
     /**
