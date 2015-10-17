@@ -1,13 +1,14 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Providers;
 
 use Config;
-use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Router;
 use Pages;
 
-class RouteServiceProvider extends ServiceProvider {
-
+class RouteServiceProvider extends ServiceProvider
+{
     /**
      * This namespace is applied to the controller routes in your routes file.
      *
@@ -20,7 +21,8 @@ class RouteServiceProvider extends ServiceProvider {
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     public function boot(Router $router)
@@ -29,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider {
 
         $router->model('pages', 'TypiCMS\Modules\Pages\Models\Page');
 
-        $router->bind('uri', function($uri) {
+        $router->bind('uri', function ($uri) {
 
             if ($uri === '/') {
                 return Pages::getFirstBy('is_home', 1);
@@ -53,30 +55,31 @@ class RouteServiceProvider extends ServiceProvider {
     /**
      * Define the routes for the application.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
+     *
      * @return void
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace], function(Router $router) {
+        $router->group(['namespace' => $this->namespace], function (Router $router) {
 
-            /**
+            /*
              * Admin routes
              */
             $router->resource('admin/pages', 'AdminController');
-            $router->post('admin/pages/sort', array('as' => 'admin.pages.sort', 'uses' => 'AdminController@sort'));
+            $router->post('admin/pages/sort', ['as' => 'admin.pages.sort', 'uses' => 'AdminController@sort']);
 
-            /**
+            /*
              * API routes
              */
             $router->resource('api/pages', 'ApiController');
 
-            /**
+            /*
              * Front office routes
              */
             if (config('typicms.lang_chooser')) {
                 $router->get('/', 'PublicController@langChooser');
-            } else if (config('typicms.main_locale_in_url')) {
+            } elseif (config('typicms.main_locale_in_url')) {
                 $router->get('/', 'PublicController@redirectToHomepage');
             }
             foreach (config('translatable.locales') as $locale) {
@@ -90,5 +93,4 @@ class RouteServiceProvider extends ServiceProvider {
             $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
         });
     }
-
 }

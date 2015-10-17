@@ -1,4 +1,5 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Observers;
 
 use TypiCMS\Modules\Pages\Models\Page;
@@ -8,7 +9,8 @@ class HomePageObserver
     /**
      * If a new homepage is defined, cancel previous homepage.
      * 
-     * @param  Model $model eloquent
+     * @param Model $model eloquent
+     *
      * @return void
      */
     public function saving(Page $model)
@@ -18,7 +20,7 @@ class HomePageObserver
             if ($model->id) {
                 $query->where('id', '!=', $model->id);
             }
-            $query->update(array('is_home' => 0));
+            $query->update(['is_home' => 0]);
         }
     }
 }

@@ -1,8 +1,8 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Models;
 
 use Dimsav\Translatable\Translatable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laracasts\Presenter\PresentableTrait;
 use TypiCMS\Modules\Core\Models\Base;
@@ -11,7 +11,6 @@ use TypiCMS\NestableTrait;
 
 class Page extends Base
 {
-
     use Historable;
     use Translatable;
     use PresentableTrait;
@@ -19,7 +18,7 @@ class Page extends Base
 
     protected $presenter = 'TypiCMS\Modules\Pages\Presenters\ModulePresenter';
 
-    protected $fillable = array(
+    protected $fillable = [
         'meta_robots_no_index',
         'meta_robots_no_follow',
         'position',
@@ -41,14 +40,14 @@ class Page extends Base
         'body',
         'meta_keywords',
         'meta_description',
-    );
+    ];
 
     /**
      * Translatable model configs.
      *
      * @var array
      */
-    public $translatedAttributes = array(
+    public $translatedAttributes = [
         'title',
         'slug',
         'uri',
@@ -56,7 +55,7 @@ class Page extends Base
         'body',
         'meta_keywords',
         'meta_description',
-    );
+    ];
 
     protected $appends = ['status', 'title', 'thumb', 'uri'];
 
@@ -65,14 +64,14 @@ class Page extends Base
      *
      * @var array
      */
-    public $attachments = array(
+    public $attachments = [
         'image',
-    );
+    ];
 
     /**
      * Is this page cacheable?
      *
-     * @return boolean
+     * @return bool
      */
     public function cacheable()
     {
@@ -80,29 +79,31 @@ class Page extends Base
     }
 
     /**
-     * Get front office uri
+     * Get front office uri.
      *
-     * @param  string $locale
+     * @param string $locale
+     *
      * @return string
      */
     public function uri($locale = null)
     {
         $locale = $locale ?: config('app.locale');
         if (!$this->hasTranslation($locale)) {
-            return null;
+            return;
         }
         $uri = $this->translate($locale)->uri;
         if (
             config('app.fallback_locale') != $locale ||
             config('typicms.main_locale_in_url')
         ) {
-            $uri = $uri ? $locale . '/' . $uri : $locale;
+            $uri = $uri ? $locale.'/'.$uri : $locale;
         }
+
         return $uri ?: '/';
     }
 
     /**
-     * Get uri attribute from translation table
+     * Get uri attribute from translation table.
      *
      * @return string uri
      */
@@ -112,7 +113,7 @@ class Page extends Base
     }
 
     /**
-     * A page can have menulinks
+     * A page can have menulinks.
      */
     public function menulinks()
     {
@@ -133,7 +134,7 @@ class Page extends Base
     }
 
     /**
-     * A page can have children
+     * A page can have children.
      */
     public function children()
     {
@@ -141,7 +142,7 @@ class Page extends Base
     }
 
     /**
-     * A page can have a parent
+     * A page can have a parent.
      */
     public function parent()
     {

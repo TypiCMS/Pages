@@ -1,8 +1,9 @@
 <?php
-return array(
-    'name' => 'Pages',
+
+return [
+    'name'  => 'Pages',
     'pages' => 'page|pages',
-    'New'  => 'New page',
-    'Edit' => 'Edit page',
-    'Back' => 'Back to pages',
-);
+    'New'   => 'New page',
+    'Edit'  => 'Edit page',
+    'Back'  => 'Back to pages',
+];

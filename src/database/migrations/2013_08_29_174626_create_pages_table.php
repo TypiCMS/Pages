@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreatePagesTable extends Migration
 {
@@ -12,7 +12,6 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-
         Schema::create('pages', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
@@ -68,7 +67,6 @@ class CreatePagesTable extends Migration
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
 
         });
-
     }
 
     /**
@@ -81,5 +79,4 @@ class CreatePagesTable extends Migration
         Schema::drop('page_translations');
         Schema::drop('pages');
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace TypiCMS\Modules\Pages\Observers;
 
 use Illuminate\Support\Facades\Input;
@@ -10,7 +11,8 @@ class AddToMenuObserver
     /**
      * If a new homepage is defined, cancel previous homepage.
      * 
-     * @param  Model $model eloquent
+     * @param Model $model eloquent
+     *
      * @return void
      */
     public function created(Page $model)
@@ -18,8 +20,8 @@ class AddToMenuObserver
         if ($menu_id = Input::get('add_to_menu')) {
             $position = $this->getPositionFormMenu($menu_id);
             $data = [
-                'menu_id' => $menu_id,
-                'page_id' => $model->id,
+                'menu_id'  => $menu_id,
+                'page_id'  => $model->id,
                 'position' => $position,
             ];
             foreach ($model->translations as $translation) {
@@ -32,6 +34,7 @@ class AddToMenuObserver
     private function getPositionFormMenu($id)
     {
         $position = Menulink::where('menu_id', $id)->max('position');
+
         return $position + 1;
     }
 }
