@@ -45,9 +45,7 @@ class PublicController extends BasePublicController
             $template = 'default';
         }
 
-        return response()
-            ->view($templateDir . $template, compact('children', 'page'))
-            ->header('typicms-no-cache', $page->no_cache);
+        return response()->view($templateDir . $template, compact('children', 'page'));
     }
 
     /**
