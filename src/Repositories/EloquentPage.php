@@ -52,7 +52,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
             ->whereHas('translations', function (Builder $query) use ($uri, $locale) {
                 $query->where('uri', $uri)
                     ->where('locale', $locale);
-                if (! Input::get('preview')) {
+                if (!Input::get('preview')) {
                     $query->where('status', 1);
                 }
             })
@@ -83,7 +83,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
             ->where('uri', '!=', $uri)
             ->where('uri', 'LIKE', $uri.'%');
 
-        if (! $all) {
+        if (!$all) {
             $query->where('status', 1);
         }
         $query->where('locale', config('app.locale'));

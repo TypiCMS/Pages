@@ -88,7 +88,7 @@ class UriObserver
      */
     private function incrementWhileExists(PageTranslation $model, $uri, $id = null)
     {
-        if (! $uri) {
+        if (!$uri) {
             return null;
         }
 

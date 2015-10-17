@@ -61,7 +61,7 @@
         @include('core::admin._galleries-fieldset')
         {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect(), null, array('class' => 'form-control')) !!}
         {!! BootForm::select(trans('validation.attributes.template'), 'template', TypiCMS::templates(), null, array('class' => 'form-control')) !!}
-        @if (! $model->id)
+        @if (!$model->id)
         {!! BootForm::select(trans('validation.attributes.add_to_menu'), 'add_to_menu', ['' => ''] + Menus::all()->lists('title', 'id')->all(), null, array('class' => 'form-control')) !!}
         @endif
         {!! BootForm::textarea(trans('validation.attributes.css'), 'css') !!}
