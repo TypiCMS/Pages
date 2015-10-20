@@ -57,7 +57,7 @@ class PublicController extends BasePublicController
     public function redirectToHomepage()
     {
         $homepage = $this->repository->getFirstBy('is_home', 1);
-        $locales = TypiCMS::getPublicLocales();
+        $locales = TypiCMS::getOnlineLocales();
         $locale = config('app.locale');
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
@@ -75,7 +75,7 @@ class PublicController extends BasePublicController
     public function langChooser()
     {
         $homepage = $this->repository->getFirstBy('is_home', 1);
-        $locales = TypiCMS::getPublicLocales();
+        $locales = TypiCMS::getOnlineLocales();
 
         return view('core::public.lang-chooser')
             ->with(compact('homepage', 'locales'));
