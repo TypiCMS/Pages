@@ -14,7 +14,7 @@ class ApiController extends BaseApiController
     }
 
     /**
-     * List resources
+     * List resources.
      *
      * @return \Illuminate\Http\JsonResponse
      */
