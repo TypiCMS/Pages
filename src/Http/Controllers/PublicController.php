@@ -59,9 +59,9 @@ class PublicController extends BasePublicController
         $homepage = $this->repository->getFirstBy('is_home', 1);
         $locales = TypiCMS::getOnlineLocales();
         $locale = config('app.locale');
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $locale = substr(getenv('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-            !in_array($locale, $locales) && $locale = config('app.locale');
+        if ($browserLanguage = getenv('HTTP_ACCEPT_LANGUAGE')) {
+            $browserLocale = substr($browserLanguage, 0, 2);
+            in_array($browserLocale, $locales) && $locale = $browserLocale;
         }
 
         return redirect($homepage->uri($locale));
