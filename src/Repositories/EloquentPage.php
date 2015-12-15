@@ -98,28 +98,19 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * Get pages linked to module to build routes.
+     * Get pages linked to a module.
      *
      * @return array
      */
     public function getForRoutes()
     {
-        $routes = [];
+        $pages = $this->make(['translations'])
+            ->online()
+            ->where('module', '!=', '')
+            ->get()
+            ->all();
 
-        try {
-            $pages = $this->make(['translations'])
-                ->online()
-                ->where('module', '!=', '')
-                ->get();
-
-            foreach ($pages as $page) {
-                $routes[$page->module] = $page;
-            }
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-        }
-
-        return $routes;
+        return $pages;
     }
 
     /**
