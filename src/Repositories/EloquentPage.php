@@ -2,11 +2,9 @@
 
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Input;
-use Log;
 use TypiCMS\Modules\Core\Repositories\RepositoriesAbstract;
 
 class EloquentPage extends RepositoriesAbstract implements PageInterface
