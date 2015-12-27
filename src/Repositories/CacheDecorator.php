@@ -80,4 +80,14 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
 
         return $models;
     }
+
+    /**
+     * Get all translated pages for a select/options.
+     *
+     * @return array
+     */
+    public function allForSelect()
+    {
+        return $this->repo->allForSelect();
+    }
 }

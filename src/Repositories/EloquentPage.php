@@ -128,6 +128,22 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     }
 
     /**
+     * Get all translated pages for a select/options.
+     *
+     * @return array
+     */
+    public function allForSelect()
+    {
+        $pages = app('TypiCMS\Modules\Pages\Repositories\PageInterface')
+            ->all([], true)
+            ->nest()
+            ->listsFlattened();
+        $pages = ['' => ' '] + $pages;
+
+        return $pages;
+    }
+
+    /**
      * Fire event to reset children’s uri
      * Only applicable on nestable collections.
      *
