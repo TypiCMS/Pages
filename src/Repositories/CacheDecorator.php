@@ -2,7 +2,7 @@
 
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use TypiCMS\Modules\Core\Repositories\CacheAbstractDecorator;
 use TypiCMS\Modules\Core\Services\Cache\CacheInterface;
 
@@ -25,7 +25,7 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
      */
     public function getFirstByUri($uri, $locale, array $with = [])
     {
-        $cacheKey = md5(config('app.locale').'getFirstByUri.'.$uri.$locale.implode('.', $with).implode('.', Input::all()));
+        $cacheKey = md5(config('app.locale').'getFirstByUri.'.$uri.$locale.implode('.', $with).implode('.', Request::all()));
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);

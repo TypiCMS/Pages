@@ -4,7 +4,7 @@ namespace TypiCMS\Modules\Pages\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use TypiCMS\Modules\Core\Repositories\RepositoriesAbstract;
 
 class EloquentPage extends RepositoriesAbstract implements PageInterface
@@ -53,7 +53,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
             ->whereHas('translations', function (Builder $query) use ($uri, $locale) {
                 $query->where('uri', $uri)
                     ->where('locale', $locale);
-                if (!Input::get('preview')) {
+                if (!Request::input('preview')) {
                     $query->where('status', 1);
                 }
             })
