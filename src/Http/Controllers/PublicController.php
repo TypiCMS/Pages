@@ -17,7 +17,7 @@ class PublicController extends BasePublicController
     /**
      * Page uri : lang/slug.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function uri($page = null)
     {
