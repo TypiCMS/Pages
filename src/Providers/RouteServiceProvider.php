@@ -77,10 +77,12 @@ class RouteServiceProvider extends ServiceProvider
             /*
              * Front office routes
              */
-            if (config('typicms.lang_chooser')) {
-                $router->get('/', 'PublicController@langChooser');
-            } elseif (config('typicms.main_locale_in_url')) {
-                $router->get('/', 'PublicController@redirectToHomepage');
+            if (config('typicms.main_locale_in_url')) {
+                if (config('typicms.lang_chooser')) {
+                    $router->get('/', 'PublicController@langChooser');
+                } else {
+                    $router->get('/', 'PublicController@redirectToHomepage');
+                }
             }
             foreach (config('translatable.locales') as $locale) {
                 if (
