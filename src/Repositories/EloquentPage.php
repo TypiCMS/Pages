@@ -138,9 +138,8 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
             ->all([], true)
             ->nest()
             ->listsFlattened();
-        $pages = ['' => ' '] + $pages;
 
-        return $pages;
+        return ['' => ''] + $pages;
     }
 
     /**
