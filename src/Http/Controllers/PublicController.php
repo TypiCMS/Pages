@@ -52,7 +52,7 @@ class PublicController extends BasePublicController
     /**
      * Get browser language or default locale and redirect to homepage.
      *
-     * @return Redirect
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToHomepage()
     {
