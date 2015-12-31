@@ -59,7 +59,7 @@ class AdminController extends BaseAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param \TypiCMS\Modules\Pages\Models\Page $page
+     * @param \TypiCMS\Modules\Pages\Models\Page               $page
      * @param \TypiCMS\Modules\Pages\Http\Requests\FormRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
