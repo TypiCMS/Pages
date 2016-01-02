@@ -29,8 +29,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
-        $router->model('pages', 'TypiCMS\Modules\Pages\Models\Page');
-
         $router->bind('uri', function ($uri) {
 
             if ($uri === '/') {
@@ -66,13 +64,19 @@ class RouteServiceProvider extends ServiceProvider
             /*
              * Admin routes
              */
-            $router->resource('admin/pages', 'AdminController');
+            $router->get('admin/pages', ['as' => 'admin.pages.index', 'uses' => 'AdminController@index']);
+            $router->get('admin/pages/create', ['as' => 'admin.pages.create', 'uses' => 'AdminController@create']);
+            $router->get('admin/pages/{page}/edit', ['as' => 'admin.pages.edit', 'uses' => 'AdminController@edit']);
+            $router->post('admin/pages', ['as' => 'admin.pages.store', 'uses' => 'AdminController@store']);
+            $router->put('admin/pages/{page}', ['as' => 'admin.pages.update', 'uses' => 'AdminController@update']);
             $router->post('admin/pages/sort', ['as' => 'admin.pages.sort', 'uses' => 'AdminController@sort']);
 
             /*
              * API routes
              */
-            $router->resource('api/pages', 'ApiController');
+            $router->get('api/pages', ['as' => 'api.pages.index', 'uses' => 'ApiController@index']);
+            $router->put('api/pages/{page}', ['as' => 'api.pages.update', 'uses' => 'ApiController@update']);
+            $router->delete('api/pages/{page}', ['as' => 'api.pages.destroy', 'uses' => 'ApiController@destroy']);
 
             /*
              * Front office routes
