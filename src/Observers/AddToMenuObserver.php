@@ -3,7 +3,7 @@
 namespace TypiCMS\Modules\Pages\Observers;
 
 use Illuminate\Support\Facades\Request;
-use TypiCMS\Modules\Menulinks\Models\Menulink;
+use TypiCMS\Modules\Menus\Models\Menulink;
 use TypiCMS\Modules\Pages\Models\Page;
 
 class AddToMenuObserver
@@ -27,7 +27,7 @@ class AddToMenuObserver
             foreach ($model->translations as $translation) {
                 $data[$translation->locale]['title'] = $translation->title;
             }
-            app('TypiCMS\Modules\Menulinks\Repositories\MenulinkInterface')->create($data);
+            app('TypiCMS\Modules\Menus\Repositories\MenulinkInterface')->create($data);
         }
     }
 
