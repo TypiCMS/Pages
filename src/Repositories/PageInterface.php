@@ -30,4 +30,11 @@ interface PageInterface extends RepositoryInterface
      * @return array
      */
     public function getForRoutes();
+
+    /**
+     * Get all translated pages for a select/options.
+     *
+     * @return array
+     */
+    public function allForSelect();
 }

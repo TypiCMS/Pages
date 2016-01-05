@@ -17,7 +17,7 @@ class PublicController extends BasePublicController
     /**
      * Page uri : lang/slug.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function uri($page = null)
     {
@@ -52,7 +52,7 @@ class PublicController extends BasePublicController
     /**
      * Get browser language or default locale and redirect to homepage.
      *
-     * @return Redirect
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToHomepage()
     {

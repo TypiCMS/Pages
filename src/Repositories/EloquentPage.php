@@ -4,7 +4,7 @@ namespace TypiCMS\Modules\Pages\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use TypiCMS\Modules\Core\Repositories\RepositoriesAbstract;
 
 class EloquentPage extends RepositoriesAbstract implements PageInterface
@@ -53,7 +53,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
             ->whereHas('translations', function (Builder $query) use ($uri, $locale) {
                 $query->where('uri', $uri)
                     ->where('locale', $locale);
-                if (!Input::get('preview')) {
+                if (!Request::input('preview')) {
                     $query->where('status', 1);
                 }
             })
@@ -125,6 +125,21 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
             'position'  => $position,
             'parent_id' => $item['parent_id'],
         ];
+    }
+
+    /**
+     * Get all translated pages for a select/options.
+     *
+     * @return array
+     */
+    public function allForSelect()
+    {
+        $pages = app('TypiCMS\Modules\Pages\Repositories\PageInterface')
+            ->all([], true)
+            ->nest()
+            ->listsFlattened();
+
+        return ['' => ''] + $pages;
     }
 
     /**
