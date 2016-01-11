@@ -25,7 +25,7 @@ class CacheDecorator extends CacheAbstractDecorator implements PageInterface
      */
     public function getFirstByUri($uri, $locale, array $with = [])
     {
-        $cacheKey = md5(config('app.locale').'getFirstByUri.'.$uri.$locale.implode('.', $with).implode('.', Request::all()));
+        $cacheKey = md5(config('app.locale').'getFirstByUri.'.$uri.$locale.serialize($with).serialize(Request::all()));
 
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
