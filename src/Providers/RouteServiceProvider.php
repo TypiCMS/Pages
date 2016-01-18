@@ -29,15 +29,15 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
-        $with = [
-            'translations',
-            'galleries',
-            'galleries.translations',
-            'galleries.files',
-            'galleries.files.translations',
-        ];
-
         $router->bind('uri', function ($uri) {
+
+            $with = [
+                'translations',
+                'galleries',
+                'galleries.translations',
+                'galleries.files',
+                'galleries.files.translations',
+            ];
 
             if ($uri === '/') {
                 return Pages::getFirstBy('is_home', 1, $with);
