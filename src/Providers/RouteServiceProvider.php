@@ -29,12 +29,18 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
-        $router->model('pages', 'TypiCMS\Modules\Pages\Models\Page');
+        $with = [
+            'translations',
+            'galleries',
+            'galleries.translations',
+            'galleries.files',
+            'galleries.files.translations',
+        ];
 
         $router->bind('uri', function ($uri) {
 
             if ($uri === '/') {
-                return Pages::getFirstBy('is_home', 1);
+                return Pages::getFirstBy('is_home', 1, $with);
             }
 
             // Only locale in url
@@ -45,10 +51,10 @@ class RouteServiceProvider extends ServiceProvider
                     config('typicms.main_locale_in_url')
                 )
             ) {
-                return Pages::getFirstBy('is_home', 1);
+                return Pages::getFirstBy('is_home', 1, $with);
             }
 
-            return Pages::getFirstByUri($uri, config('app.locale'), ['translations', 'galleries']);
+            return Pages::getFirstByUri($uri, config('app.locale'), $with);
         });
     }
 
