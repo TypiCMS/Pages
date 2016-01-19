@@ -1,5 +1,9 @@
 @extends('pages::public.master')
 
+@section('site-title')
+<h1 class="site-title">@include('core::public._site-title')</h1>
+@endsection
+
 @section('page')
 
     {!! $page->present()->body !!}
@@ -38,4 +42,4 @@
     @endif
 --}}
 
-@stop
+@endsection
