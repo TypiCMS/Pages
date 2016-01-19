@@ -13,4 +13,4 @@
     {!! $page->present()->body !!}
     @include('galleries::public._galleries', ['model' => $page])
 
-@stop
+@endsection
