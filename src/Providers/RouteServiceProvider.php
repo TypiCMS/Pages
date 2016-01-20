@@ -29,6 +29,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
+        $router->model('pages', 'TypiCMS\Modules\Pages\Models\Page');
+
         $router->bind('uri', function ($uri) {
 
             $with = [
