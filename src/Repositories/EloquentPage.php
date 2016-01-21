@@ -134,8 +134,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      */
     public function allForSelect()
     {
-        $pages = app('TypiCMS\Modules\Pages\Repositories\PageInterface')
-            ->all([], true)
+        $pages = $this->all([], true)
             ->nest()
             ->listsFlattened();
 
