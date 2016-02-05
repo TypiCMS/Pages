@@ -57,14 +57,25 @@ class PublicController extends BasePublicController
     public function redirectToHomepage()
     {
         $homepage = $this->repository->getFirstBy('is_home', 1);
-        $locales = TypiCMS::getOnlineLocales();
-        $locale = config('app.locale');
-        if ($browserLanguage = getenv('HTTP_ACCEPT_LANGUAGE')) {
-            $browserLocale = substr($browserLanguage, 0, 2);
-            in_array($browserLocale, $locales) && $locale = $browserLocale;
-        }
+        $locale = $this->getBrowserLocaleOrDefault();
 
         return redirect($homepage->uri($locale));
+    }
+
+    /**
+     * Browser locale
+     *
+     * @return string
+     */
+    private function getBrowserLocaleOrDefault()
+    {
+        if ($browserLanguage = getenv('HTTP_ACCEPT_LANGUAGE')) {
+            $browserLocale = substr($browserLanguage, 0, 2);
+            if (in_array($browserLocale, TypiCMS::getOnlineLocales())) {
+                return $browserLocale;
+            }
+        }
+        return config('app.locale');
     }
 
     /**
