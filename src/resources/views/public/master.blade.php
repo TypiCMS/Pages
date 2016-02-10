@@ -15,7 +15,7 @@
         {{ $page->css }}
     </style>
     @endif
-@stop
+@endsection
 
 @section('js')
     @if($page->js)
@@ -23,10 +23,10 @@
         {{ $page->js }}
     </script>
     @endif
-@stop
+@endsection
 
 @section('main')
 
     @yield('page')
 
-@stop
+@endsection

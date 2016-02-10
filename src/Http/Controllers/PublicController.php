@@ -17,7 +17,7 @@ class PublicController extends BasePublicController
     /**
      * Page uri : lang/slug.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \Illuminate\Http\RedirectResponse
      */
     public function uri($page = null)
     {
@@ -57,14 +57,26 @@ class PublicController extends BasePublicController
     public function redirectToHomepage()
     {
         $homepage = $this->repository->getFirstBy('is_home', 1);
-        $locales = TypiCMS::getOnlineLocales();
-        $locale = config('app.locale');
-        if ($browserLanguage = getenv('HTTP_ACCEPT_LANGUAGE')) {
-            $browserLocale = substr($browserLanguage, 0, 2);
-            in_array($browserLocale, $locales) && $locale = $browserLocale;
-        }
+        $locale = $this->getBrowserLanguageOrDefault();
 
         return redirect($homepage->uri($locale));
+    }
+
+    /**
+     * Get browser language or app.locale.
+     *
+     * @return string
+     */
+    private function getBrowserLanguageOrDefault()
+    {
+        if ($browserLanguage = getenv('HTTP_ACCEPT_LANGUAGE')) {
+            $browserLocale = substr($browserLanguage, 0, 2);
+            if (in_array($browserLocale, TypiCMS::getOnlineLocales())) {
+                return $browserLocale;
+            }
+        }
+
+        return config('app.locale');
     }
 
     /**

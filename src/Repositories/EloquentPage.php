@@ -47,7 +47,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      *
      * @return TypiCMS\Modules\Models\Page $model
      */
-    public function getFirstByUri($uri = '', $locale, array $with = [])
+    public function getFirstByUri($uri, $locale, array $with = [])
     {
         $model = $this->make($with)
             ->whereHas('translations', function (Builder $query) use ($uri, $locale) {
@@ -134,8 +134,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      */
     public function allForSelect()
     {
-        $pages = app('TypiCMS\Modules\Pages\Repositories\PageInterface')
-            ->all([], true)
+        $pages = $this->all([], true)
             ->nest()
             ->listsFlattened();
 
