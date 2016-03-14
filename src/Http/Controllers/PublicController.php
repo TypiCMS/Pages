@@ -38,7 +38,7 @@ class PublicController extends BasePublicController
         // get submenu
         $children = $this->repository->getSubMenu($page->uri);
 
-        $templateDir = 'pages::public.';
+        $templateDir = 'pages::'.config('typicms.template_dir').'.';
         $template = $page->template ?: 'default';
 
         if (!view()->exists($templateDir.$template)) {
