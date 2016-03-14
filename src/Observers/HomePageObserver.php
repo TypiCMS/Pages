@@ -8,7 +8,7 @@ class HomePageObserver
 {
     /**
      * If a new homepage is defined, cancel previous homepage.
-     * 
+     *
      * @param Model $model eloquent
      *
      * @return void
