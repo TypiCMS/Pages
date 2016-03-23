@@ -11,7 +11,7 @@ class UriObserver
      *
      * @param PageTranslation $model
      *
-     * @return void
+     * @return null
      */
     public function creating(PageTranslation $model)
     {
@@ -23,7 +23,7 @@ class UriObserver
      *
      * @param PageTranslation $model
      *
-     * @return void
+     * @return null
      */
     public function updating(PageTranslation $model)
     {
@@ -46,15 +46,13 @@ class UriObserver
      *
      * @param PageTranslation $model
      *
-     * @return string
+     * @return string|null
      */
     private function getParentUri(PageTranslation $model)
     {
         if ($parentPage = $model->page->parent) {
             return $parentPage->translate($model->locale)->uri;
         }
-
-        return;
     }
 
     /**
