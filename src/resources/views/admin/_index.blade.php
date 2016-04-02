@@ -1,6 +1,6 @@
 <div ng-app="typicms" ng-cloak ng-controller="ListController">
 
-    <a href="{{ route('admin.' . $module . '.create') }}" class="btn-add"><i class="fa fa-plus-circle"></i><span class="sr-only">New</span></a>
+    <a href="{{ route('admin::create-'.$module) }}" class="btn-add"><i class="fa fa-plus-circle"></i><span class="sr-only">New</span></a>
     <h1>
         <span>Pages</span>
     </h1>

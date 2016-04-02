@@ -72,19 +72,19 @@ class RouteServiceProvider extends ServiceProvider
             /*
              * Admin routes
              */
-            $router->get('admin/pages', ['as' => 'admin.pages.index', 'uses' => 'AdminController@index']);
-            $router->get('admin/pages/create', ['as' => 'admin.pages.create', 'uses' => 'AdminController@create']);
-            $router->get('admin/pages/{page}/edit', ['as' => 'admin.pages.edit', 'uses' => 'AdminController@edit']);
-            $router->post('admin/pages', ['as' => 'admin.pages.store', 'uses' => 'AdminController@store']);
-            $router->put('admin/pages/{page}', ['as' => 'admin.pages.update', 'uses' => 'AdminController@update']);
-            $router->post('admin/pages/sort', ['as' => 'admin.pages.sort', 'uses' => 'AdminController@sort']);
+            $router->get('admin/pages', 'AdminController@index')->name('admin::index-pages');
+            $router->get('admin/pages/create', 'AdminController@create')->name('admin::create-pages');
+            $router->get('admin/pages/{page}/edit', 'AdminController@edit')->name('admin::edit-pages');
+            $router->post('admin/pages', 'AdminController@store')->name('admin::store-pages');
+            $router->put('admin/pages/{page}', 'AdminController@update')->name('admin::update-pages');
+            $router->post('admin/pages/sort', 'AdminController@sort')->name('admin::sort-pages');
 
             /*
              * API routes
              */
-            $router->get('api/pages', ['as' => 'api.pages.index', 'uses' => 'ApiController@index']);
-            $router->put('api/pages/{page}', ['as' => 'api.pages.update', 'uses' => 'ApiController@update']);
-            $router->delete('api/pages/{page}', ['as' => 'api.pages.destroy', 'uses' => 'ApiController@destroy']);
+            $router->get('api/pages', 'ApiController@index')->name('api::index-pages');
+            $router->put('api/pages/{page}', 'ApiController@update')->name('api::update-pages');
+            $router->delete('api/pages/{page}', 'ApiController@destroy')->name('api::destroy-pages');
 
             /*
              * Front office routes
