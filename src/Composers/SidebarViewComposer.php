@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Pages\Composers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Sidebar\SidebarGroup;
 use Maatwebsite\Sidebar\SidebarItem;
 
@@ -19,7 +20,7 @@ class SidebarViewComposer
                 $item->route('admin::index-pages');
                 $item->append('admin::create-pages');
                 $item->authorize(
-                    auth()->user()->can('index-pages')
+                    Gate::allows('index-pages')
                 );
             });
         });
