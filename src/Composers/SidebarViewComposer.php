@@ -18,7 +18,7 @@ class SidebarViewComposer
                 $item->icon = config('typicms.pages.sidebar.icon', 'icon fa fa-fw fa-file');
                 $item->weight = config('typicms.pages.sidebar.weight');
                 $item->route('admin::index-pages');
-                $item->append('admin::create-pages');
+                $item->append('admin::create-page');
                 $item->authorize(
                     Gate::allows('index-pages')
                 );
