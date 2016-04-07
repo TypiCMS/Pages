@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
+use JavaScript;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Pages\Http\Requests\FormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
@@ -12,6 +13,22 @@ class AdminController extends BaseAdminController
     public function __construct(PageInterface $page)
     {
         parent::__construct($page);
+    }
+
+    /**
+     * List models.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        $module = $this->repository->getTable();
+        $title = trans($module.'::global.name');
+        $models = $this->repository->allNested([], true);
+        JavaScript::put('models', $models);
+
+        return view('core::admin.index')
+            ->with(compact('title', 'module', 'models'));
     }
 
     /**
