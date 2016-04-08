@@ -1,3 +1,9 @@
+@extends('core::admin.master')
+
+@section('title', trans($module.'::global.name'))
+
+@section('main')
+
 <div ng-app="typicms" ng-cloak ng-controller="ListController">
 
     <a href="{{ route('admin::create-'.str_singular($module)) }}" class="btn-add" title="@lang($module.'::global.New')">
@@ -20,3 +26,5 @@
     </div>
 
 </div>
+
+@endsection
