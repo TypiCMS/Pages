@@ -64,7 +64,11 @@
         {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
         {!! BootForm::hidden('no_cache')->value(0) !!}
         {!! BootForm::checkbox(trans('validation.attributes.don’t generate HTML cache'), 'no_cache') !!}
-        {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect()) !!}
+        @if ($model->children->count())
+            {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect())->disabled('disabled')->helpBlock(trans('pages::global.Parent cannot be module')) !!}
+        @else
+            {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect()) !!}
+        @endif
         {!! BootForm::select(trans('validation.attributes.template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir()) !!}
         @if (!$model->id)
         {!! BootForm::select(trans('validation.attributes.add_to_menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('title', 'id')->all(), null, array('class' => 'form-control')) !!}

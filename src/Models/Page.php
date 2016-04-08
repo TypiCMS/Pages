@@ -60,15 +60,6 @@ class Page extends Base
     protected $appends = ['status', 'title', 'thumb', 'uri'];
 
     /**
-     * Columns that are file.
-     *
-     * @var array
-     */
-    public $attachments = [
-        'image',
-    ];
-
-    /**
      * Is this page cacheable?
      *
      * @return bool

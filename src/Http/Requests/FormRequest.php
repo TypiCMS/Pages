@@ -10,7 +10,6 @@ class FormRequest extends AbstractFormRequest
     {
         return [
             'template'           => 'alpha_dash|max:255',
-            'image'              => 'image|max:2000',
             '*.slug'             => 'alpha_dash|max:255',
             '*.title'            => 'max:255',
             '*.meta_keywords'    => 'max:255',
