@@ -21,12 +21,10 @@ class AdminController extends BaseAdminController
      */
     public function index()
     {
-        $module = $this->repository->getTable();
         $models = $this->repository->allNested([], true);
         app('JavaScript')->put('models', $models);
 
-        return view('pages::admin.index')
-            ->with(compact('module', 'models'));
+        return view('pages::admin.index');
     }
 
     /**
