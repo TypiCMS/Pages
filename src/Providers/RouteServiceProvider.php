@@ -39,6 +39,8 @@ class RouteServiceProvider extends ServiceProvider
                 'galleries.files.translations',
             ];
 
+            info('Route service : Locale is '.config('app.locale'));
+
             if ($uri === '/') {
                 return Pages::getFirstBy('is_home', 1, $with);
             }
