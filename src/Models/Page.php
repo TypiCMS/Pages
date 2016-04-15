@@ -2,37 +2,25 @@
 
 namespace TypiCMS\Modules\Pages\Models;
 
-use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laracasts\Presenter\PresentableTrait;
+use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\NestableTrait;
 
 class Page extends Base
 {
+    use HasTranslations;
     use Historable;
-    use Translatable;
-    use PresentableTrait;
     use NestableTrait;
+    use PresentableTrait;
 
     protected $presenter = 'TypiCMS\Modules\Pages\Presenters\ModulePresenter';
 
-    protected $fillable = [
-        'meta_robots_no_index',
-        'meta_robots_no_follow',
-        'position',
-        'parent_id',
-        'private',
-        'is_home',
-        'redirect',
-        'no_cache',
-        'css',
-        'js',
-        'module',
-        'template',
-        'image',
-        // Translatable columns
+    protected $guarded = ['id'];
+
+    public $translatable = [
         'title',
         'slug',
         'uri',
@@ -42,28 +30,8 @@ class Page extends Base
         'meta_description',
     ];
 
-    /**
-     * Translatable model configs.
-     *
-     * @var array
-     */
-    public $translatedAttributes = [
-        'title',
-        'slug',
-        'uri',
-        'status',
-        'body',
-        'meta_keywords',
-        'meta_description',
-    ];
+    protected $appends = ['thumb', 'uri'];
 
-    protected $appends = ['status', 'title', 'thumb', 'uri'];
-
-    /**
-     * Columns that are file.
-     *
-     * @var array
-     */
     public $attachments = [
         'image',
     ];
@@ -100,26 +68,6 @@ class Page extends Base
         }
 
         return $uri ?: '/';
-    }
-
-    /**
-     * Append status attribute from translation table.
-     *
-     * @return string
-     */
-    public function getStatusAttribute()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Append title attribute from translation table.
-     *
-     * @return string title
-     */
-    public function getTitleAttribute()
-    {
-        return $this->title;
     }
 
     /**

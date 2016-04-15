@@ -28,27 +28,16 @@ class CreatePagesTable extends Migration
             $table->text('js')->nullable();
             $table->string('module')->nullable();
             $table->string('template')->nullable();
+            $table->json('slug');
+            $table->json('uri');
+            $table->json('title');
+            $table->json('body');
+            $table->json('status');
+            $table->json('meta_title');
+            $table->json('meta_keywords');
+            $table->json('meta_description');
             $table->timestamps();
             $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
-        });
-
-        Schema::create('page_translations', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->integer('page_id')->unsigned();
-            $table->string('locale')->index();
-            $table->string('slug')->nullable();
-            $table->string('uri')->nullable();
-            $table->string('title');
-            $table->text('body');
-            $table->boolean('status')->default(0);
-            $table->string('meta_title')->nullable();
-            $table->string('meta_keywords')->nullable();
-            $table->string('meta_description')->nullable();
-            $table->timestamps();
-            $table->unique(['page_id', 'locale']);
-            $table->unique(['locale', 'uri']);
-            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
         });
     }
 
@@ -59,7 +48,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('page_translations');
         Schema::drop('pages');
     }
 }
