@@ -16,7 +16,7 @@ class SortObserver
     public function updating(Page $model)
     {
         if ($model->isDirty('parent_id')) {
-            foreach (config('translatable.locales') as $locale) {
+            foreach (config('translatable-bootforms.locales') as $locale) {
                 $model->translate($locale)->uri = '';
             }
         }

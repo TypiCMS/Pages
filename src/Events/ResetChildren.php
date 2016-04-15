@@ -18,7 +18,7 @@ class ResetChildren
     public function resetChildrenUri(Page $page)
     {
         foreach ($page->children as $childPage) {
-            foreach (config('translatable.locales') as $locale) {
+            foreach (config('translatable-bootforms.locales') as $locale) {
                 if (is_null($page->translate($locale)->uri)) {
                     $childPage->translate($locale)->uri = null;
                 } else {
