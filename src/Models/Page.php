@@ -30,7 +30,7 @@ class Page extends Base
         'meta_description',
     ];
 
-    protected $appends = ['thumb', 'uri'];
+    protected $appends = ['thumb'];
 
     public $attachments = [
         'image',
@@ -56,10 +56,7 @@ class Page extends Base
     public function uri($locale = null)
     {
         $locale = $locale ?: config('app.locale');
-        if (!$this->hasTranslation($locale)) {
-            return;
-        }
-        $uri = $this->translate($locale)->uri;
+        $uri = $this->translate('uri', $locale);
         if (
             config('app.fallback_locale') != $locale ||
             config('typicms.main_locale_in_url')
@@ -78,16 +75,6 @@ class Page extends Base
     public function getThumbAttribute()
     {
         return $this->present()->thumbSrc(null, 22);
-    }
-
-    /**
-     * Append uri attribute from translation table.
-     *
-     * @return string uri
-     */
-    public function getUriAttribute()
-    {
-        return $this->uri;
     }
 
     /**

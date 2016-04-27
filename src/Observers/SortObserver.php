@@ -17,7 +17,7 @@ class SortObserver
     {
         if ($model->isDirty('parent_id')) {
             foreach (config('translatable-bootforms.locales') as $locale) {
-                $model->translate($locale)->uri = '';
+                $model->setTranslation('uri', $locale, '');
             }
         }
     }
