@@ -2,7 +2,6 @@
 
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 use TypiCMS\Modules\Core\Repositories\RepositoriesAbstract;
@@ -54,6 +53,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         if (!Request::input('preview')) {
             $query->where('status', 1);
         }
+
         return $query->firstOrFail();
     }
 
