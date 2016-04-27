@@ -56,9 +56,6 @@ class Page extends Base
     public function uri($locale = null)
     {
         $locale = $locale ?: config('app.locale');
-        if (!$this->hasTranslation($locale)) {
-            return;
-        }
         $uri = $this->translate($locale)->uri;
         if (
             config('app.fallback_locale') != $locale ||
