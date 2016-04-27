@@ -31,8 +31,6 @@ class UriObserver
      */
     public function updating(Page $model)
     {
-        // dump($model);
-        // exit();
         $slugs = $model->getTranslations('slug');
         $parentUris = $this->getParentUris($model);
 
@@ -69,9 +67,9 @@ class UriObserver
     /**
      * Check if the uri exists.
      *
-     * @param Page $model
-     * @param string          $uri
-     * @param int             $id
+     * @param Page   $model
+     * @param string $uri
+     * @param int    $id
      *
      * @return bool
      */

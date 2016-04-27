@@ -9,7 +9,6 @@ use TypiCMS\Modules\Core\Observers\FileObserver;
 use TypiCMS\Modules\Core\Services\Cache\LaravelCache;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Models\Page;
-use TypiCMS\Modules\Pages\Models\PageTranslation;
 use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
 use TypiCMS\Modules\Pages\Observers\SortObserver;
