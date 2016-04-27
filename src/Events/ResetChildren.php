@@ -19,10 +19,10 @@ class ResetChildren
     {
         foreach ($page->children as $childPage) {
             foreach (config('translatable-bootforms.locales') as $locale) {
-                if (is_null($page->translate($locale)->uri)) {
-                    $childPage->translate($locale)->uri = null;
+                if (is_null($page->translate('uri', $locale))) {
+                    $childPage->setTranslation('uri', $locale, null);
                 } else {
-                    $childPage->translate($locale)->uri = '';
+                    $childPage->setTranslation('uri', $locale, '');
                 }
             }
             $childPage->save();

@@ -32,11 +32,8 @@ class RouteServiceProvider extends ServiceProvider
         $router->bind('uri', function ($uri) {
 
             $with = [
-                'translations',
                 'galleries',
-                'galleries.translations',
                 'galleries.files',
-                'galleries.files.translations',
             ];
 
             if ($uri === '/') {

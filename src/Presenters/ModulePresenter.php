@@ -15,7 +15,7 @@ class ModulePresenter extends Presenter
      */
     public function parentUri($locale)
     {
-        $parentUri = ($this->entity->translate('uri', $locale)) ? : '/' ;
+        $parentUri = $this->entity->translate('uri', $locale) ? : '/';
         $parentUri = explode('/', $parentUri);
         array_pop($parentUri);
         $parentUri = implode('/', $parentUri).'/';
