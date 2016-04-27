@@ -15,8 +15,8 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('meta_robots_no_index')->default(0);
-            $table->string('meta_robots_no_follow')->default(0);
+            $table->json('slug');
+            $table->json('uri');
             $table->string('image')->nullable();
             $table->integer('position')->unsigned()->default(0);
             $table->integer('parent_id')->unsigned()->nullable()->default(null);
@@ -28,14 +28,14 @@ class CreatePagesTable extends Migration
             $table->text('js')->nullable();
             $table->string('module')->nullable();
             $table->string('template')->nullable();
-            $table->json('slug');
-            $table->json('uri');
             $table->json('title');
             $table->json('body');
             $table->json('status');
             $table->json('meta_title');
             $table->json('meta_keywords');
             $table->json('meta_description');
+            $table->string('meta_robots_no_index')->default(0);
+            $table->string('meta_robots_no_follow')->default(0);
             $table->timestamps();
             $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
         });
