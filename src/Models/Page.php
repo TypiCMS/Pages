@@ -18,7 +18,7 @@ class Page extends Base
 
     protected $presenter = 'TypiCMS\Modules\Pages\Presenters\ModulePresenter';
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'exit', 'galleries'];
 
     public $translatable = [
         'title',
