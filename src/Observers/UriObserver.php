@@ -2,72 +2,82 @@
 
 namespace TypiCMS\Modules\Pages\Observers;
 
-use TypiCMS\Modules\Pages\Models\PageTranslation;
+use TypiCMS\Modules\Pages\Models\Page;
 
 class UriObserver
 {
     /**
      * On create, update uri.
      *
-     * @param PageTranslation $model
+     * @param Page $model
      *
      * @return null
      */
-    public function creating(PageTranslation $model)
+    public function creating(Page $model)
     {
-        $model->uri = $this->incrementWhileExists($model, $model->slug);
+        $slugs = $model->getTranslations('slug');
+        foreach ($slugs as $locale => $slug) {
+            $uri = $this->incrementWhileExists($model, $slug, $locale);
+            $model->setTranslation('uri', $locale, $uri);
+        }
     }
 
     /**
      * On update, change uri.
      *
-     * @param PageTranslation $model
+     * @param Page $model
      *
      * @return null
      */
-    public function updating(PageTranslation $model)
+    public function updating(Page $model)
     {
-        $parentUri = $this->getParentUri($model);
+        // dump($model);
+        // exit();
+        $slugs = $model->getTranslations('slug');
+        $parentUris = $this->getParentUris($model);
 
-        if ($parentUri) {
-            $uri = $parentUri;
-            if ($model->slug) {
-                $uri .= '/'.$model->slug;
+        foreach ($slugs as $locale => $slug) {
+            $parentUri = $parentUris[$locale] ?? '';
+            if ($parentUri !== '') {
+                $uri = $parentUri;
+                if ($slug) {
+                    $uri .= '/'.$slug;
+                }
+            } else {
+                $uri = $slug;
             }
-        } else {
-            $uri = $model->slug;
+            $uri = $this->incrementWhileExists($model, $uri, $locale, $model->id);
+            $model->setTranslation('uri', $locale, $uri);
         }
 
-        $model->uri = $this->incrementWhileExists($model, $uri, $model->id);
     }
 
     /**
-     * Get parent page’s URI.
+     * Get the URIs of the parent page.
      *
-     * @param PageTranslation $model
+     * @param Page $model
      *
-     * @return string|null
+     * @return array|null
      */
-    private function getParentUri(PageTranslation $model)
+    private function getParentUris(Page $model)
     {
-        if ($parentPage = $model->page->parent) {
-            return $parentPage->translate($model->locale)->uri;
+        if ($parentPage = $model->parent) {
+            return $parentPage->getTranslations('uri');
         }
     }
 
     /**
-     * Check if uri exists.
+     * Check if the uri exists.
      *
-     * @param PageTranslation $model
+     * @param Page $model
      * @param string          $uri
      * @param int             $id
      *
      * @return bool
      */
-    private function uriExists(PageTranslation $model, $uri, $id)
+    private function uriExists(Page $model, $uri, $locale, $id)
     {
-        $query = $model->where('uri', $uri)
-            ->where('locale', $model->locale);
+        $query = $model->where('uri->'.$locale, $uri);
         if ($id) {
             $query->where('id', '!=', $id);
         }
@@ -82,23 +92,23 @@ class UriObserver
     /**
      * Add '-x' on uri if it exists in page_translations table.
      *
-     * @param PageTranslation $model
-     * @param string          $uri
-     * @param int             $id
+     * @param Page   $model
+     * @param string $uri
+     * @param int    $id
      *
-     * @return string|null
+     * @return string
      */
-    private function incrementWhileExists(PageTranslation $model, $uri, $id = null)
+    private function incrementWhileExists(Page $model, $uri, $locale, $id = null)
     {
         if (!$uri) {
-            return;
+            return '';
         }
 
         $originalUri = $uri;
 
         $i = 0;
         // Check if uri is unique
-        while ($this->uriExists($model, $uri, $id)) {
+        while ($this->uriExists($model, $uri, $locale, $id)) {
             $i++;
             // increment uri if it exists
             $uri = $originalUri.'-'.$i;

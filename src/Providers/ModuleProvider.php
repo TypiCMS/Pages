@@ -48,7 +48,7 @@ class ModuleProvider extends ServiceProvider
         Page::observe(new HomePageObserver());
         Page::observe(new SortObserver());
         Page::observe(new AddToMenuObserver());
-        PageTranslation::observe(new UriObserver());
+        Page::observe(new UriObserver());
     }
 
     public function register()
