@@ -29,16 +29,16 @@
                 {!! TranslatableBootForm::text(trans('validation.attributes.title'), 'title') !!}
             </div>
             @foreach ($locales as $lang)
-            <div class="col-md-6 form-group form-group-translation @if($errors->has($lang.'.slug'))has-error @endif">
-                <label class="control-label" for="{{ $lang }}[slug]"><span>@lang('validation.attributes.url')</span> ({{ $lang }})</label>
+            <div class="col-md-6 form-group form-group-translation @if($errors->has('slug.'.$lang))has-error @endif">
+                <label class="control-label" for="slug[{{ $lang }}]"><span>@lang('validation.attributes.url')</span> ({{ $lang }})</label>
                 <div class="input-group">
                     <span class="input-group-addon">{{ $model->present()->parentUri($lang) }}</span>
-                    <input class="form-control" type="text" name="{{ $lang }}[slug]" id="{{ $lang }}[slug]" value="{{ $model->translate('slug', $lang) }}" data-slug="{{ $lang }}[title]" data-language="{{ $lang }}">
+                    <input class="form-control" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
                     <span class="input-group-btn">
-                        <button class="btn btn-default btn-slug @if($errors->has($lang.'.slug'))btn-danger @endif" type="button">@lang('validation.attributes.generate')</button>
+                        <button class="btn btn-default btn-slug @if($errors->has('slug.'.$lang))btn-danger @endif" type="button">@lang('validation.attributes.generate')</button>
                     </span>
                 </div>
-                {!! $errors->first($lang.'.slug', '<p class="help-block">:message</p>') !!}
+                {!! $errors->first('slug.'.$lang, '<p class="help-block">:message</p>') !!}
             </div>
             @endforeach
         </div>
