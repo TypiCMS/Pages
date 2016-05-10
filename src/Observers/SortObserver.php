@@ -11,7 +11,7 @@ class SortObserver
      *
      * @param Page $model
      *
-     * @return void
+     * @return null
      */
     public function updating(Page $model)
     {

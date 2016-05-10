@@ -47,7 +47,6 @@ class UriObserver
             $uri = $this->incrementWhileExists($model, $uri, $locale, $model->id);
             $model->setTranslation('uri', $locale, $uri);
         }
-
     }
 
     /**

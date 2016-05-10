@@ -13,7 +13,7 @@ class ResetChildren
      *
      * @param Page $page
      *
-     * @return void
+     * @return null
      */
     public function resetChildrenUri(Page $page)
     {

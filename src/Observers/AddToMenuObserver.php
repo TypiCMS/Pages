@@ -13,7 +13,7 @@ class AddToMenuObserver
      *
      * @param Model $model eloquent
      *
-     * @return void
+     * @return null
      */
     public function created(Page $model)
     {

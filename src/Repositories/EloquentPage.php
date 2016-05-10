@@ -141,7 +141,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      *
      * @param Page $page
      *
-     * @return void|null
+     * @return null|null
      */
     protected function fireResetChildrenUriEvent($page)
     {

@@ -82,7 +82,7 @@ class PublicController extends BasePublicController
     /**
      * Display the lang chooser.
      *
-     * @return void
+     * @return null
      */
     public function langChooser()
     {
