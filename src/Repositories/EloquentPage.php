@@ -51,7 +51,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         $query = $this->make($with)
             ->where('uri->'.$locale, $uri);
         if (!Request::input('preview')) {
-            $query->where('status', 1);
+            $query->where('status->'.$locale, 1);
         }
 
         return $query->firstOrFail();
@@ -66,6 +66,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     {
         $rootUriArray = explode('/', $uri);
         $uri = $rootUriArray[0];
+        $locale = config('app.locale');
         if (in_array($uri, config('translatable-bootforms.locales'))) {
             if (isset($rootUriArray[1])) { // i
                 $uri .= '/'.$rootUriArray[1]; // add next part of uri in locale
@@ -73,17 +74,12 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         }
 
         $query = $this->model
-            ->with('translations')
-            ->select('*')
-            ->addSelect('pages.id AS id')
-            ->join('page_translations', 'pages.id', '=', 'page_translations.page_id')
-            ->where('uri', '!=', $uri)
-            ->where('uri', 'LIKE', $uri.'%');
+            ->where('uri->'.$locale, '!=', $uri)
+            ->where('uri->'.$locale, 'LIKE', $uri.'%');
 
         if (!$all) {
-            $query->where('status', 1);
+            $query->where('status->'.$locale, 1);
         }
-        $query->where('locale', config('app.locale'));
 
         $models = $query->order()->get()->nest();
 
