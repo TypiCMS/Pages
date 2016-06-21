@@ -30,7 +30,6 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot($router);
 
         $router->bind('uri', function ($uri) {
-
             $with = [
                 'galleries',
                 'galleries.files',
