@@ -93,7 +93,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
      */
     public function getForRoutes()
     {
-        $pages = $this->make(['translations'])
+        $pages = $this->make()
             ->where('module', '!=', '')
             ->get()
             ->all();
