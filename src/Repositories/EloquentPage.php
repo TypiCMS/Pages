@@ -47,13 +47,12 @@ class EloquentPage extends EloquentRepository
      */
     public function getFirstByUri($uri, $locale, array $with = [])
     {
-        $query = $this->make($with)
-            ->where('uri->'.$locale, $uri);
+        $repository = $this->with($with);
         if (!Request::input('preview')) {
-            $query->where('status->'.$locale, '1');
+            $repository->where('status->'.$locale, '1');
         }
 
-        return $query->firstOrFail();
+        return $repository->findBy('uri->'.$locale, $uri);
     }
 
     /**
@@ -72,7 +71,7 @@ class EloquentPage extends EloquentRepository
             }
         }
 
-        $query = $this->model
+        $query = app($this->getModel())
             ->where('uri->'.$locale, '!=', $uri)
             ->where('uri->'.$locale, 'LIKE', $uri.'%');
 

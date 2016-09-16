@@ -56,7 +56,7 @@ class PublicController extends BasePublicController
      */
     public function redirectToHomepage()
     {
-        $homepage = $this->repository->getFirstBy('is_home', 1);
+        $homepage = $this->repository->findBy('is_home', 1);
         $locale = $this->getBrowserLanguageOrDefault();
 
         return redirect($homepage->uri($locale));
@@ -86,7 +86,7 @@ class PublicController extends BasePublicController
      */
     public function langChooser()
     {
-        $homepage = $this->repository->getFirstBy('is_home', 1);
+        $homepage = $this->repository->findBy('is_home', 1);
         if (!$homepage) {
             app('log')->error('No homepage found.');
             abort(404);

@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
             ];
 
             if ($uri === '/') {
-                return Pages::getFirstBy('is_home', 1, $with);
+                return Pages::findBy('is_home', 1, $with);
             }
 
             // Only locale in url
@@ -46,10 +46,10 @@ class RouteServiceProvider extends ServiceProvider
                     config('typicms.main_locale_in_url')
                 )
             ) {
-                return Pages::getFirstBy('is_home', 1, $with);
+                return Pages::with($with)->findBy('is_home', 1);
             }
 
-            return Pages::getFirstByUri($uri, config('app.locale'), $with);
+            return app('Pages')->getFirstByUri($uri, config('app.locale'), $with);
         });
     }
 
