@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "typicms/core": "~3.0.0"
+        "typicms/core": "dev-dev"
     },
     "autoload": {
         "psr-4": {
