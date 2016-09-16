@@ -5,11 +5,11 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use TypiCMS;
 use TypiCMS\Modules\Core\Http\Controllers\BasePublicController;
-use TypiCMS\Modules\Pages\Repositories\PageInterface;
+use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
 class PublicController extends BasePublicController
 {
-    public function __construct(PageInterface $page)
+    public function __construct(EloquentPage $page)
     {
         parent::__construct($page);
     }

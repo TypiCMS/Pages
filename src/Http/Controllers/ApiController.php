@@ -5,11 +5,11 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 use Illuminate\Support\Facades\Request;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Pages\Models\Page;
-use TypiCMS\Modules\Pages\Repositories\PageInterface as Repository;
+use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
 class ApiController extends BaseApiController
 {
-    public function __construct(Repository $repository)
+    public function __construct(EloquentPage $repository)
     {
         parent::__construct($repository);
     }

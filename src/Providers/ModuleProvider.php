@@ -6,14 +6,12 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Core\Observers\FileObserver;
-use TypiCMS\Modules\Core\Services\Cache\LaravelCache;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
 use TypiCMS\Modules\Pages\Observers\SortObserver;
 use TypiCMS\Modules\Pages\Observers\UriObserver;
-use TypiCMS\Modules\Pages\Repositories\CacheDecorator;
 use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
 class ModuleProvider extends ServiceProvider
@@ -69,14 +67,6 @@ class ModuleProvider extends ServiceProvider
          */
         $app->events->subscribe(new ResetChildren());
 
-        $app->bind('TypiCMS\Modules\Pages\Repositories\PageInterface', function (Application $app) {
-            $repository = new EloquentPage(new Page());
-            if (!config('typicms.cache')) {
-                return $repository;
-            }
-            $laravelCache = new LaravelCache($app['cache'], ['pages', 'galleries'], 10);
-
-            return new CacheDecorator($repository, $laravelCache);
-        });
+        $app->bind('Pages', EloquentPage::class);
     }
 }

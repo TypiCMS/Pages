@@ -5,11 +5,11 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Pages\Http\Requests\FormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
-use TypiCMS\Modules\Pages\Repositories\PageInterface;
+use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
 class AdminController extends BaseAdminController
 {
-    public function __construct(PageInterface $page)
+    public function __construct(EloquentPage $page)
     {
         parent::__construct($page);
     }
@@ -81,7 +81,7 @@ class AdminController extends BaseAdminController
     {
         $data = $request->all();
         $data['parent_id'] = $data['parent_id'] ?: null;
-        $this->repository->update($data);
+        $this->repository->update($page->id, $data);
 
         return $this->redirect($request, $page);
     }
