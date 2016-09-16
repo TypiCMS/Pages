@@ -24,8 +24,10 @@ class AddToMenuObserver
                 'page_id'  => $model->id,
                 'position' => $position,
             ];
-            foreach ($model->translations as $translation) {
-                $data[$translation->locale]['title'] = $translation->title;
+            foreach (config('translatable-bootforms.locales') as $locale) {
+                $data['title'][$locale] = $model->translate('title', $locale);
+                $data['status'][$locale] = 0;
+                $data['url'][$locale] = '';
             }
             app('TypiCMS\Modules\Menus\Repositories\MenulinkInterface')->create($data);
         }
