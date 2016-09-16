@@ -5,6 +5,7 @@ namespace TypiCMS\Modules\Pages\Providers;
 use Config;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Pages;
 
 class RouteServiceProvider extends ServiceProvider
@@ -21,15 +22,13 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
      * @return null
      */
-    public function boot(Router $router)
+    public function boot()
     {
-        parent::boot($router);
+        parent::boot();
 
-        $router->bind('uri', function ($uri) {
+        Route::bind('uri', function ($uri) {
             $with = [
                 'galleries',
                 'galleries.files',
@@ -57,13 +56,11 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
      * @return null
      */
-    public function map(Router $router)
+    public function map()
     {
-        $router->group(['namespace' => $this->namespace], function (Router $router) {
+        Route::group(['namespace' => $this->namespace], function (Router $router) {
 
             /*
              * Admin routes
