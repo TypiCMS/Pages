@@ -51,7 +51,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         $query = $this->make($with)
             ->where('uri->'.$locale, $uri);
         if (!Request::input('preview')) {
-            $query->where('status->'.$locale, 1);
+            $query->where('status->'.$locale, '1');
         }
 
         return $query->firstOrFail();
@@ -78,7 +78,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
             ->where('uri->'.$locale, 'LIKE', $uri.'%');
 
         if (!$all) {
-            $query->where('status->'.$locale, 1);
+            $query->where('status->'.$locale, '1');
         }
 
         $models = $query->order()->get()->nest();
