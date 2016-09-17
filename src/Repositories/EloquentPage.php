@@ -4,6 +4,7 @@ namespace TypiCMS\Modules\Pages\Repositories;
 
 use Illuminate\Support\Facades\Request;
 use TypiCMS\Modules\Core\EloquentRepository;
+use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Models\Page;
 
 class EloquentPage extends EloquentRepository
@@ -49,10 +50,10 @@ class EloquentPage extends EloquentRepository
     {
         $repository = $this->with($with);
         if (!Request::input('preview')) {
-            $repository->where('status->'.$locale, '1');
+            $repository->where(column('status'), '1');
         }
 
-        return $repository->findBy('uri->'.$locale, $uri);
+        return $repository->findBy(column('uri'), $uri);
     }
 
     /**
@@ -66,20 +67,20 @@ class EloquentPage extends EloquentRepository
         $uri = $rootUriArray[0];
         $locale = config('app.locale');
         if (in_array($uri, config('translatable-bootforms.locales'))) {
-            if (isset($rootUriArray[1])) { // i
+            if (isset($rootUriArray[1])) {
                 $uri .= '/'.$rootUriArray[1]; // add next part of uri in locale
             }
         }
 
-        $query = app($this->getModel())
-            ->where('uri->'.$locale, '!=', $uri)
-            ->where('uri->'.$locale, 'LIKE', $uri.'%');
+        $repository = Pages::where(column('uri'), '!=', $uri);
 
         if (!$all) {
-            $query->where('status->'.$locale, '1');
+            $repository->where(column('status'), '1');
         }
 
-        $models = $query->order()->get()->nest();
+        $models = $repository->orderBy('position', 'asc')
+            ->findWhere([column('uri'), 'LIKE', $uri.'%'])
+            ->nest();
 
         return $models;
     }

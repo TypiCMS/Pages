@@ -6,7 +6,7 @@ use Config;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
-use Pages;
+use TypiCMS\Modules\Pages\Facades\Pages;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
                 return Pages::with($with)->findBy('is_home', 1);
             }
 
-            return app('Pages')->getFirstByUri($uri, config('app.locale'), $with);
+            return Pages::getFirstByUri($uri, config('app.locale'), $with);
         });
     }
 
