@@ -2,9 +2,9 @@
 
 namespace TypiCMS\Modules\Pages\Facades;
 
-use Illuminate\Support\Facades\Facade as MainFacade;
+use Illuminate\Support\Facades\Facade;
 
-class Facade extends MainFacade
+class Pages extends Facade
 {
     /**
      * Get the registered name of the component.
