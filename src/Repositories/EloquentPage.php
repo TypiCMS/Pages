@@ -25,10 +25,6 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
     {
         $model = $this->model->find($data['id']);
 
-        if ($model->parent && $model->parent->private) {
-            $data['private'] = 1;
-        }
-
         $model->fill($data);
 
         $this->syncRelation($model, $data, 'galleries');
@@ -127,7 +123,6 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         return [
             'position'  => $position,
             'parent_id' => $item['parent_id'],
-            'private'   => $item['private'],
         ];
     }
 
