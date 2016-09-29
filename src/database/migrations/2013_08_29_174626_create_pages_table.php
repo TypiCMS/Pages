@@ -31,7 +31,6 @@ class CreatePagesTable extends Migration
             $table->json('title');
             $table->json('body');
             $table->json('status');
-            $table->json('meta_title');
             $table->json('meta_keywords');
             $table->json('meta_description');
             $table->string('meta_robots_no_index')->default(0);
