@@ -65,19 +65,23 @@ class RouteServiceProvider extends ServiceProvider
             /*
              * Admin routes
              */
-            $router->get('admin/pages', 'AdminController@index')->name('admin::index-pages');
-            $router->get('admin/pages/create', 'AdminController@create')->name('admin::create-page');
-            $router->get('admin/pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page');
-            $router->post('admin/pages', 'AdminController@store')->name('admin::store-page');
-            $router->put('admin/pages/{page}', 'AdminController@update')->name('admin::update-page');
-            $router->post('admin/pages/sort', 'AdminController@sort')->name('admin::sort-pages');
+            $router->group(['middleware' => 'admin', 'prefix' => 'admin'], function(Router $router) {
+                $router->get('pages', 'AdminController@index')->name('admin::index-pages');
+                $router->get('pages/create', 'AdminController@create')->name('admin::create-page');
+                $router->get('pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page');
+                $router->post('pages', 'AdminController@store')->name('admin::store-page');
+                $router->put('pages/{page}', 'AdminController@update')->name('admin::update-page');
+                $router->post('pages/sort', 'AdminController@sort')->name('admin::sort-pages');
+            });
 
             /*
              * API routes
              */
-            $router->get('api/pages', 'ApiController@index')->name('api::index-pages');
-            $router->put('api/pages/{page}', 'ApiController@update')->name('api::update-page');
-            $router->delete('api/pages/{page}', 'ApiController@destroy')->name('api::destroy-page');
+            $router->group(['middleware' => 'api', 'prefix' => 'api'], function(Router $router) {
+                $router->get('pages', 'ApiController@index')->name('api::index-pages');
+                $router->put('pages/{page}', 'ApiController@update')->name('api::update-page');
+                $router->delete('pages/{page}', 'ApiController@destroy')->name('api::destroy-page');
+            });
 
             /*
              * Front office routes

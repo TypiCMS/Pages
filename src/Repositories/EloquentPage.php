@@ -3,7 +3,7 @@
 namespace TypiCMS\Modules\Pages\Repositories;
 
 use Illuminate\Support\Facades\Request;
-use TypiCMS\Modules\Core\EloquentRepository;
+use TypiCMS\Modules\Core\Repositories\EloquentRepository;
 use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Models\Page;
 
