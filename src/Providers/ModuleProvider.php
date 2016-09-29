@@ -3,7 +3,6 @@
 namespace TypiCMS\Modules\Pages\Providers;
 
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Core\Observers\FileObserver;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
