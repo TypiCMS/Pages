@@ -22,7 +22,7 @@ class EloquentPage extends EloquentRepository
      */
     public function update($id, array $attributes = [])
     {
-        $model = $this->model->find($attributes['id']);
+        $model = $this->find($id);
 
         $model->fill($attributes);
 
@@ -92,9 +92,8 @@ class EloquentPage extends EloquentRepository
      */
     public function getForRoutes()
     {
-        $pages = $this->make()
-            ->where('module', '!=', '')
-            ->get()
+        $pages = $this->where('module', '!=', '')
+            ->findAll()
             ->all();
 
         return $pages;
@@ -123,7 +122,7 @@ class EloquentPage extends EloquentRepository
      */
     public function allForSelect()
     {
-        $pages = $this->all([], true)
+        $pages = $this->findAll()
             ->nest()
             ->listsFlattened();
 
