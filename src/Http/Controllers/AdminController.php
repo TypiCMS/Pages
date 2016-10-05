@@ -109,7 +109,7 @@ class AdminController extends BaseAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param integer $id
+     * @param int   $id
      * @param array $data
      *
      * @return \Illuminate\Http\JsonResponse
