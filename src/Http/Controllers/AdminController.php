@@ -21,7 +21,18 @@ class AdminController extends BaseAdminController
      */
     public function index()
     {
-        $models = $this->repository->allNested();
+        $models = $this->repository->allNested([
+            'id',
+            'parent_id',
+            'title',
+            'position',
+            'status',
+            'private',
+            'redirect',
+            'module',
+            'slug',
+            'uri',
+        ]);
         app('JavaScript')->put('models', $models);
 
         return view('pages::admin.index');
@@ -80,9 +91,51 @@ class AdminController extends BaseAdminController
     public function update(Page $page, FormRequest $request)
     {
         $data = $request->all();
+
+        if ($request->wantsJson()) {
+            return $this->ajaxUpdate($page->id, $data);
+        }
+
         $data['parent_id'] = $data['parent_id'] ?: null;
+
         $this->repository->update($page->id, $data);
+        $this->repository->syncRelation($page, $data, 'galleries');
+
+        event('page.resetChildrenUri', [$page]);
 
         return $this->redirect($request, $page);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param integer $id
+     * @param array $data
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function ajaxUpdate($id, array $data)
+    {
+        $updated = $this->repository->update($id, $data);
+
+        return response()->json([
+            'error' => !$updated,
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \TypiCMS\Modules\Pages\Models\Page $page
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Page $page)
+    {
+        $deleted = $this->repository->delete($page);
+
+        return response()->json([
+            'error' => !$deleted,
+        ]);
     }
 }

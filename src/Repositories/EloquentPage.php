@@ -14,30 +14,6 @@ class EloquentPage extends EloquentRepository
     protected $model = Page::class;
 
     /**
-     * Update an existing model.
-     *
-     * @param array  Data needed for model update
-     *
-     * @return bool
-     */
-    public function update($id, array $attributes = [])
-    {
-        $model = $this->find($id);
-
-        $model->fill($attributes);
-
-        $this->syncRelation($model, $attributes, 'galleries');
-
-        if ($model->save()) {
-            event('page.resetChildrenUri', [$model]);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Get a page by its uri.
      *
      * @param string $uri
