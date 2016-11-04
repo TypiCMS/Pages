@@ -6,6 +6,16 @@ use TypiCMS\Modules\Core\Models\BaseTranslation;
 
 class PageTranslation extends BaseTranslation
 {
+    protected $fillable = [
+        'title',
+        'slug',
+        'uri',
+        'status',
+        'body',
+        'meta_keywords',
+        'meta_description',
+    ];
+
     /**
      * get the parent model.
      */

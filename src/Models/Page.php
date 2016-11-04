@@ -32,14 +32,6 @@ class Page extends Base
         'module',
         'template',
         'image',
-        // Translatable columns
-        'title',
-        'slug',
-        'uri',
-        'status',
-        'body',
-        'meta_keywords',
-        'meta_description',
     ];
 
     /**
@@ -107,9 +99,9 @@ class Page extends Base
      *
      * @return string
      */
-    public function getStatusAttribute()
+    public function getStatusAttribute($value)
     {
-        return $this->status;
+        return $value;
     }
 
     /**
@@ -117,9 +109,9 @@ class Page extends Base
      *
      * @return string title
      */
-    public function getTitleAttribute()
+    public function getTitleAttribute($value)
     {
-        return $this->title;
+        return $value;
     }
 
     /**
@@ -137,9 +129,9 @@ class Page extends Base
      *
      * @return string uri
      */
-    public function getUriAttribute()
+    public function getUriAttribute($value)
     {
-        return $this->uri;
+        return $value;
     }
 
     /**
