@@ -90,7 +90,7 @@ class EloquentPage extends RepositoriesAbstract implements PageInterface
         }
         $query->where('locale', config('app.locale'));
 
-        $models = $query->order()->get()->nest();
+        $models = $query->order()->get()->noCleaning()->nest();
 
         return $models;
     }
