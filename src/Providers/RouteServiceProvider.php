@@ -40,7 +40,7 @@ class RouteServiceProvider extends ServiceProvider
 
             // Only locale in url
             if (
-                in_array($uri, config('translatable-bootforms.locales')) &&
+                in_array($uri, locales()) &&
                 (
                     config('app.fallback_locale') != $uri ||
                     config('typicms.main_locale_in_url')
@@ -86,7 +86,7 @@ class RouteServiceProvider extends ServiceProvider
                     $router->get('/', 'PublicController@redirectToHomepage');
                 }
             }
-            foreach (config('translatable-bootforms.locales') as $locale) {
+            foreach (locales() as $locale) {
                 if (
                     config('app.fallback_locale') != $locale ||
                     config('typicms.main_locale_in_url')

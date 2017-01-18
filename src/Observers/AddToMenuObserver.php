@@ -24,7 +24,7 @@ class AddToMenuObserver
                 'page_id'  => $model->id,
                 'position' => $position,
             ];
-            foreach (config('translatable-bootforms.locales') as $locale) {
+            foreach (locales() as $locale) {
                 $data['title'][$locale] = $model->translate('title', $locale);
                 $data['status'][$locale] = 0;
                 $data['url'][$locale] = '';

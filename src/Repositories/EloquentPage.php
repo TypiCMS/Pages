@@ -42,7 +42,7 @@ class EloquentPage extends EloquentRepository
         $rootUriArray = explode('/', $uri);
         $uri = $rootUriArray[0];
         $locale = config('app.locale');
-        if (in_array($uri, config('translatable-bootforms.locales'))) {
+        if (in_array($uri, locales())) {
             if (isset($rootUriArray[1])) {
                 $uri .= '/'.$rootUriArray[1]; // add next part of uri in locale
             }
