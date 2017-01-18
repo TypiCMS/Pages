@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
+use TypiCMS\Modules\Galleries\Models\Gallery;
 use TypiCMS\Modules\History\Traits\Historable;
+use TypiCMS\Modules\Menus\Models\Menulink;
 use TypiCMS\NestableTrait;
 
 class Page extends Base
@@ -82,7 +84,7 @@ class Page extends Base
      */
     public function menulinks()
     {
-        return $this->hasMany('TypiCMS\Modules\Menulinks\Models\Menulink');
+        return $this->hasMany(Menulink::class);
     }
 
     /**
@@ -92,7 +94,7 @@ class Page extends Base
      */
     public function galleries()
     {
-        return $this->morphToMany('TypiCMS\Modules\Galleries\Models\Gallery', 'galleryable')
+        return $this->morphToMany(Gallery::class, 'galleryable')
             ->withPivot('position')
             ->orderBy('position')
             ->withTimestamps();
@@ -103,7 +105,7 @@ class Page extends Base
      */
     public function children()
     {
-        return $this->hasMany('TypiCMS\Modules\Pages\Models\Page', 'parent_id')->order();
+        return $this->hasMany(Page::class, 'parent_id')->order();
     }
 
     /**
@@ -111,6 +113,6 @@ class Page extends Base
      */
     public function parent()
     {
-        return $this->belongsTo('TypiCMS\Modules\Pages\Models\Page', 'parent_id');
+        return $this->belongsTo(Page::class, 'parent_id');
     }
 }
