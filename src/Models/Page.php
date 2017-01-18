@@ -105,7 +105,7 @@ class Page extends Base
      */
     public function children()
     {
-        return $this->hasMany(Page::class, 'parent_id')->order();
+        return $this->hasMany(self::class, 'parent_id')->order();
     }
 
     /**
@@ -113,6 +113,6 @@ class Page extends Base
      */
     public function parent()
     {
-        return $this->belongsTo(Page::class, 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
 }
