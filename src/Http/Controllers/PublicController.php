@@ -71,7 +71,7 @@ class PublicController extends BasePublicController
     {
         if ($browserLanguage = getenv('HTTP_ACCEPT_LANGUAGE')) {
             $browserLocale = substr($browserLanguage, 0, 2);
-            if (in_array($browserLocale, TypiCMS::getOnlineLocales())) {
+            if (in_array($browserLocale, TypiCMS::enabledLocales())) {
                 return $browserLocale;
             }
         }
@@ -91,7 +91,7 @@ class PublicController extends BasePublicController
             app('log')->error('No homepage found.');
             abort(404);
         }
-        $locales = TypiCMS::getOnlineLocales();
+        $locales = TypiCMS::enabledLocales();
 
         return view('core::public.lang-chooser')
             ->with(compact('homepage', 'locales'));
