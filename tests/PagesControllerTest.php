@@ -18,11 +18,11 @@ class PagesControllerTest extends TestCase
     public function testStoreFails()
     {
         $input = [
-            '_token'    => csrf_token(),
+            '_token' => csrf_token(),
             'parent_id' => null,
-            'fr.title'  => 'test',
-            'fr.slug'   => '',
-            'fr.body'   => '',
+            'fr.title' => 'test',
+            'fr.slug' => '',
+            'fr.body' => '',
         ];
         $this->call('POST', 'admin/pages', $input);
         $this->assertResponseStatus(302);
@@ -32,11 +32,11 @@ class PagesControllerTest extends TestCase
     public function testStoreSuccess()
     {
         $input = [
-            '_token'    => csrf_token(),
+            '_token' => csrf_token(),
             'parent_id' => null,
-            'fr.title'  => 'test',
-            'fr.slug'   => 'test',
-            'fr.body'   => '',
+            'fr.title' => 'test',
+            'fr.slug' => 'test',
+            'fr.body' => '',
         ];
         $this->call('POST', 'admin/pages', $input);
         $this->assertRedirectedToRoute('admin.pages.edit', 4);
@@ -45,11 +45,11 @@ class PagesControllerTest extends TestCase
     public function testUpdateSuccess()
     {
         $input = [
-            '_token'    => csrf_token(),
-            'id'        => 1,
+            '_token' => csrf_token(),
+            'id' => 1,
             'parent_id' => null,
-            'fr.title'  => 'test',
-            'fr.slug'   => 'test',
+            'fr.title' => 'test',
+            'fr.slug' => 'test',
         ];
         $this->call('PUT', 'admin/pages/1', $input);
         $this->assertResponseStatus(302);
@@ -59,11 +59,11 @@ class PagesControllerTest extends TestCase
     public function testUpdateFails()
     {
         $input = [
-            '_token'    => csrf_token(),
-            'id'        => 1,
+            '_token' => csrf_token(),
+            'id' => 1,
             'parent_id' => null,
-            'fr.title'  => 'test',
-            'fr.slug'   => '',
+            'fr.title' => 'test',
+            'fr.slug' => '',
         ];
         $this->call('PUT', 'admin/pages/1', $input);
         $this->assertResponseStatus(302);
@@ -73,12 +73,12 @@ class PagesControllerTest extends TestCase
     public function testStoreSuccessWithRedirectToList()
     {
         $input = [
-            '_token'    => csrf_token(),
+            '_token' => csrf_token(),
             'parent_id' => null,
-            'fr.title'  => 'test',
-            'fr.slug'   => 'test',
-            'fr.body'   => '',
-            'exit'      => true,
+            'fr.title' => 'test',
+            'fr.slug' => 'test',
+            'fr.body' => '',
+            'exit' => true,
         ];
         $this->call('POST', 'admin/pages', $input);
         $this->assertRedirectedToRoute('admin.pages.index');

@@ -20,8 +20,8 @@ class AddToMenuObserver
         if ($menu_id = Request::input('add_to_menu')) {
             $position = $this->getPositionFormMenu($menu_id);
             $data = [
-                'menu_id'  => $menu_id,
-                'page_id'  => $model->id,
+                'menu_id' => $menu_id,
+                'page_id' => $model->id,
                 'position' => $position,
             ];
             foreach (locales() as $locale) {
