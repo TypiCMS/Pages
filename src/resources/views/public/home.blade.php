@@ -25,10 +25,10 @@
     @endif
 --}}
 {{--
-    @if($incomingEvents = Events::incoming() and $incomingEvents->count())
+    @if($upcomingEvents = Events::upcoming() and $upcomingEvents->count())
         <div class="container-events">
             <h3>@lang('db.Incoming events')</h3>
-            @include('events::public._list', ['items' => $incomingEvents])
+            @include('events::public._list', ['items' => $upcomingEvents])
             <a href="{{ route($lang.'.events') }}" class="btn btn-default btn-xs">@lang('db.All events')</a>
         </div>
     @endif
