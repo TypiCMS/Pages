@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Pages\Providers;
 
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Core\Observers\FileObserver;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
@@ -38,6 +39,23 @@ class ModuleProvider extends ServiceProvider
             'Pages',
             'TypiCMS\Modules\Pages\Facades\Pages'
         );
+
+        $messages = [
+            'start_date' => 'Date de début',
+            'end_date' => 'Date de fin',
+            'start_time' => 'Heure de début',
+            'end_time' => 'Heure de fin',
+            'HH:MM' => 'HH:MM',
+            'DDMMYYYY' => 'JJ.MM.AAAA',
+            'DDMMYYYY HHMM' => 'JJ.MM.AAAA HH:MM',
+            'location' => 'Lieu',
+            'venue' => 'Lieu',
+            'price' => 'Prix',
+            'currency' => 'Devise',
+        ];
+        // dump($this->app['translation.loader']->load('fr', 'validation'));
+        // $this->app['translation.loader']->addMessages('fr', 'validation', $messages);
+        // dd($this->app['translation.loader']->load('fr', 'validation'));
 
         // Observers
         Page::observe(new FileObserver());
