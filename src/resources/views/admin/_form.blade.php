@@ -26,7 +26,7 @@
         @include('core::admin._image-fieldset', ['field' => 'image'])
         <div class="row">
             <div class="col-md-6">
-                {!! TranslatableBootForm::text(trans('validation.attributes.title'), 'title') !!}
+                {!! TranslatableBootForm::text(__('validation.attributes.title'), 'title') !!}
             </div>
             @foreach ($locales as $lang)
             <div class="col-md-6 form-group form-group-translation @if($errors->has('slug.'.$lang))has-error @endif">
@@ -44,36 +44,36 @@
         </div>
         {!! TranslatableBootForm::hidden('uri') !!}
         {!! TranslatableBootForm::hidden('status')->value(0) !!}
-        {!! TranslatableBootForm::checkbox(trans('validation.attributes.online'), 'status') !!}
-        {!! TranslatableBootForm::textarea(trans('validation.attributes.body'), 'body')->addClass('ckeditor') !!}
+        {!! TranslatableBootForm::checkbox(__('validation.attributes.online'), 'status') !!}
+        {!! TranslatableBootForm::textarea(__('validation.attributes.body'), 'body')->addClass('ckeditor') !!}
         @include('core::admin._galleries-fieldset')
     </div>
 
     <div class="tab-pane fade" id="tab-meta">
-        {!! TranslatableBootForm::text(trans('validation.attributes.meta_keywords'), 'meta_keywords') !!}
-        {!! TranslatableBootForm::text(trans('validation.attributes.meta_description'), 'meta_description') !!}
+        {!! TranslatableBootForm::text(__('validation.attributes.meta_keywords'), 'meta_keywords') !!}
+        {!! TranslatableBootForm::text(__('validation.attributes.meta_description'), 'meta_description') !!}
     </div>
 
     <div class="tab-pane fade" id="tab-options">
         {!! BootForm::hidden('is_home')->value(0) !!}
-        {!! BootForm::checkbox(trans('validation.attributes.is_home'), 'is_home') !!}
+        {!! BootForm::checkbox(__('validation.attributes.is_home'), 'is_home') !!}
         {!! BootForm::hidden('private')->value(0) !!}
-        {!! BootForm::checkbox(trans('validation.attributes.private'), 'private') !!}
+        {!! BootForm::checkbox(__('validation.attributes.private'), 'private') !!}
         {!! BootForm::hidden('redirect')->value(0) !!}
-        {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
+        {!! BootForm::checkbox(__('validation.attributes.redirect to first child'), 'redirect') !!}
         {!! BootForm::hidden('no_cache')->value(0) !!}
-        {!! BootForm::checkbox(trans('validation.attributes.don’t generate HTML cache'), 'no_cache') !!}
+        {!! BootForm::checkbox(__('validation.attributes.don’t generate HTML cache'), 'no_cache') !!}
         @if ($model->children->count())
-            {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect())->disabled('disabled')->helpBlock(trans('pages::global.A page with children cannot be linked to a module')) !!}
+            {!! BootForm::select(__('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect())->disabled('disabled')->helpBlock(__('pages::global.A page with children cannot be linked to a module')) !!}
         @else
-            {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect()) !!}
+            {!! BootForm::select(__('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect()) !!}
         @endif
-        {!! BootForm::select(trans('validation.attributes.template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir()) !!}
+        {!! BootForm::select(__('validation.attributes.template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir()) !!}
         @if (!$model->id)
-        {!! BootForm::select(trans('validation.attributes.add_to_menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('name', 'id')->all(), null, array('class' => 'form-control')) !!}
+        {!! BootForm::select(__('validation.attributes.add_to_menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('name', 'id')->all(), null, array('class' => 'form-control')) !!}
         @endif
-        {!! BootForm::textarea(trans('validation.attributes.css'), 'css') !!}
-        {!! BootForm::textarea(trans('validation.attributes.js'), 'js') !!}
+        {!! BootForm::textarea(__('validation.attributes.css'), 'css') !!}
+        {!! BootForm::textarea(__('validation.attributes.js'), 'js') !!}
     </div>
 
 </div>
