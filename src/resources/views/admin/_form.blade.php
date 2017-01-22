@@ -10,13 +10,13 @@
 
 <ul class="nav nav-tabs">
     <li class="active">
-        <a href="#tab-content" data-target="#tab-content" data-toggle="tab">@lang('global.Content')</a>
+        <a href="#tab-content" data-target="#tab-content" data-toggle="tab">@lang('Content')</a>
     </li>
     <li>
-        <a href="#tab-meta" data-target="#tab-meta" data-toggle="tab">@lang('global.Meta')</a>
+        <a href="#tab-meta" data-target="#tab-meta" data-toggle="tab">@lang('Meta')</a>
     </li>
     <li>
-        <a href="#tab-options" data-target="#tab-options" data-toggle="tab">@lang('global.Options')</a>
+        <a href="#tab-options" data-target="#tab-options" data-toggle="tab">@lang('Options')</a>
     </li>
 </ul>
 
@@ -44,7 +44,7 @@
         </div>
         {!! TranslatableBootForm::hidden('uri') !!}
         {!! TranslatableBootForm::hidden('status')->value(0) !!}
-        {!! TranslatableBootForm::checkbox(__('Online'), 'status') !!}
+        {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
         @include('core::admin._galleries-fieldset')
     </div>
