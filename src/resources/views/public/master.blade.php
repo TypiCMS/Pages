@@ -25,7 +25,7 @@
     @endif
 @endsection
 
-@section('main')
+@section('content')
 
     @yield('page')
 

@@ -2,7 +2,7 @@
 
 @section('title', __('pages::global.New'))
 
-@section('main')
+@section('content')
 
     @include('core::admin._button-back', ['module' => 'pages'])
     <h1>
