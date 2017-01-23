@@ -1,9 +1,9 @@
-<li id="page_{{ $child->id }}" class="{{ Request::is($child->uri()) ? 'active' : '' }}">
-    <a href="{{ url($child->uri()) }}">
+<li class="pages-item {{ Request::is($child->uri()) ? 'active' : '' }}" id="page_{{ $child->id }}">
+    <a class="pages-item-link" href="{{ url($child->uri()) }}">
         {{ $child->title }}
     </a>
     @if ($child->items)
-        <ul>
+        <ul class="pages-item-children">
             @foreach ($child->items as $childPage)
                 @include('pages::public._list-item', array('child' => $childPage))
             @endforeach
