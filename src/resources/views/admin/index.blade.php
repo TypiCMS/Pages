@@ -9,7 +9,7 @@
     @include('core::admin._button-create', ['module' => 'pages'])
 
     <h1>
-        <span>Pages</span>
+        <span>__('Pages')</span>
     </h1>
 
     <div class="btn-toolbar">
