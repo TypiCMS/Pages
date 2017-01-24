@@ -99,7 +99,7 @@ class AdminController extends BaseAdminController
         $data['parent_id'] = $data['parent_id'] ?: null;
 
         $this->repository->update($page->id, $data);
-        $this->repository->syncRelation($page, $data, 'galleries');
+        $this->syncRelation($page, $data, 'galleries');
 
         event('page.resetChildrenUri', [$page]);
 
