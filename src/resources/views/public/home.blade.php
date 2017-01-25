@@ -15,7 +15,7 @@
         @include('slides::public._slider', ['items' => $slides])
     @endif
 --}}
-{{--
+
     @if($latestNews = News::latest(3) and $latestNews->count())
         <div class="container-news">
             <h2>@lang('db.Latest news')</h2>
@@ -23,7 +23,7 @@
             <a href="{{ route($lang.'::index-news') }}" class="btn btn-default btn-xs">@lang('db.All news')</a>
         </div>
     @endif
---}}
+
 {{--
     @if($upcomingEvents = Events::upcoming() and $upcomingEvents->count())
         <div class="container-events">

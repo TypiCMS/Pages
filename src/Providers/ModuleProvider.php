@@ -5,7 +5,9 @@ namespace TypiCMS\Modules\Pages\Providers;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Core\Observers\FileObserver;
+use TypiCMS\Modules\Pages\Composers\SidebarViewComposer;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
+use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
@@ -34,10 +36,7 @@ class ModuleProvider extends ServiceProvider
             __DIR__.'/../database' => base_path('database'),
         ], 'migrations');
 
-        AliasLoader::getInstance()->alias(
-            'Pages',
-            'TypiCMS\Modules\Pages\Facades\Pages'
-        );
+        AliasLoader::getInstance()->alias('Pages', Pages::class);
 
         // Observers
         Page::observe(new FileObserver());
@@ -54,12 +53,12 @@ class ModuleProvider extends ServiceProvider
         /*
          * Register route service provider
          */
-        $app->register('TypiCMS\Modules\Pages\Providers\RouteServiceProvider');
+        $app->register(RouteServiceProvider::class);
 
         /*
          * Sidebar view composer
          */
-        $app->view->composer('core::admin._sidebar', 'TypiCMS\Modules\Pages\Composers\SidebarViewComposer');
+        $app->view->composer('core::admin._sidebar', SidebarViewComposer::class);
 
         /*
          * Events
