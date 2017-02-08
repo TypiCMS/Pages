@@ -107,23 +107,6 @@ class AdminController extends BaseAdminController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param int   $id
-     * @param array $data
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    private function ajaxUpdate($id, array $data)
-    {
-        $updated = $this->repository->update($id, $data);
-
-        return response()->json([
-            'error' => !$updated,
-        ]);
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param \TypiCMS\Modules\Pages\Models\Page $page
