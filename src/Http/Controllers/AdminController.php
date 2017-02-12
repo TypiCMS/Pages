@@ -92,10 +92,6 @@ class AdminController extends BaseAdminController
     {
         $data = $request->all();
 
-        if ($request->wantsJson()) {
-            return $this->ajaxUpdate($page->id, $data);
-        }
-
         $data['parent_id'] = $data['parent_id'] ?: null;
 
         $this->repository->update($page->id, $data);
