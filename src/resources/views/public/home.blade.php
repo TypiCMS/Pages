@@ -35,6 +35,7 @@
         </div>
     @endif
 --}}
+
 {{--
     @if($partners = Partners::allBy('homepage', 1) and $partners->count())
         <div class="container-partners">
