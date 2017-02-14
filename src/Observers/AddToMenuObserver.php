@@ -29,7 +29,7 @@ class AddToMenuObserver
                 $data['status'][$locale] = 0;
                 $data['url'][$locale] = '';
             }
-            app('TypiCMS\Modules\Menus\Repositories\MenulinkInterface')->create($data);
+            Menulink::create($data);
         }
     }
 
