@@ -13,7 +13,7 @@
     </h1>
 
     <div class="btn-toolbar">
-        @include('core::admin._lang-switcher')
+        @include('core::admin._lang-switcher-for-list')
     </div>
 
     <div ui-tree="treeOptions">
