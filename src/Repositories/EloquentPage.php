@@ -2,7 +2,6 @@
 
 namespace TypiCMS\Modules\Pages\Repositories;
 
-use Illuminate\Support\Facades\Request;
 use TypiCMS\Modules\Core\Repositories\EloquentRepository;
 use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Models\Page;
@@ -25,7 +24,7 @@ class EloquentPage extends EloquentRepository
     public function getFirstByUri($uri, $locale, array $with = [])
     {
         $repository = $this->with($with);
-        if (!Request::input('preview')) {
+        if (!request('preview')) {
             $repository->where(column('status'), '1');
         }
 

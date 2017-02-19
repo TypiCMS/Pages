@@ -2,7 +2,6 @@
 
 namespace TypiCMS\Modules\Pages\Observers;
 
-use Illuminate\Support\Facades\Request;
 use TypiCMS\Modules\Menus\Models\Menulink;
 use TypiCMS\Modules\Pages\Models\Page;
 
@@ -17,7 +16,7 @@ class AddToMenuObserver
      */
     public function created(Page $model)
     {
-        if ($menu_id = Request::input('add_to_menu')) {
+        if ($menu_id = request('add_to_menu')) {
             $position = $this->getPositionFormMenu($menu_id);
             $data = [
                 'menu_id' => $menu_id,
