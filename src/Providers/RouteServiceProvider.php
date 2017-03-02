@@ -72,8 +72,8 @@ class RouteServiceProvider extends ServiceProvider
                 $router->post('pages', 'AdminController@store')->name('admin::store-page');
                 $router->put('pages/{page}', 'AdminController@update')->name('admin::update-page');
                 $router->post('pages/sort', 'AdminController@sort')->name('admin::sort-pages');
-                $router->patch('pages/{page}', 'AdminController@ajaxUpdate');
-                $router->delete('pages/{page}', 'AdminController@destroy')->name('api::destroy-page');
+                $router->patch('pages/{ids}', 'AdminController@ajaxUpdate')->name('admin::update-page');
+                $router->delete('pages/{page}', 'AdminController@destroy')->name('admin::destroy-page');
             });
 
             /*
