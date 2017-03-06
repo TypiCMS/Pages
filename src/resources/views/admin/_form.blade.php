@@ -2,7 +2,8 @@
     <script src="{{ asset('components/ckeditor/ckeditor.js') }}"></script>
 @endsection
 
-@include('core::admin._buttons-form')
+@component('core::admin._buttons-form', ['model' => $model])
+@endcomponent
 
 {!! BootForm::hidden('id') !!}
 {!! BootForm::hidden('position')->value($model->position ?: 0) !!}
