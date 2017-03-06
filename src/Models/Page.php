@@ -9,6 +9,7 @@ use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Galleries\Models\Gallery;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Menus\Models\Menulink;
+use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
 use TypiCMS\NestableTrait;
 
 class Page extends Base
@@ -18,7 +19,7 @@ class Page extends Base
     use NestableTrait;
     use PresentableTrait;
 
-    protected $presenter = 'TypiCMS\Modules\Pages\Presenters\ModulePresenter';
+    protected $presenter = ModulePresenter::class;
 
     protected $guarded = ['id', 'exit', 'galleries', 'add_to_menu'];
 
