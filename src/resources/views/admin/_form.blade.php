@@ -11,13 +11,13 @@
 
 <ul class="nav nav-tabs">
     <li class="active">
-        <a href="#tab-content" data-target="#tab-content" data-toggle="tab">@lang('Content')</a>
+        <a href="#tab-content" data-target="#tab-content" data-toggle="tab">{{ __('Content') }}</a>
     </li>
     <li>
-        <a href="#tab-meta" data-target="#tab-meta" data-toggle="tab">@lang('Meta')</a>
+        <a href="#tab-meta" data-target="#tab-meta" data-toggle="tab">{{ __('Meta') }}</a>
     </li>
     <li>
-        <a href="#tab-options" data-target="#tab-options" data-toggle="tab">@lang('Options')</a>
+        <a href="#tab-options" data-target="#tab-options" data-toggle="tab">{{ __('Options') }}</a>
     </li>
 </ul>
 
