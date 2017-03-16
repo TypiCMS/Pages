@@ -4,7 +4,6 @@ namespace TypiCMS\Modules\Pages\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use TypiCMS\Modules\Core\Observers\FileObserver;
 use TypiCMS\Modules\Pages\Composers\SidebarViewComposer;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Facades\Pages;
@@ -42,7 +41,6 @@ class ModuleProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('Pages', Pages::class);
 
         // Observers
-        Page::observe(new FileObserver());
         Page::observe(new HomePageObserver());
         Page::observe(new SortObserver());
         Page::observe(new AddToMenuObserver());

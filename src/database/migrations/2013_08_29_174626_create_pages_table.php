@@ -17,7 +17,7 @@ class CreatePagesTable extends Migration
             $table->increments('id');
             $table->json('slug');
             $table->json('uri');
-            $table->string('image')->nullable();
+            $table->integer('image_id')->unsigned()->nullable();
             $table->integer('position')->unsigned()->default(0);
             $table->integer('parent_id')->unsigned()->nullable()->default(null);
             $table->boolean('private')->default(0);

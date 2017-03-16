@@ -46,6 +46,7 @@ class AdminController extends BaseAdminController
     public function create()
     {
         $model = $this->repository->createModel();
+        app('JavaScript')->put('model', $model);
 
         return view('pages::admin.create')
             ->with(compact('model'));
@@ -60,6 +61,8 @@ class AdminController extends BaseAdminController
      */
     public function edit(Page $page)
     {
+        app('JavaScript')->put('model', $page);
+
         return view('pages::admin.edit')
             ->with(['model' => $page]);
     }

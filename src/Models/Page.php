@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
+use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Galleries\Models\Gallery;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Menus\Models\Menulink;
@@ -34,10 +35,6 @@ class Page extends Base
     ];
 
     protected $appends = ['thumb', 'title_translated'];
-
-    public $attachments = [
-        'image',
-    ];
 
     /**
      * Is this page cacheable?
@@ -127,5 +124,15 @@ class Page extends Base
     public function parent()
     {
         return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    /**
+     * A page belongs to one image.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function image()
+    {
+        return $this->belongsTo(File::class, 'image_id');
     }
 }
