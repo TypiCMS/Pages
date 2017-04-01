@@ -27,13 +27,11 @@ class ModuleProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/../resources/views/', 'pages');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'pages');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->publishes([
             __DIR__.'/../resources/views' => base_path('resources/views/vendor/pages'),
         ], 'views');
-        $this->publishes([
-            __DIR__.'/../database' => base_path('database'),
-        ], 'migrations');
         $this->publishes([
             __DIR__.'/../../public' => public_path(),
         ], 'assets');
