@@ -37,16 +37,6 @@ class Page extends Base
     protected $appends = ['thumb', 'title_translated'];
 
     /**
-     * Is this page cacheable?
-     *
-     * @return bool
-     */
-    public function cacheable()
-    {
-        return !$this->no_cache;
-    }
-
-    /**
      * Get front office uri.
      *
      * @param string $locale

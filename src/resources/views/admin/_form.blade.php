@@ -62,8 +62,6 @@
         {!! BootForm::checkbox(__('Private'), 'private') !!}
         {!! BootForm::hidden('redirect')->value(0) !!}
         {!! BootForm::checkbox(__('Redirect to first child'), 'redirect') !!}
-        {!! BootForm::hidden('no_cache')->value(0) !!}
-        {!! BootForm::checkbox(__('Don’t generate HTML cache'), 'no_cache') !!}
         @if ($model->children->count())
             {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disabled('disabled')->helpBlock(__('pages::global.A page with children cannot be linked to a module')) !!}
         @else
