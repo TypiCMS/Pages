@@ -6,6 +6,8 @@
 
 @section('page')
 
+    {!! $page->present()->thumb(200, 200) !!}
+
     {!! $page->present()->body !!}
 
     @include('galleries::public._galleries', ['model' => $page])
