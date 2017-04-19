@@ -11,6 +11,9 @@ class SidebarViewComposer
 {
     public function compose(View $view)
     {
+        if (Gate::denies('see-all-pages')) {
+            return;
+        }
         $view->sidebar->group(__('Content'), function (SidebarGroup $group) {
             $group->id = 'content';
             $group->weight = 30;
@@ -20,9 +23,6 @@ class SidebarViewComposer
                 $item->weight = config('typicms.pages.sidebar.weight');
                 $item->route('admin::index-pages');
                 $item->append('admin::create-page');
-                $item->authorize(
-                    Gate::allows('index-pages')
-                );
             });
         });
     }

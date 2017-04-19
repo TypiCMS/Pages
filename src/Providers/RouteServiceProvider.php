@@ -66,14 +66,14 @@ class RouteServiceProvider extends ServiceProvider
              * Admin routes
              */
             $router->group(['middleware' => 'admin', 'prefix' => 'admin'], function (Router $router) {
-                $router->get('pages', 'AdminController@index')->name('admin::index-pages');
-                $router->get('pages/create', 'AdminController@create')->name('admin::create-page');
-                $router->get('pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page');
-                $router->post('pages', 'AdminController@store')->name('admin::store-page');
-                $router->put('pages/{page}', 'AdminController@update')->name('admin::update-page');
-                $router->post('pages/sort', 'AdminController@sort')->name('admin::sort-pages');
-                $router->patch('pages/{ids}', 'AdminController@ajaxUpdate')->name('admin::update-page-ajax');
-                $router->delete('pages/{page}', 'AdminController@destroy')->name('admin::destroy-page');
+                $router->get('pages', 'AdminController@index')->name('admin::index-pages')->middleware('can:see-all-pages');
+                $router->get('pages/create', 'AdminController@create')->name('admin::create-page')->middleware('can:create-page');
+                $router->get('pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page')->middleware('can:update-page');
+                $router->post('pages', 'AdminController@store')->name('admin::store-page')->middleware('can:create-page');
+                $router->put('pages/{page}', 'AdminController@update')->name('admin::update-page')->middleware('can:update-page');
+                $router->post('pages/sort', 'AdminController@sort')->name('admin::sort-pages')->middleware('can:update-page');
+                $router->patch('pages/{ids}', 'AdminController@ajaxUpdate')->name('admin::update-page-ajax')->middleware('can:update-page');
+                $router->delete('pages/{page}', 'AdminController@destroy')->name('admin::destroy-page')->middleware('can:delete-page');
             });
 
             /*

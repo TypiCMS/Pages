@@ -2,9 +2,9 @@
 
 return [
     'pages' => [
-        'index-pages' => 'View list',
+        'see-all-pages' => 'View list',
         'create-page' => 'Create',
-        'edit-page' => 'Edit',
-        'destroy-page' => 'Destroy',
+        'update-page' => 'Edit',
+        'delete-page' => 'Delete',
     ],
 ];
