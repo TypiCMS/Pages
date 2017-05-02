@@ -121,4 +121,18 @@ class AdminController extends BaseAdminController
             'error' => !$deleted,
         ]);
     }
+
+    /**
+     * List models.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function files(Page $page)
+    {
+        $data = [
+            'models' => $page->files,
+        ];
+
+        return response()->json($data, 200);
+    }
 }

@@ -69,6 +69,7 @@ class RouteServiceProvider extends ServiceProvider
                 $router->get('pages', 'AdminController@index')->name('admin::index-pages')->middleware('can:see-all-pages');
                 $router->get('pages/create', 'AdminController@create')->name('admin::create-page')->middleware('can:create-page');
                 $router->get('pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page')->middleware('can:update-page');
+                $router->get('pages/{page}/files', 'AdminController@files')->name('admin::edit-page-files')->middleware('can:update-page');
                 $router->post('pages', 'AdminController@store')->name('admin::store-page')->middleware('can:create-page');
                 $router->put('pages/{page}', 'AdminController@update')->name('admin::update-page')->middleware('can:update-page');
                 $router->post('pages/sort', 'AdminController@sort')->name('admin::sort-pages')->middleware('can:update-page');

@@ -125,4 +125,15 @@ class Page extends Base
     {
         return $this->belongsTo(File::class, 'image_id');
     }
+
+    /**
+     * A page can have many files.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function files()
+    {
+        return $this->morphToMany(File::class, 'model', 'model_has_files', 'model_id', 'file_id')
+            ->orderBy('model_has_files.position');
+    }
 }

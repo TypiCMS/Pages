@@ -9,6 +9,16 @@
 {!! BootForm::hidden('position')->value($model->position ?: 0) !!}
 {!! BootForm::hidden('parent_id') !!}
 
+@if ($model->id)
+    <div ng-app="typicms">
+        @include('files::admin._filemanager', ['options' => ['dropzoneHidden', 'multiple', 'modal']])
+        <button class="btn btn-success" id="select-files" type="button">{{ __('Add files') }}</button>
+        @include('galleries::admin.files')
+    </div>
+@else
+    <p class="alert alert-info">@lang('galleries::global.Save your gallery, then add files.')</p>
+@endif
+
 <ul class="nav nav-tabs">
     <li class="active">
         <a href="#tab-content" data-target="#tab-content" data-toggle="tab">{{ __('Content') }}</a>
@@ -24,7 +34,6 @@
 <div class="tab-content">
 
     <div class="tab-pane fade in active" id="tab-content">
-        @include('core::admin._image-fieldset', ['field' => 'image'])
         <div class="row">
             <div class="col-md-6">
                 {!! TranslatableBootForm::text(__('Title'), 'title') !!}
