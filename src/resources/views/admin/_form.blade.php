@@ -9,15 +9,7 @@
 {!! BootForm::hidden('position')->value($model->position ?: 0) !!}
 {!! BootForm::hidden('parent_id') !!}
 
-@if ($model->id)
-    <div ng-app="typicms">
-        @include('files::admin._filemanager', ['options' => ['dropzoneHidden', 'multiple', 'modal']])
-        <button class="btn btn-success" id="select-files" type="button">{{ __('Add files') }}</button>
-        @include('galleries::admin.files')
-    </div>
-@else
-    <p class="alert alert-info">@lang('galleries::global.Save your gallery, then add files.')</p>
-@endif
+@include('files::admin._files-selector')
 
 <ul class="nav nav-tabs">
     <li class="active">

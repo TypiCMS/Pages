@@ -34,7 +34,7 @@ class Page extends Base
         'meta_description',
     ];
 
-    protected $appends = ['thumb', 'title_translated'];
+    protected $appends = ['image', 'thumb', 'title_translated'];
 
     /**
      * Get front office uri.
@@ -70,6 +70,16 @@ class Page extends Base
     }
 
     /**
+     * Append image attribute.
+     *
+     * @return string
+     */
+    public function getImageAttribute()
+    {
+        return $this->files->first();
+    }
+
+    /**
      * Append thumb attribute.
      *
      * @return string
@@ -101,16 +111,6 @@ class Page extends Base
     public function parent()
     {
         return $this->belongsTo(self::class, 'parent_id');
-    }
-
-    /**
-     * A page belongs to one image.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function image()
-    {
-        return $this->belongsTo(File::class, 'image_id');
     }
 
     /**
