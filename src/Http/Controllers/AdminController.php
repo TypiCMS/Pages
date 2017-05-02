@@ -79,7 +79,6 @@ class AdminController extends BaseAdminController
         $data = $request->all();
         $data['parent_id'] = null;
         $page = $this->repository->create($data);
-        $this->syncGalleries($page, $data['galleries']);
 
         return $this->redirect($request, $page);
     }
@@ -99,7 +98,6 @@ class AdminController extends BaseAdminController
         $data['parent_id'] = $data['parent_id'] ?: null;
 
         $this->repository->update($page->id, $data);
-        $this->syncGalleries($page, $data['galleries']);
 
         event('page.resetChildrenUri', [$page]);
 

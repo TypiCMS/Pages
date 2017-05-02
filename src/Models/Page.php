@@ -88,19 +88,6 @@ class Page extends Base
     }
 
     /**
-     * A page has many galleries.
-     *
-     * @return MorphToMany
-     */
-    public function galleries()
-    {
-        return $this->morphToMany(Gallery::class, 'galleryable')
-            ->withPivot('position')
-            ->orderBy('position')
-            ->withTimestamps();
-    }
-
-    /**
      * A page can have children.
      */
     public function children()

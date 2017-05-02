@@ -56,7 +56,6 @@
         {!! TranslatableBootForm::hidden('status')->value(0) !!}
         {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
-        @include('core::admin._galleries-fieldset')
     </div>
 
     <div class="tab-pane fade" id="tab-meta">
