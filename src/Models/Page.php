@@ -2,12 +2,10 @@
 
 namespace TypiCMS\Modules\Pages\Models;
 
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Files\Models\File;
-use TypiCMS\Modules\Galleries\Models\Gallery;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Menus\Models\Menulink;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
