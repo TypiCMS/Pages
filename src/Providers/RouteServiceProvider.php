@@ -29,7 +29,6 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::bind('uri', function ($uri) {
-
             if ($uri === '/') {
                 return Pages::findBy('is_home', 1);
             }
