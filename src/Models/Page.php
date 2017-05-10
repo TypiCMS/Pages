@@ -20,7 +20,7 @@ class Page extends Base
 
     protected $presenter = ModulePresenter::class;
 
-    protected $guarded = ['id', 'exit', 'galleries', 'add_to_menu'];
+    protected $guarded = ['id', 'exit', 'add_to_menu'];
 
     public $translatable = [
         'title',

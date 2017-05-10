@@ -29,13 +29,9 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::bind('uri', function ($uri) {
-            $with = [
-                'galleries',
-                'galleries.files',
-            ];
 
             if ($uri === '/') {
-                return Pages::findBy('is_home', 1, $with);
+                return Pages::findBy('is_home', 1);
             }
 
             // Only locale in url
@@ -46,10 +42,10 @@ class RouteServiceProvider extends ServiceProvider
                     config('typicms.main_locale_in_url')
                 )
             ) {
-                return Pages::with($with)->findBy('is_home', 1);
+                return Pages::findBy('is_home', 1);
             }
 
-            return Pages::getFirstByUri($uri, config('app.locale'), $with);
+            return Pages::getFirstByUri($uri, config('app.locale'));
         });
     }
 
