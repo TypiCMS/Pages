@@ -9,7 +9,7 @@
     @include('core::admin._button-create', ['module' => 'pages'])
 
     <h1>
-        <span>@lang('Pages')</span>
+        <span>{{ __('Pages') }}</span>
     </h1>
 
     <div class="btn-toolbar">
