@@ -6,13 +6,16 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Pages\Composers\SidebarViewComposer;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
+use TypiCMS\Modules\Pages\Facades\PageSections;
 use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Models\Page;
+use TypiCMS\Modules\Pages\Models\PageSection;
 use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
 use TypiCMS\Modules\Pages\Observers\SortObserver;
 use TypiCMS\Modules\Pages\Observers\UriObserver;
 use TypiCMS\Modules\Pages\Repositories\EloquentPage;
+use TypiCMS\Modules\Pages\Repositories\EloquentPageSection;
 
 class ModuleProvider extends ServiceProvider
 {
@@ -29,7 +32,8 @@ class ModuleProvider extends ServiceProvider
         $this->app['config']->set('typicms.modules', array_merge(['pages' => []], $modules));
 
         $this->loadViewsFrom(__DIR__.'/../resources/views/', 'pages');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'pages');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/pages/lang', 'pages');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/page_sections/lang', 'page_sections');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->publishes([
@@ -40,12 +44,15 @@ class ModuleProvider extends ServiceProvider
         ], 'assets');
 
         AliasLoader::getInstance()->alias('Pages', Pages::class);
+        AliasLoader::getInstance()->alias('PageSections', PageSections::class);
 
         // Observers
         Page::observe(new HomePageObserver());
         Page::observe(new SortObserver());
         Page::observe(new AddToMenuObserver());
         Page::observe(new UriObserver());
+        PageSection::observe(new HomePageObserver());
+        PageSection::observe(new SortObserver());
     }
 
     public function register()
@@ -68,5 +75,6 @@ class ModuleProvider extends ServiceProvider
         $app->events->subscribe(new ResetChildren());
 
         $app->bind('Pages', EloquentPage::class);
+        $app->bind('PageSections', EloquentPageSection::class);
     }
 }

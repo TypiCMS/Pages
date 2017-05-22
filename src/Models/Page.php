@@ -8,6 +8,7 @@ use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Menus\Models\Menulink;
+use TypiCMS\Modules\Pages\Models\PageSection;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
 use TypiCMS\NestableTrait;
 
@@ -85,6 +86,16 @@ class Page extends Base
     public function getThumbAttribute()
     {
         return $this->present()->thumbSrc(null, 22);
+    }
+
+    /**
+     * A page has many sections.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sections()
+    {
+        return $this->hasMany(PageSection::class)->order();
     }
 
     /**
