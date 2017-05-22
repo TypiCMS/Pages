@@ -8,7 +8,6 @@ use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Menus\Models\Menulink;
-use TypiCMS\Modules\Pages\Models\PageSection;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
 use TypiCMS\NestableTrait;
 

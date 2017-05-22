@@ -7,7 +7,6 @@ use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\History\Traits\Historable;
-use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
 
 class PageSection extends Base
