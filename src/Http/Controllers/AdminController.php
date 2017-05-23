@@ -136,7 +136,7 @@ class AdminController extends BaseAdminController
     }
 
     /**
-     * Store page sections
+     * Store page sections.
      *
      * @param array $data
      *
@@ -151,7 +151,7 @@ class AdminController extends BaseAdminController
                 $slug[$locale] = str_slug($title);
             }
             $section->page_id = $item['page_id'];
-            $section->position = $key+1;
+            $section->position = $key + 1;
             $section->status = $item['status'];
             $section->title = $item['title'];
             $section->slug = $slug;
