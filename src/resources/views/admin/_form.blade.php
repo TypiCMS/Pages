@@ -48,6 +48,20 @@
         {!! TranslatableBootForm::hidden('status')->value(0) !!}
         {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
+        <div class="sections">
+        <h2>{{ __('Sections') }}</h2>
+            @foreach ($model->allsections as $key => $section)
+                @foreach ($locales as $locale)
+                <div class="form-group form-group-translation @if($errors->has('allsections.'.$key.'.title.'.$lang))has-error @endif">
+                    <label class="control-label" for="title[{{ $locale }}]">
+                        <span>{{ __('Title') }}</span> <span>({{ $locale }})</span>
+                    </label>
+                    {!! Form::text('allsections['.$key.'][title]['.$locale.']')->data('language', $locale)->class('form-control') !!}
+                    {!! $errors->first('allsections.'.$key.'.title.'.$lang, '<p class="help-block">:message</p>') !!}
+                </div>
+                @endforeach
+            @endforeach
+        </div>
     </div>
 
     <div class="tab-pane fade" id="tab-meta">
