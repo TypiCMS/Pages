@@ -13,4 +13,10 @@
     {!! $page->present()->body !!}
     @include('files::public._files', ['model' => $page])
 
+    @foreach ($page->publishedSections as $section)
+        <div id="{{ $section->position.'-'.$section->slug }}">
+        {!! $section->present()->body !!}
+        </div>
+    @endforeach
+
 @endsection

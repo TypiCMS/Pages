@@ -9,7 +9,6 @@ use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Facades\PageSections;
 use TypiCMS\Modules\Pages\Models\Page;
-use TypiCMS\Modules\Pages\Models\PageSection;
 use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
 use TypiCMS\Modules\Pages\Observers\SortObserver;
@@ -32,8 +31,7 @@ class ModuleProvider extends ServiceProvider
         $this->app['config']->set('typicms.modules', array_merge(['pages' => []], $modules));
 
         $this->loadViewsFrom(__DIR__.'/../resources/views/', 'pages');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/pages/lang', 'pages');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/page_sections/lang', 'page_sections');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'pages');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->publishes([
@@ -51,8 +49,6 @@ class ModuleProvider extends ServiceProvider
         Page::observe(new SortObserver());
         Page::observe(new AddToMenuObserver());
         Page::observe(new UriObserver());
-        PageSection::observe(new HomePageObserver());
-        PageSection::observe(new SortObserver());
     }
 
     public function register()
