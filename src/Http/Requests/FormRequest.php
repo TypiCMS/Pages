@@ -15,7 +15,7 @@ class FormRequest extends AbstractFormRequest
             'title.*' => 'nullable|max:255',
             'meta_keywords.*' => 'nullable|max:255',
             'meta_description.*' => 'nullable|max:255',
-            'allsections.*.title.*' => 'nullable|max:2',
+            'allsections.*.title.*' => 'nullable|max:255',
         ];
     }
 }
