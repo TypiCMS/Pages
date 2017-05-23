@@ -7,12 +7,14 @@ use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Pages\Composers\SidebarViewComposer;
 use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Facades\Pages;
+use TypiCMS\Modules\Pages\Facades\PageSections;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
 use TypiCMS\Modules\Pages\Observers\SortObserver;
 use TypiCMS\Modules\Pages\Observers\UriObserver;
 use TypiCMS\Modules\Pages\Repositories\EloquentPage;
+use TypiCMS\Modules\Pages\Repositories\EloquentPageSection;
 
 class ModuleProvider extends ServiceProvider
 {
@@ -40,6 +42,7 @@ class ModuleProvider extends ServiceProvider
         ], 'assets');
 
         AliasLoader::getInstance()->alias('Pages', Pages::class);
+        AliasLoader::getInstance()->alias('PageSections', PageSections::class);
 
         // Observers
         Page::observe(new HomePageObserver());
@@ -68,5 +71,6 @@ class ModuleProvider extends ServiceProvider
         $app->events->subscribe(new ResetChildren());
 
         $app->bind('Pages', EloquentPage::class);
+        $app->bind('PageSections', EloquentPageSection::class);
     }
 }

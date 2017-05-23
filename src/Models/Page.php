@@ -88,7 +88,29 @@ class Page extends Base
     }
 
     /**
+     * A page has many sections.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sections()
+    {
+        return $this->hasMany(PageSection::class)->order();
+    }
+
+    /**
+     * Get all published sections.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function publishedSections()
+    {
+        return $this->sections()->published();
+    }
+
+    /**
      * A page can have menulinks.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function menulinks()
     {
@@ -97,6 +119,8 @@ class Page extends Base
 
     /**
      * A page can have children.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children()
     {
@@ -105,6 +129,8 @@ class Page extends Base
 
     /**
      * A page can have a parent.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent()
     {

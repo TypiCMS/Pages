@@ -5,6 +5,7 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Pages\Http\Requests\FormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
+use TypiCMS\Modules\Pages\Models\PageSection;
 use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
 class AdminController extends BaseAdminController
@@ -61,6 +62,7 @@ class AdminController extends BaseAdminController
      */
     public function edit(Page $page)
     {
+        $page->allsections = $page->sections->toArray();
         app('JavaScript')->put('model', $page);
 
         return view('pages::admin.edit')
@@ -76,7 +78,8 @@ class AdminController extends BaseAdminController
      */
     public function store(FormRequest $request)
     {
-        $data = $request->all();
+        $this->storeSections($request->allsections);
+        $data = $request->except('allsections');
         $data['parent_id'] = null;
         $page = $this->repository->create($data);
 
@@ -93,12 +96,10 @@ class AdminController extends BaseAdminController
      */
     public function update(Page $page, FormRequest $request)
     {
-        $data = $request->all();
-
+        $this->storeSections($request->allsections);
+        $data = $request->except('allsections');
         $data['parent_id'] = $data['parent_id'] ?: null;
-
         $this->repository->update($page->id, $data);
-
         event('page.resetChildrenUri', [$page]);
 
         return $this->redirect($request, $page);
@@ -132,5 +133,30 @@ class AdminController extends BaseAdminController
         ];
 
         return response()->json($data, 200);
+    }
+
+    /**
+     * Store page sections.
+     *
+     * @param array $data
+     *
+     * @return null
+     */
+    private function storeSections(array $sections = [])
+    {
+        foreach ($sections as $key => $item) {
+            $section = PageSection::firstOrCreate(['id' => $item['id']]);
+            $slug = [];
+            foreach ($item['title'] as $locale => $title) {
+                $slug[$locale] = str_slug($title);
+            }
+            $section->page_id = $item['page_id'];
+            $section->position = $key + 1;
+            $section->status = $item['status'];
+            $section->title = $item['title'];
+            $section->slug = $slug;
+            $section->body = $item['body'];
+            $section->save();
+        }
     }
 }
