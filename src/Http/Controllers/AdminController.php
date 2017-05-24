@@ -138,12 +138,15 @@ class AdminController extends BaseAdminController
     /**
      * Store page sections.
      *
-     * @param array $data
+     * @param array|null $data
      *
      * @return null
      */
-    private function storeSections(array $sections = [])
+    private function storeSections($sections)
     {
+        if (is_null($sections)) {
+            return;
+        }
         foreach ($sections as $key => $item) {
             $section = PageSection::firstOrCreate(['id' => $item['id']]);
             $slug = [];
