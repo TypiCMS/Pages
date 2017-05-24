@@ -48,7 +48,7 @@ class SectionsAdminController extends BaseAdminController
     /**
      * Edit form for the specified resource.
      *
-     * @param \TypiCMS\Modules\Pages\Models\Page $page
+     * @param \TypiCMS\Modules\Pages\Models\Page        $page
      * @param \TypiCMS\Modules\Pages\Models\PageSection $section
      *
      * @return \Illuminate\View\View
@@ -67,7 +67,7 @@ class SectionsAdminController extends BaseAdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \TypiCMS\Modules\Pages\Models\Page $page
+     * @param \TypiCMS\Modules\Pages\Models\Page                          $page
      * @param \TypiCMS\Modules\Pages\Http\Requests\PageSectionFormRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -82,8 +82,8 @@ class SectionsAdminController extends BaseAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param \TypiCMS\Modules\Pages\Models\Page $page
-     * @param \TypiCMS\Modules\Pages\Models\PageSection $section
+     * @param \TypiCMS\Modules\Pages\Models\Page                          $page
+     * @param \TypiCMS\Modules\Pages\Models\PageSection                   $section
      * @param \TypiCMS\Modules\Pages\Http\Requests\PageSectionFormRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -99,7 +99,7 @@ class SectionsAdminController extends BaseAdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \TypiCMS\Modules\Pages\Models\Page $page
+     * @param \TypiCMS\Modules\Pages\Models\Page        $page
      * @param \TypiCMS\Modules\Pages\Models\PageSection $section
      *
      * @return \Illuminate\Http\JsonResponse
