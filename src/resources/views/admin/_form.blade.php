@@ -47,17 +47,21 @@
         {!! TranslatableBootForm::hidden('uri') !!}
         {!! TranslatableBootForm::hidden('status')->value(0) !!}
         {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
-        {{-- {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!} --}}
+        {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
+            {{-- expr --}}
         <div class="sections-container">
-
             <h2>{{ __('Sections') }}</h2>
+            @if (is_array($model->allsections))
             <div class="sections" id="sections">
                 @foreach ($model->allsections as $key => $section)
                 @include('pages::admin._section-fields')
                 @endforeach
-                @include('pages::admin._section-fields', ['key' => $key+1, 'disabled' => true])
+                @include('pages::admin._section-fields', ['key' => count($model->allsections)+1, 'disabled' => true])
             </div>
             <a href="" class="btn btn-default" id="btn-add-section"><i class="fa fa-plus-circle"></i> {{ __('Add section') }}</a>
+            @else
+            <p class="alert alert-info">{{ __('Save the page then add sections.') }}</p>
+            @endif
         </div>
     </div>
 
