@@ -78,7 +78,7 @@ class RouteServiceProvider extends ServiceProvider
                 $router->post('pages/{page}/sections/sort', 'SectionsAdminController@sort')->name('admin::sort-page_sections');
 
                 $router->get('sections', 'SectionsAdminController@index')->name('admin::index-page_sections')->middleware('can:see-all-page_sections');
-                $router->patch('sections/{ids}', 'SectionsAdminController@ajaxUpdate')->name('admin::update-page_section')->middleware('can:update-page_section');
+                $router->patch('sections/{ids}', 'SectionsAdminController@ajaxUpdate')->name('admin::update-page_section-ajax')->middleware('can:update-page_section');
                 $router->delete('sections/{section}', 'SectionsAdminController@destroyMultiple')->name('admin::destroy-page_section')->middleware('can:delete-page_section');
 
                 $router->get('page_sections/{section}/files', 'SectionsAdminController@files')->name('admin::edit-page_section-files')->middleware('can:update-page_section');
