@@ -7,6 +7,7 @@
 
 {!! BootForm::hidden('id') !!}
 {!! BootForm::hidden('page_id')->value($page->id) !!}
+{!! BootForm::hidden('position') !!}
 
 @include('files::admin._files-selector')
 
