@@ -8,9 +8,9 @@ return [
         'delete-page' => 'Delete',
     ],
     'page-sections' => [
-        'see-all-sections' => 'View list',
-        'create-section' => 'Create',
-        'update-section' => 'Edit',
-        'delete-section' => 'Delete',
+        'see-all-page_sections' => 'View list',
+        'create-page_section' => 'Create',
+        'update-page_section' => 'Edit',
+        'delete-page_section' => 'Delete',
     ],
 ];

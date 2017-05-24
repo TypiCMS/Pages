@@ -62,7 +62,6 @@ class AdminController extends BaseAdminController
      */
     public function edit(Page $page)
     {
-        $page->allsections = $page->sections->toArray();
         app('JavaScript')->put('model', $page);
 
         return view('pages::admin.edit')
@@ -78,8 +77,7 @@ class AdminController extends BaseAdminController
      */
     public function store(FormRequest $request)
     {
-        $this->storeSections($request->allsections);
-        $data = $request->except('allsections');
+        $data = $request->all();
         $data['parent_id'] = null;
         $page = $this->repository->create($data);
 
@@ -96,8 +94,7 @@ class AdminController extends BaseAdminController
      */
     public function update(Page $page, FormRequest $request)
     {
-        $this->storeSections($request->allsections);
-        $data = $request->except('allsections');
+        $data = $request->all();
         $data['parent_id'] = $data['parent_id'] ?: null;
         $this->repository->update($page->id, $data);
         event('page.resetChildrenUri', [$page]);
@@ -131,27 +128,5 @@ class AdminController extends BaseAdminController
         ];
 
         return response()->json($data, 200);
-    }
-
-    /**
-     * Store page sections.
-     *
-     * @param array|null $data
-     *
-     * @return null
-     */
-    private function storeSections($sections)
-    {
-        if (is_null($sections)) {
-            return;
-        }
-        foreach ($sections as $key => $item) {
-            $item['slug'] = [];
-            foreach ($item['title'] as $locale => $title) {
-                $item['slug'][$locale] = str_slug($title);
-            }
-            $item['position'] = $key + 1;
-            $section = PageSection::updateOrCreate(['id' => $item['id']], $item);
-        }
     }
 }
