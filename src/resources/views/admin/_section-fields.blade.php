@@ -20,7 +20,7 @@
         <label class="control-label" for="body[{{ $locale }}]">
             <span>{{ __('Body') }}</span> <span>({{ $locale }})</span>
         </label>
-        {!! Form::text('allsections['.$key.'][body]['.$locale.']')->data('language', $locale)->addClass('form-control ckeditor')->disable($disabled ?? false) !!}
+        {!! Form::textarea('allsections['.$key.'][body]['.$locale.']')->data('language', $locale)->addClass('form-control ckeditor')->disable($disabled ?? false) !!}
         {!! $errors->first('allsections.'.$key.'.body.'.$locale, '<p class="help-block">:message</p>') !!}
     </div>
     @endforeach
