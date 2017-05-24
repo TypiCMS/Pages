@@ -3,17 +3,20 @@
 namespace TypiCMS\Modules\Pages\Models;
 
 use Laracasts\Presenter\PresentableTrait;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
 
-class PageSection extends Base
+class PageSection extends Base implements Sortable
 {
     use HasTranslations;
     use Historable;
     use PresentableTrait;
+    use SortableTrait;
 
     protected $presenter = ModulePresenter::class;
 
@@ -24,6 +27,10 @@ class PageSection extends Base
         'slug',
         'status',
         'body',
+    ];
+
+    public $sortable = [
+        'order_column_name' => 'position',
     ];
 
     protected $appends = ['image', 'title_translated', 'status_translated'];
