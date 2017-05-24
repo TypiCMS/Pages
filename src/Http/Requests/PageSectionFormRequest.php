@@ -10,7 +10,6 @@ class PageSectionFormRequest extends AbstractFormRequest
     {
         return [
             'slug.*' => 'nullable|alpha_dash|max:255',
-            'position' => 'integer|min:0',
             'title.*' => 'nullable|max:255',
         ];
     }
