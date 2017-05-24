@@ -24,49 +24,56 @@ class SectionsAdminController extends BaseAdminController
      */
     public function index(Page $page)
     {
-        $models = $this->repository->where('page_id', $page->id)->findAll();
-        app('JavaScript')->put('models', $models);
+        $id = request('page_id');
+        $models = $this->repository->where('page_id', $id)->findAll();
 
-        return view('pages::admin.index-sections');
+        return response()->json($models, 200);
     }
 
     /**
      * Create form for a new resource.
      *
+     * @param \TypiCMS\Modules\Pages\Models\Page $page
+     *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Page $page)
     {
         $model = $this->repository->createModel();
         app('JavaScript')->put('model', $model);
 
         return view('pages::admin.create-section')
-            ->with(compact('model'));
+            ->with(compact('model', 'page'));
     }
 
     /**
      * Edit form for the specified resource.
      *
+     * @param \TypiCMS\Modules\Pages\Models\Page $page
      * @param \TypiCMS\Modules\Pages\Models\PageSection $section
      *
      * @return \Illuminate\View\View
      */
-    public function edit(PageSection $section)
+    public function edit(Page $page, PageSection $section)
     {
         app('JavaScript')->put('model', $section);
 
         return view('pages::admin.edit-section')
-            ->with(['model' => $section]);
+            ->with([
+                'model' => $section,
+                'page' => $page,
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
+     * @param \TypiCMS\Modules\Pages\Models\Page $page
      * @param \TypiCMS\Modules\Pages\Http\Requests\PageSectionFormRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(PageSectionFormRequest $request)
+    public function store(Page $page, PageSectionFormRequest $request)
     {
         $section = $this->repository->create($request->all());
 
@@ -76,12 +83,13 @@ class SectionsAdminController extends BaseAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param \TypiCMS\Modules\Pages\Models\PageSection           $section
+     * @param \TypiCMS\Modules\Pages\Models\Page $page
+     * @param \TypiCMS\Modules\Pages\Models\PageSection $section
      * @param \TypiCMS\Modules\Pages\Http\Requests\PageSectionFormRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(PageSection $section, PageSectionFormRequest $request)
+    public function update(Page $page, PageSection $section, PageSectionFormRequest $request)
     {
         $this->repository->update($request->id, $request->all());
         Pages::forgetCache();
@@ -92,16 +100,29 @@ class SectionsAdminController extends BaseAdminController
     /**
      * Remove the specified resource from storage.
      *
+     * @param \TypiCMS\Modules\Pages\Models\Page $page
      * @param \TypiCMS\Modules\Pages\Models\PageSection $section
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(PageSection $section)
+    public function destroy(Page $page, PageSection $section)
     {
         $deleted = $this->repository->delete($section);
 
         return response()->json([
             'error' => !$deleted,
         ]);
+    }
+
+    /**
+     * get files.
+     */
+    public function files(PageSection $section)
+    {
+        $data = [
+            'models' => $section->files,
+        ];
+
+        return response()->json($data, 200);
     }
 }

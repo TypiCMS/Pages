@@ -71,14 +71,17 @@ class RouteServiceProvider extends ServiceProvider
                 $router->patch('pages/{ids}', 'AdminController@ajaxUpdate')->name('admin::update-page-ajax')->middleware('can:update-page');
                 $router->delete('pages/{page}', 'AdminController@destroy')->name('admin::destroy-page')->middleware('can:delete-page');
 
-                $router->get('pages/{page}/sections', 'SectionsAdminController@index')->name('admin::index-page_sections')->middleware('can:see-all-page_sections');
                 $router->get('pages/{page}/sections/create', 'SectionsAdminController@create')->name('admin::create-page_section')->middleware('can:create-page_section');
-                $router->get('pages/{page}/sections/{category}/edit', 'SectionsAdminController@edit')->name('admin::edit-page_section')->middleware('can:update-page_section');
+                $router->get('pages/{page}/sections/{section}/edit', 'SectionsAdminController@edit')->name('admin::edit-page_section')->middleware('can:update-page_section');
                 $router->post('pages/{page}/sections', 'SectionsAdminController@store')->name('admin::store-page_section')->middleware('can:create-page_section');
-                $router->put('pages/{page}/sections/{category}', 'SectionsAdminController@update')->name('admin::update-page_section')->middleware('can:update-page_section');
+                $router->put('pages/{page}/sections/{section}', 'SectionsAdminController@update')->name('admin::update-page_section')->middleware('can:update-page_section');
                 $router->post('pages/{page}/sections/sort', 'SectionsAdminController@sort')->name('admin::sort-page_sections');
-                $router->patch('pages/{page}/sections/{ids}', 'SectionsAdminController@ajaxUpdate')->name('admin::update-page_section')->middleware('can:update-page_section');
-                $router->delete('pages/{page}/sections/{category}', 'SectionsAdminController@destroyMultiple')->name('admin::destroy-page_section')->middleware('can:delete-page_section');
+
+                $router->get('sections', 'SectionsAdminController@index')->name('admin::index-page_sections')->middleware('can:see-all-page_sections');
+                $router->patch('sections/{ids}', 'SectionsAdminController@ajaxUpdate')->name('admin::update-page_section')->middleware('can:update-page_section');
+                $router->delete('sections/{section}', 'SectionsAdminController@destroyMultiple')->name('admin::destroy-page_section')->middleware('can:delete-page_section');
+
+                $router->get('page_sections/{section}/files', 'SectionsAdminController@files')->name('admin::edit-page_section-files')->middleware('can:update-page_section');
             });
 
             /*

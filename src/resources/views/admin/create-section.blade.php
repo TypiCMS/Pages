@@ -1,16 +1,16 @@
 @extends('core::admin.master')
 
-@section('title', __('project-categories::global.New'))
+@section('title', __('page-sections::global.New'))
 
 @section('content')
 
-    @include('core::admin._button-back', ['module' => 'project_categories'])
+    @include('core::admin._button-back', ['module' => 'page_sections'])
     <h1>
-        @lang('project_categories::global.New')
+        @lang('page_sections::global.New')
     </h1>
 
-    {!! BootForm::open()->action(route('admin::index-project_categories'))->multipart()->role('form') !!}
-        @include('projects::admin._form-category')
+    {!! BootForm::open()->action(route('admin::store-page_section', $page->id))->multipart()->role('form') !!}
+        @include('pages::admin._form-section')
     {!! BootForm::close() !!}
 
 @endsection

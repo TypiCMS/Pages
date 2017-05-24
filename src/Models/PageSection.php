@@ -63,6 +63,34 @@ class PageSection extends Base
     }
 
     /**
+     * Get edit url of model.
+     *
+     * @return string|void
+     */
+    public function editUrl()
+    {
+        try {
+            return route('admin::edit-page_section', [$this->page_id, $this->id]);
+        } catch (InvalidArgumentException $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
+    /**
+     * Get back office’s index of models url.
+     *
+     * @return string|void
+     */
+    public function indexUrl()
+    {
+        try {
+            return route('admin::index-page_sections', $this->page_id);
+        } catch (InvalidArgumentException $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
+    /**
      * A section belongs to a page.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -73,7 +101,7 @@ class PageSection extends Base
     }
 
     /**
-     * Has many files.
+     * A page can have many files.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */

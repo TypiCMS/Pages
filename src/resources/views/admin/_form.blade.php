@@ -49,15 +49,6 @@
         {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
 
-        <div class="sections-container">
-            <h2>{{ __('Sections') }}</h2>
-            @if ($model->id)
-            <a href="{{ route('admin::index-page_sections', [$model->id]) }}" class="btn btn-primary" id="btn-add-section">{{ __('Edit Sections') }}</a>
-            @else
-            <p class="alert alert-info">{{ __('Save the page then add sections.') }}</p>
-            @endif
-        </div>
-
     </div>
 
     <div class="tab-pane fade" id="tab-meta">
