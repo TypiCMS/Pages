@@ -4,7 +4,6 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Pages\Facades\Pages;
-use TypiCMS\Modules\Pages\Http\Requests\FormRequest;
 use TypiCMS\Modules\Pages\Http\Requests\PageSectionFormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageSection;
@@ -76,7 +75,7 @@ class SectionsAdminController extends BaseAdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param \TypiCMS\Modules\Pages\Models\PageSection           $section
+     * @param \TypiCMS\Modules\Pages\Models\PageSection                   $section
      * @param \TypiCMS\Modules\Pages\Http\Requests\PageSectionFormRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse
