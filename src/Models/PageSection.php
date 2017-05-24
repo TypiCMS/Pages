@@ -84,7 +84,7 @@ class PageSection extends Base
     public function indexUrl()
     {
         try {
-            return route('admin::index-page_sections', $this->page_id);
+            return route('admin::edit-page', $this->page_id);
         } catch (InvalidArgumentException $e) {
             Log::error($e->getMessage());
         }
