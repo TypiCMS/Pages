@@ -75,6 +75,7 @@ class SectionsAdminController extends BaseAdminController
     public function store(Page $page, PageSectionFormRequest $request)
     {
         $section = $this->repository->create($request->all());
+        Pages::forgetCache();
 
         return $this->redirect($request, $section);
     }
