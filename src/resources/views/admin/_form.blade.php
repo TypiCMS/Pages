@@ -47,36 +47,17 @@
         {!! TranslatableBootForm::hidden('uri') !!}
         {!! TranslatableBootForm::hidden('status')->value(0) !!}
         {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
-        {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
-        <div class="sections">
+        {{-- {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!} --}}
+        <div class="sections-container">
+
             <h2>{{ __('Sections') }}</h2>
-            @foreach ($model->allsections as $key => $section)
-                {!! Form::hidden('allsections['.$key.'][id]') !!}
-                {!! Form::hidden('allsections['.$key.'][page_id]') !!}
-                @foreach ($locales as $locale)
-                <div class="form-group form-group-translation @if($errors->has('allsections.'.$key.'.title.'.$lang))has-error @endif">
-                    <label class="control-label" for="title[{{ $locale }}]">
-                        <span>{{ __('Title') }}</span> <span>({{ $locale }})</span>
-                    </label>
-                    {!! Form::text('allsections['.$key.'][title]['.$locale.']')->data('language', $locale)->class('form-control') !!}
-                    {!! $errors->first('allsections.'.$key.'.title.'.$lang, '<p class="help-block">:message</p>') !!}
-                </div>
-                <div class="checkbox form-group-translation">
-                    <label class="control-label">
-                        {!! Form::hidden('allsections['.$key.'][status]['.$locale.']')->value(0) !!}
-                        {!! Form::checkbox('allsections['.$key.'][status]['.$locale.']')->data('language', $locale) !!}
-                        <span>{{ __('Published') }}</span> <span>({{ $locale }})</span>
-                    </label>
-                </div>
-                <div class="form-group form-group-translation @if($errors->has('allsections.'.$key.'.body.'.$lang))has-error @endif">
-                    <label class="control-label" for="body[{{ $locale }}]">
-                        <span>{{ __('Body') }}</span> <span>({{ $locale }})</span>
-                    </label>
-                    {!! Form::textarea('allsections['.$key.'][body]['.$locale.']')->data('language', $locale)->addClass('form-control ckeditor') !!}
-                    {!! $errors->first('allsections.'.$key.'.body.'.$lang, '<p class="help-block">:message</p>') !!}
-                </div>
+            <div class="sections" id="sections">
+                @foreach ($model->allsections as $key => $section)
+                @include('pages::admin._section-fields')
                 @endforeach
-            @endforeach
+                @include('pages::admin._section-fields', ['key' => $key+1, 'disabled' => true])
+            </div>
+            <a href="" class="btn btn-default" id="btn-add-section"><i class="fa fa-plus-circle"></i> {{ __('Add section') }}</a>
         </div>
     </div>
 

@@ -122,9 +122,7 @@ class AdminController extends BaseAdminController
     }
 
     /**
-     * List models.
-     *
-     * @return \Illuminate\View\View
+     * get files.
      */
     public function files(Page $page)
     {
@@ -148,18 +146,12 @@ class AdminController extends BaseAdminController
             return;
         }
         foreach ($sections as $key => $item) {
-            $section = PageSection::firstOrCreate(['id' => $item['id']]);
-            $slug = [];
+            $item['slug'] = [];
             foreach ($item['title'] as $locale => $title) {
-                $slug[$locale] = str_slug($title);
+                $item['slug'][$locale] = str_slug($title);
             }
-            $section->page_id = $item['page_id'];
-            $section->position = $key + 1;
-            $section->status = $item['status'];
-            $section->title = $item['title'];
-            $section->slug = $slug;
-            $section->body = $item['body'];
-            $section->save();
+            $item['position'] = $key + 1;
+            $section = PageSection::updateOrCreate(['id' => $item['id']], $item);
         }
     }
 }
