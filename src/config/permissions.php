@@ -7,7 +7,7 @@ return [
         'update-page' => 'Edit',
         'delete-page' => 'Delete',
     ],
-    'page-sections' => [
+    'page_sections' => [
         'see-all-page_sections' => 'View list',
         'create-page_section' => 'Create',
         'update-page_section' => 'Edit',
