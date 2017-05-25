@@ -3,7 +3,6 @@
 namespace TypiCMS\Modules\Pages\Models;
 
 use Laracasts\Presenter\PresentableTrait;
-use Spatie\EloquentSortable\Sortable;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Files\Models\File;

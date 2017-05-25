@@ -2,11 +2,6 @@
 
 namespace TypiCMS\Modules\Pages\Traits;
 
-use ArrayAccess;
-use InvalidArgumentException;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-
 trait SortableSectionTrait
 {
     public static function bootSortableSectionTrait()
