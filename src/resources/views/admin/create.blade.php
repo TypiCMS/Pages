@@ -13,6 +13,6 @@
         @include('pages::admin._form')
     {!! BootForm::close() !!}
 
-    <p class="alert alert-info">{{ __('Save the page then add sections.') }}</p>
+    <p class="alert alert-info">{{ __('Save this page first, then add sections.') }}</p>
 
 @endsection
