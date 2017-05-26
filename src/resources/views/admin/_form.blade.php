@@ -49,13 +49,15 @@
         {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
 
+        @if ($model->id)
+
+        <a href="{{ route('admin::create-page_section', $model->id) }}" title="{{ __('pages::global.Back') }}" class="btn-back">
+            <span class="fa fa-plus-circle"></span><span class="sr-only">{{ __('pages::global.Back') }}</span>
+        </a>
+
+        <h1>@{{ models.length }} @choice('page_sections::global.page-sections', 2)</h1>
+
         <div ng-cloak ng-controller="ListController">
-
-            <a href="{{ route('admin::create-page_section', $model->id) }}" title="{{ __('pages::global.Back') }}" class="btn-back">
-                <span class="fa fa-plus-circle"></span><span class="sr-only">{{ __('pages::global.Back') }}</span>
-            </a>
-
-            <h1>@{{ models.length }} @choice('page_sections::global.page-sections', 2)</h1>
 
             <div class="btn-toolbar">
                 @include('core::admin._button-select')
@@ -96,6 +98,7 @@
             </div>
 
         </div>
+        @endif
 
     </div>
 
