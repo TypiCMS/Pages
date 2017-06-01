@@ -31,13 +31,13 @@
                 {!! TranslatableBootForm::text(__('Title'), 'title') !!}
             </div>
             @foreach ($locales as $lang)
-            <div class="col-md-6 form-group form-group-translation @if($errors->has('slug.'.$lang))has-error @endif">
+            <div class="col-md-6 form-group form-group-translation @if ($errors->has('slug.'.$lang))has-error @endif">
                 <label class="control-label" for="slug[{{ $lang }}]"><span>{{ __('Url') }}</span> ({{ $lang }})</label>
                 <div class="input-group">
                     <span class="input-group-addon">{{ $model->present()->parentUri($lang) }}</span>
                     <input class="form-control" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
                     <span class="input-group-btn">
-                        <button class="btn btn-default btn-slug @if($errors->has('slug.'.$lang))btn-danger @endif" type="button">{{ __('Generate') }}</button>
+                        <button class="btn btn-default btn-slug @if ($errors->has('slug.'.$lang))btn-danger @endif" type="button">{{ __('Generate') }}</button>
                     </span>
                 </div>
                 {!! $errors->first('slug.'.$lang, '<p class="help-block">:message</p>') !!}
@@ -49,13 +49,14 @@
         {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
 
+        @can ('see-all-page_sections')
         @if ($model->id)
 
-        <a href="{{ route('admin::create-page_section', $model->id) }}" title="{{ __('pages::global.Back') }}" class="btn-back">
-            <span class="fa fa-plus-circle"></span><span class="sr-only">{{ __('pages::global.Back') }}</span>
+        <a href="{{ route('admin::create-page_section', $model->id) }}" title="{{ __('New page section') }}" class="btn-back">
+            <span class="fa fa-plus-circle"></span><span class="sr-only">{{ __('New page section') }}</span>
         </a>
 
-        <h1>@{{ models.length }} @choice('page_sections::global.page-sections', 2)</h1>
+        <h1>@{{ models.length }} @lang('Page sections')</h1>
 
         <div ng-cloak ng-controller="ListController">
 
@@ -99,6 +100,7 @@
 
         </div>
         @endif
+        @endcan
 
     </div>
 
@@ -115,7 +117,7 @@
         {!! BootForm::hidden('redirect')->value(0) !!}
         {!! BootForm::checkbox(__('Redirect to first child'), 'redirect') !!}
         @if ($model->children->count())
-            {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disabled('disabled')->helpBlock(__('pages::global.A page with children cannot be linked to a module')) !!}
+            {!! BootForm::select(__('A page with children cannot be linked to a module')) !!}
         @else
             {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect()) !!}
         @endif

@@ -5,7 +5,7 @@
 @section('content')
 
     @include('core::admin._button-back', ['module' => 'pages'])
-    <h1 class="@if(!$model->present()->title)text-muted @endif">
+    <h1 class="@if (!$model->present()->title)text-muted @endif">
         {{ $model->present()->title ?: __('Untitled') }}
     </h1>
 

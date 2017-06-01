@@ -1,6 +1,6 @@
 @extends('core::admin.master')
 
-@section('title', __('pages::global.name'))
+@section('title', __('Pages'))
 
 @section('content')
 

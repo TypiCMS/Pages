@@ -1,12 +1,12 @@
 @extends('core::admin.master')
 
-@section('title', __('pages::global.New'))
+@section('title', __('New page'))
 
 @section('content')
 
     @include('core::admin._button-back', ['module' => 'pages'])
     <h1>
-        @lang('pages::global.New')
+        @lang('New page')
     </h1>
 
     {!! BootForm::open()->action(route('admin::index-pages'))->multipart()->role('form') !!}

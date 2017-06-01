@@ -10,7 +10,7 @@
 @section('bodyClass', 'body-page body-page-'.$page->id)
 
 @section('css')
-    @if($page->css)
+    @if ($page->css)
     <style type="text/css">
         {{ $page->css }}
     </style>
@@ -18,7 +18,7 @@
 @endsection
 
 @section('js')
-    @if($page->js)
+    @if ($page->js)
     <script>
         {{ $page->js }}
     </script>

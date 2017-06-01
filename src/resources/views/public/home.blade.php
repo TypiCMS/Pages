@@ -13,13 +13,13 @@
     @include('files::public._files', ['model' => $page])
 
 {{--
-    @if($slides = Slides::all() and $slides->count())
+    @if ($slides = Slides::all() and $slides->count())
         @include('slides::public._slider', ['items' => $slides])
     @endif
 --}}
 
 {{--
-    @if($latestNews = News::latest(3) and $latestNews->count())
+    @if ($latestNews = News::latest(3) and $latestNews->count())
         <div class="container-news">
             <h2>@lang('db.Latest news')</h2>
             @include('news::public._list', ['items' => $latestNews])
@@ -29,7 +29,7 @@
 --}}
 
 {{--
-    @if($upcomingEvents = Events::upcoming() and $upcomingEvents->count())
+    @if ($upcomingEvents = Events::upcoming() and $upcomingEvents->count())
         <div class="container-events">
             <h3>@lang('db.Incoming events')</h3>
             @include('events::public._list', ['items' => $upcomingEvents])
@@ -39,7 +39,7 @@
 --}}
 
 {{--
-    @if($partners = Partners::allBy('homepage', 1) and $partners->count())
+    @if ($partners = Partners::allBy('homepage', 1) and $partners->count())
         <div class="container-partners">
             <h2><a href="{{ route($lang.'::index-partners') }}">@lang('db.Partners')</a></h2>
             @include('partners::public._list', ['items' => $partners])

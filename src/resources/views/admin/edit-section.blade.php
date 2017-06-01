@@ -4,9 +4,9 @@
 
 @section('content')
 
-    <a class="btn-back" href="{{ route('admin::edit-page', $page->id) }}" title="{{ __('page_sections::global.Back') }}"><span class="text-muted fa fa-arrow-circle-left"></span><span class="sr-only">{{ __('page_sections::global.Back') }}</span></a>
+    <a class="btn-back" href="{{ route('admin::edit-page', $page->id) }}" title="{{ __('Back to page') }}"><span class="text-muted fa fa-arrow-circle-left"></span><span class="sr-only">{{ __('Back to page') }}</span></a>
 
-    <h1 class="@if(!$model->present()->title)text-muted @endif">
+    <h1 class="@if (!$model->present()->title)text-muted @endif">
         {{ $model->present()->title ?: __('Untitled') }}
     </h1>
 
