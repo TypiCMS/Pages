@@ -116,11 +116,7 @@
         {!! BootForm::checkbox(__('Private'), 'private') !!}
         {!! BootForm::hidden('redirect')->value(0) !!}
         {!! BootForm::checkbox(__('Redirect to first child'), 'redirect') !!}
-        @if ($model->children->count())
-            {!! BootForm::select(__('A page with children cannot be linked to a module')) !!}
-        @else
-            {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect()) !!}
-        @endif
+        {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disable($model->children->count())->helpBlock($model->children->count() ? __('A page with children cannot be linked to a module') : '') !!}
         {!! BootForm::select(__('Template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir()) !!}
         @if (!$model->id)
         {!! BootForm::select(__('Add to menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('name', 'id')->all(), null, array('class' => 'form-control')) !!}
