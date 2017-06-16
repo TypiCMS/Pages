@@ -21,9 +21,9 @@ class PublicController extends BasePublicController
      */
     public function uri($uri = null)
     {
-        abort_if(!$uri, '404');
-
         $page = $this->findPageByUri($uri);
+
+        abort_if(!$page, '404');
 
         if ($page->private && !Auth::check()) {
             abort('403');
