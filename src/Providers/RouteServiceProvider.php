@@ -2,11 +2,9 @@
 
 namespace TypiCMS\Modules\Pages\Providers;
 
-use Config;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
-use TypiCMS\Modules\Pages\Facades\Pages;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -18,16 +16,6 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'TypiCMS\Modules\Pages\Http\Controllers';
-
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @return null
-     */
-    public function boot()
-    {
-        parent::boot();
-    }
 
     /**
      * Define the routes for the application.
