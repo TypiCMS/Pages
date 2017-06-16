@@ -19,9 +19,11 @@ class PublicController extends BasePublicController
      *
      * @return \Illuminate\Http\Response | \Illuminate\Http\RedirectResponse
      */
-    public function uri($page = null)
+    public function uri($uri = null)
     {
         abort_if(!$uri, '404');
+
+        $page = $this->findPageByUri($uri);
 
         if ($page->private && !Auth::check()) {
             abort('403');
@@ -45,6 +47,31 @@ class PublicController extends BasePublicController
         }
 
         return response()->view($templateDir.$template, compact('children', 'page'));
+    }
+
+    /**
+     * Find page by URI.
+     *
+     * @return TypiCMS\Modules\Pages\Models\Page
+     */
+    private function findPageByUri($uri)
+    {
+        if ($uri === '/') {
+            return $this->repository->findBy('is_home', 1);
+        }
+
+        // Only locale in url
+        if (
+            in_array($uri, locales()) &&
+            (
+                config('app.fallback_locale') != $uri ||
+                config('typicms.main_locale_in_url')
+            )
+        ) {
+            return $this->repository->findBy('is_home', 1);
+        }
+
+        return $this->repository->getFirstByUri($uri, config('app.locale'));
     }
 
     /**

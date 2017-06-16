@@ -27,25 +27,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        Route::bind('uri', function ($uri) {
-            if ($uri === '/') {
-                return Pages::findBy('is_home', 1);
-            }
-
-            // Only locale in url
-            if (
-                in_array($uri, locales()) &&
-                (
-                    config('app.fallback_locale') != $uri ||
-                    config('typicms.main_locale_in_url')
-                )
-            ) {
-                return Pages::findBy('is_home', 1);
-            }
-
-            return Pages::getFirstByUri($uri, config('app.locale'));
-        });
     }
 
     /**
