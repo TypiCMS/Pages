@@ -1,6 +1,6 @@
-@section('js')
+@push('js')
     <script src="{{ asset('components/ckeditor/ckeditor.js') }}"></script>
-@endsection
+@endpush
 
 @component('core::admin._buttons-form', ['model' => $model])
 @endcomponent
