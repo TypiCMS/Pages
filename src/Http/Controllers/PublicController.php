@@ -56,7 +56,7 @@ class PublicController extends BasePublicController
      */
     private function findPageByUri($uri)
     {
-        if ($uri === '/') {
+        if ($uri === null) {
             return $this->repository->findBy('is_home', 1);
         }
 
