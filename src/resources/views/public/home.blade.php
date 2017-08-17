@@ -6,8 +6,10 @@
 
 @section('page')
 
-    {!! $page->present()->thumb(200, 200) !!}
-
+    @if($page->image)
+        {!! $page->present()->thumb(200, 200) !!}
+    @endif
+    
     {!! $page->present()->body !!}
 
     @include('files::public._files', ['model' => $page])
