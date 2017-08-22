@@ -54,7 +54,8 @@ class EloquentPage extends EloquentRepository
         }
 
         $models = $repository->orderBy('position', 'asc')
-            ->findWhere([column('uri'), 'LIKE', $uri.'%'])
+            ->findWhere([column('uri'), 'LIKE', '\"'.$uri.'%'])
+            ->noCleaning()
             ->nest();
 
         return $models;
