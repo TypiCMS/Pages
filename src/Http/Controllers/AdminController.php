@@ -21,7 +21,7 @@ class AdminController extends BaseAdminController
      */
     public function index()
     {
-        $models = $this->repository->findAll([
+        $models = $this->repository->orderBy('position')->findAll([
             'id',
             'parent_id',
             'title',
