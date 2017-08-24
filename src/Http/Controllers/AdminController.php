@@ -21,7 +21,7 @@ class AdminController extends BaseAdminController
      */
     public function index()
     {
-        $models = $this->repository->allNested([
+        $models = $this->repository->findAll([
             'id',
             'parent_id',
             'title',
@@ -32,7 +32,7 @@ class AdminController extends BaseAdminController
             'module',
             'slug',
             'uri',
-        ]);
+        ])->nest();
         app('JavaScript')->put('models', $models);
 
         return view('pages::admin.index');
