@@ -2,15 +2,21 @@
 
 @section('page')
 
-    @if($children)
+    @if ($children)
     <ul class="nav nav-subpages">
         @foreach ($children as $child)
-        @include('pages::public._listItem', array('child' => $child))
+        @include('pages::public._list-item', array('child' => $child))
         @endforeach
     </ul>
     @endif
 
     {!! $page->present()->body !!}
-    @include('galleries::public._galleries', ['model' => $page])
+    @include('files::public._files', ['model' => $page])
+
+    @foreach ($page->publishedSections as $section)
+        <div id="{{ $section->position.'-'.$section->slug }}">
+        {!! $section->present()->body !!}
+        </div>
+    @endforeach
 
 @endsection

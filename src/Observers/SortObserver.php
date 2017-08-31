@@ -11,13 +11,13 @@ class SortObserver
      *
      * @param Page $model
      *
-     * @return void
+     * @return null
      */
     public function updating(Page $model)
     {
         if ($model->isDirty('parent_id')) {
-            foreach (config('translatable.locales') as $locale) {
-                $model->translate($locale)->uri = '';
+            foreach (locales() as $locale) {
+                $model->setTranslation('uri', $locale, '');
             }
         }
     }

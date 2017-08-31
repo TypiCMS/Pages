@@ -1,79 +1,128 @@
-@section('js')
+@push('js')
     <script src="{{ asset('components/ckeditor/ckeditor.js') }}"></script>
-@endsection
+@endpush
 
-@include('core::admin._buttons-form')
+@component('core::admin._buttons-form', ['model' => $model])
+@endcomponent
 
 {!! BootForm::hidden('id') !!}
 {!! BootForm::hidden('position')->value($model->position ?: 0) !!}
 {!! BootForm::hidden('parent_id') !!}
 
+@include('files::admin._files-selector')
+
 <ul class="nav nav-tabs">
     <li class="active">
-        <a href="#tab-content" data-target="#tab-content" data-toggle="tab">@lang('global.Content')</a>
+        <a href="#tab-content" data-target="#tab-content" data-toggle="tab">{{ __('Content') }}</a>
     </li>
     <li>
-        <a href="#tab-meta" data-target="#tab-meta" data-toggle="tab">@lang('global.Meta')</a>
+        <a href="#tab-meta" data-target="#tab-meta" data-toggle="tab">{{ __('Meta') }}</a>
     </li>
     <li>
-        <a href="#tab-options" data-target="#tab-options" data-toggle="tab">@lang('global.Options')</a>
+        <a href="#tab-options" data-target="#tab-options" data-toggle="tab">{{ __('Options') }}</a>
     </li>
 </ul>
 
 <div class="tab-content">
 
     <div class="tab-pane fade in active" id="tab-content">
-        @include('core::admin._image-fieldset', ['field' => 'image'])
         <div class="row">
             <div class="col-md-6">
-                {!! TranslatableBootForm::text(trans('validation.attributes.title'), 'title') !!}
+                {!! TranslatableBootForm::text(__('Title'), 'title') !!}
             </div>
             @foreach ($locales as $lang)
-            <div class="col-md-6 form-group form-group-translation @if($errors->has($lang.'.slug'))has-error @endif">
-                <label class="control-label" for="{{ $lang }}[slug]"><span>@lang('validation.attributes.url')</span> ({{ $lang }})</label>
+            <div class="col-md-6 form-group form-group-translation @if ($errors->has('slug.'.$lang))has-error @endif">
+                <label class="control-label" for="slug[{{ $lang }}]"><span>{{ __('Url') }}</span> ({{ $lang }})</label>
                 <div class="input-group">
                     <span class="input-group-addon">{{ $model->present()->parentUri($lang) }}</span>
-                    <input class="form-control" type="text" name="{{ $lang }}[slug]" id="{{ $lang }}[slug]" value="@if($model->hasTranslation($lang)){{ $model->translate($lang)->slug }}@endif" data-slug="{{ $lang }}[title]" data-language="{{ $lang }}">
+                    <input class="form-control" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
                     <span class="input-group-btn">
-                        <button class="btn btn-default btn-slug @if($errors->has($lang.'.slug'))btn-danger @endif" type="button">@lang('validation.attributes.generate')</button>
+                        <button class="btn btn-default btn-slug @if ($errors->has('slug.'.$lang))btn-danger @endif" type="button">{{ __('Generate') }}</button>
                     </span>
                 </div>
-                {!! $errors->first($lang.'.slug', '<p class="help-block">:message</p>') !!}
+                {!! $errors->first('slug.'.$lang, '<p class="help-block">:message</p>') !!}
             </div>
             @endforeach
         </div>
         {!! TranslatableBootForm::hidden('uri') !!}
         {!! TranslatableBootForm::hidden('status')->value(0) !!}
-        {!! TranslatableBootForm::checkbox(trans('validation.attributes.online'), 'status') !!}
-        {!! TranslatableBootForm::textarea(trans('validation.attributes.body'), 'body')->addClass('ckeditor') !!}
-        @include('core::admin._galleries-fieldset')
+        {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
+        {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
+
+        @can ('see-all-page_sections')
+        @if ($model->id)
+
+        <a href="{{ route('admin::create-page_section', $model->id) }}" title="{{ __('New page section') }}" class="btn-back">
+            <span class="fa fa-plus-circle"></span><span class="sr-only">{{ __('New page section') }}</span>
+        </a>
+
+        <h1>@{{ models.length }} @lang('Page sections')</h1>
+
+        <div ng-cloak ng-controller="ListController">
+
+            <div class="btn-toolbar">
+                @include('core::admin._button-select')
+                @include('core::admin._button-actions')
+                @include('core::admin._lang-switcher-for-list')
+            </div>
+
+            <div class="table-responsive">
+
+                <table st-persist="pageSectionsTable" st-table="displayedModels" st-safe-src="models" st-order st-filter class="table table-condensed table-main">
+                    <thead>
+                        <tr>
+                            <th class="delete"></th>
+                            <th class="edit"></th>
+                            <th st-sort="status_translated" class="status st-sort">{{ __('Status') }}</th>
+                            <th st-sort="position" st-sort-default="true" class="position st-sort">{{ __('Position') }}</th>
+                            <th st-sort="title_translated" class="title_translated st-sort">{{ __('Title') }}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="model in displayedModels">
+                            <td>
+                                <input type="checkbox" checklist-model="checked.models" checklist-value="model">
+                            </td>
+                            <td>
+                                @include('core::admin._button-edit', ['permission' => 'update-page_section', 'module' => 'sections'])
+                            </td>
+                            <td typi-btn-status action="toggleStatus(model)" model="model"></td>
+                            <td>
+                                <input class="form-control input-sm" min="0" type="number" name="position" ng-model="model.position" ng-change="update(model, 'position')">
+                            </td>
+                            <td>@{{ model.title_translated }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+        @endif
+        @endcan
+
     </div>
 
     <div class="tab-pane fade" id="tab-meta">
-        {!! TranslatableBootForm::text(trans('validation.attributes.meta_keywords'), 'meta_keywords') !!}
-        {!! TranslatableBootForm::text(trans('validation.attributes.meta_description'), 'meta_description') !!}
+        {!! TranslatableBootForm::text(__('Meta keywords'), 'meta_keywords') !!}
+        {!! TranslatableBootForm::text(__('Meta description'), 'meta_description') !!}
     </div>
 
     <div class="tab-pane fade" id="tab-options">
         {!! BootForm::hidden('is_home')->value(0) !!}
-        {!! BootForm::checkbox(trans('validation.attributes.is_home'), 'is_home') !!}
+        {!! BootForm::checkbox(__('Is home'), 'is_home') !!}
         {!! BootForm::hidden('private')->value(0) !!}
-        {!! BootForm::checkbox(trans('validation.attributes.private'), 'private') !!}
+        {!! BootForm::checkbox(__('Private'), 'private') !!}
         {!! BootForm::hidden('redirect')->value(0) !!}
-        {!! BootForm::checkbox(trans('validation.attributes.redirect to first child'), 'redirect') !!}
-        {!! BootForm::hidden('no_cache')->value(0) !!}
-        {!! BootForm::checkbox(trans('validation.attributes.don’t generate HTML cache'), 'no_cache') !!}
-        @if ($model->children->count())
-            {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect())->disabled('disabled')->helpBlock(trans('pages::global.A page with children cannot be linked to a module')) !!}
-        @else
-            {!! BootForm::select(trans('validation.attributes.module'), 'module', TypiCMS::getModulesForSelect()) !!}
-        @endif
-        {!! BootForm::select(trans('validation.attributes.template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir()) !!}
+        {!! BootForm::checkbox(__('Redirect to first child'), 'redirect') !!}
+        {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disable($model->children->count())->helpBlock($model->children->count() ? __('A page with children cannot be linked to a module') : '') !!}
+        {!! BootForm::select(__('Template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir()) !!}
         @if (!$model->id)
-        {!! BootForm::select(trans('validation.attributes.add_to_menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('name', 'id')->all(), null, array('class' => 'form-control')) !!}
+        {!! BootForm::select(__('Add to menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('name', 'id')->all(), null, array('class' => 'form-control')) !!}
         @endif
-        {!! BootForm::textarea(trans('validation.attributes.css'), 'css') !!}
-        {!! BootForm::textarea(trans('validation.attributes.js'), 'js') !!}
+        {!! BootForm::textarea(__('Css'), 'css') !!}
+        {!! BootForm::textarea(__('Js'), 'js') !!}
     </div>
 
 </div>

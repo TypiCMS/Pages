@@ -11,7 +11,7 @@ class HomePageObserver
      *
      * @param Model $model eloquent
      *
-     * @return void
+     * @return null
      */
     public function saving(Page $model)
     {

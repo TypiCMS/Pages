@@ -2,44 +2,27 @@
 
 namespace TypiCMS\Modules\Pages\Models;
 
-use Dimsav\Translatable\Translatable;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laracasts\Presenter\PresentableTrait;
+use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
+use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\History\Traits\Historable;
+use TypiCMS\Modules\Menus\Models\Menulink;
+use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
 use TypiCMS\NestableTrait;
 
 class Page extends Base
 {
+    use HasTranslations;
     use Historable;
-    use Translatable;
-    use PresentableTrait;
     use NestableTrait;
+    use PresentableTrait;
 
-    protected $presenter = 'TypiCMS\Modules\Pages\Presenters\ModulePresenter';
+    protected $presenter = ModulePresenter::class;
 
-    protected $fillable = [
-        'meta_robots_no_index',
-        'meta_robots_no_follow',
-        'position',
-        'parent_id',
-        'private',
-        'is_home',
-        'redirect',
-        'no_cache',
-        'css',
-        'js',
-        'module',
-        'template',
-        'image',
-    ];
+    protected $guarded = ['id', 'exit', 'add_to_menu'];
 
-    /**
-     * Translatable model configs.
-     *
-     * @var array
-     */
-    public $translatedAttributes = [
+    public $translatable = [
         'title',
         'slug',
         'uri',
@@ -49,26 +32,7 @@ class Page extends Base
         'meta_description',
     ];
 
-    protected $appends = ['status', 'title', 'thumb', 'uri'];
-
-    /**
-     * Columns that are file.
-     *
-     * @var array
-     */
-    public $attachments = [
-        'image',
-    ];
-
-    /**
-     * Is this page cacheable?
-     *
-     * @return bool
-     */
-    public function cacheable()
-    {
-        return !$this->no_cache;
-    }
+    protected $appends = ['image', 'thumb', 'title_translated'];
 
     /**
      * Get front office uri.
@@ -80,10 +44,7 @@ class Page extends Base
     public function uri($locale = null)
     {
         $locale = $locale ?: config('app.locale');
-        if (!$this->hasTranslation($locale)) {
-            return;
-        }
-        $uri = $this->translate($locale)->uri;
+        $uri = $this->translate('uri', $locale);
         if (
             config('app.fallback_locale') != $locale ||
             config('typicms.main_locale_in_url')
@@ -95,23 +56,25 @@ class Page extends Base
     }
 
     /**
-     * Append status attribute from translation table.
+     * Append title_translated attribute.
      *
      * @return string
      */
-    public function getStatusAttribute($value)
+    public function getTitleTranslatedAttribute()
     {
-        return $value;
+        $locale = config('app.locale');
+
+        return $this->translate('title', config('typicms.content_locale', $locale));
     }
 
     /**
-     * Append title attribute from translation table.
+     * Append image attribute.
      *
-     * @return string title
+     * @return string
      */
-    public function getTitleAttribute($value)
+    public function getImageAttribute()
     {
-        return $value;
+        return $this->files->first();
     }
 
     /**
@@ -125,49 +88,63 @@ class Page extends Base
     }
 
     /**
-     * Append uri attribute from translation table.
+     * A page has many sections.
      *
-     * @return string uri
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getUriAttribute($value)
+    public function sections()
     {
-        return $value;
+        return $this->hasMany(PageSection::class)->order();
+    }
+
+    /**
+     * Get all published sections.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function publishedSections()
+    {
+        return $this->sections()->published();
     }
 
     /**
      * A page can have menulinks.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function menulinks()
     {
-        return $this->hasMany('TypiCMS\Modules\Menulinks\Models\Menulink');
-    }
-
-    /**
-     * A page has many galleries.
-     *
-     * @return MorphToMany
-     */
-    public function galleries()
-    {
-        return $this->morphToMany('TypiCMS\Modules\Galleries\Models\Gallery', 'galleryable')
-            ->withPivot('position')
-            ->orderBy('position')
-            ->withTimestamps();
+        return $this->hasMany(Menulink::class);
     }
 
     /**
      * A page can have children.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children()
     {
-        return $this->hasMany('TypiCMS\Modules\Pages\Models\Page', 'parent_id')->order();
+        return $this->hasMany(self::class, 'parent_id')->order();
     }
 
     /**
      * A page can have a parent.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent()
     {
-        return $this->belongsTo('TypiCMS\Modules\Pages\Models\Page', 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    /**
+     * A page can have many files.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function files()
+    {
+        return $this->morphToMany(File::class, 'model', 'model_has_files', 'model_id', 'file_id')
+            ->orderBy('model_has_files.position');
     }
 }

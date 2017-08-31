@@ -2,10 +2,9 @@
 
 namespace TypiCMS\Modules\Pages\Providers;
 
-use Config;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
-use Pages;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -19,71 +18,40 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'TypiCMS\Modules\Pages\Http\Controllers';
 
     /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @param \Illuminate\Routing\Router $router
-     *
-     * @return void
-     */
-    public function boot(Router $router)
-    {
-        parent::boot($router);
-
-        $router->bind('uri', function ($uri) {
-            $with = [
-                'translations',
-                'galleries',
-                'galleries.translations',
-                'galleries.files',
-                'galleries.files.translations',
-            ];
-
-            if ($uri === '/') {
-                return Pages::getFirstBy('is_home', 1, $with);
-            }
-
-            // Only locale in url
-            if (
-                in_array($uri, config('translatable.locales')) &&
-                (
-                    config('app.fallback_locale') != $uri ||
-                    config('typicms.main_locale_in_url')
-                )
-            ) {
-                return Pages::getFirstBy('is_home', 1, $with);
-            }
-
-            return Pages::getFirstByUri($uri, config('app.locale'), $with);
-        });
-    }
-
-    /**
      * Define the routes for the application.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
-     * @return void
+     * @return null
      */
-    public function map(Router $router)
+    public function map()
     {
-        $router->group(['namespace' => $this->namespace], function (Router $router) {
+        Route::group(['namespace' => $this->namespace], function (Router $router) {
 
             /*
              * Admin routes
              */
-            $router->get('admin/pages', 'AdminController@index')->name('admin::index-pages');
-            $router->get('admin/pages/create', 'AdminController@create')->name('admin::create-page');
-            $router->get('admin/pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page');
-            $router->post('admin/pages', 'AdminController@store')->name('admin::store-page');
-            $router->put('admin/pages/{page}', 'AdminController@update')->name('admin::update-page');
-            $router->post('admin/pages/sort', 'AdminController@sort')->name('admin::sort-pages');
+            $router->group(['middleware' => 'admin', 'prefix' => 'admin'], function (Router $router) {
+                $router->get('pages', 'AdminController@index')->name('admin::index-pages')->middleware('can:see-all-pages');
+                $router->get('pages/create', 'AdminController@create')->name('admin::create-page')->middleware('can:create-page');
+                $router->get('pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page')->middleware('can:update-page');
+                $router->get('pages/{page}/files', 'AdminController@files')->name('admin::edit-page-files')->middleware('can:update-page');
+                $router->post('pages', 'AdminController@store')->name('admin::store-page')->middleware('can:create-page');
+                $router->put('pages/{page}', 'AdminController@update')->name('admin::update-page')->middleware('can:update-page');
+                $router->post('pages/sort', 'AdminController@sort')->name('admin::sort-pages')->middleware('can:update-page');
+                $router->patch('pages/{ids}', 'AdminController@ajaxUpdate')->name('admin::update-page-ajax')->middleware('can:update-page');
+                $router->delete('pages/{page}', 'AdminController@destroy')->name('admin::destroy-page')->middleware('can:delete-page');
 
-            /*
-             * API routes
-             */
-            $router->get('api/pages', 'ApiController@index')->name('api::index-pages');
-            $router->put('api/pages/{page}', 'ApiController@update')->name('api::update-page');
-            $router->delete('api/pages/{page}', 'ApiController@destroy')->name('api::destroy-page');
+                $router->get('pages/{page}/sections/create', 'SectionsAdminController@create')->name('admin::create-page_section')->middleware('can:create-page_section');
+                $router->get('pages/{page}/sections/{section}/edit', 'SectionsAdminController@edit')->name('admin::edit-page_section')->middleware('can:update-page_section');
+                $router->post('pages/{page}/sections', 'SectionsAdminController@store')->name('admin::store-page_section')->middleware('can:create-page_section');
+                $router->put('pages/{page}/sections/{section}', 'SectionsAdminController@update')->name('admin::update-page_section')->middleware('can:update-page_section');
+                $router->post('pages/{page}/sections/sort', 'SectionsAdminController@sort')->name('admin::sort-page_sections');
+
+                $router->get('sections', 'SectionsAdminController@index')->name('admin::index-page_sections')->middleware('can:see-all-page_sections');
+                $router->patch('sections/{ids}', 'SectionsAdminController@ajaxUpdate')->name('admin::update-page_section-ajax')->middleware('can:update-page_section');
+                $router->delete('sections/{section}', 'SectionsAdminController@destroyMultiple')->name('admin::destroy-page_section')->middleware('can:delete-page_section');
+
+                $router->get('page_sections/{section}/files', 'SectionsAdminController@files')->name('admin::edit-page_section-files')->middleware('can:update-page_section');
+            });
 
             /*
              * Front office routes
@@ -95,7 +63,7 @@ class RouteServiceProvider extends ServiceProvider
                     $router->get('/', 'PublicController@redirectToHomepage');
                 }
             }
-            foreach (config('translatable.locales') as $locale) {
+            foreach (locales() as $locale) {
                 if (
                     config('app.fallback_locale') != $locale ||
                     config('typicms.main_locale_in_url')

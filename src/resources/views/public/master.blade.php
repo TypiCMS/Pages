@@ -9,23 +9,19 @@
 @endif
 @section('bodyClass', 'body-page body-page-'.$page->id)
 
-@section('css')
-    @if($page->css)
-    <style type="text/css">
-        {{ $page->css }}
-    </style>
-    @endif
-@endsection
+@if ($page->css)
+    @push('css')
+        <style type="text/css">{{ $page->css }}</style>
+    @endpush
+@endif
 
-@section('js')
-    @if($page->js)
-    <script>
-        {{ $page->js }}
-    </script>
-    @endif
-@endsection
+@if ($page->js)
+    @push('js')
+        <script>{!! $page->js !!}</script>
+    @endpush
+@endif
 
-@section('main')
+@section('content')
 
     @yield('page')
 

@@ -5,11 +5,11 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use TypiCMS;
 use TypiCMS\Modules\Core\Http\Controllers\BasePublicController;
-use TypiCMS\Modules\Pages\Repositories\PageInterface;
+use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
 class PublicController extends BasePublicController
 {
-    public function __construct(PageInterface $page)
+    public function __construct(EloquentPage $page)
     {
         parent::__construct($page);
     }
@@ -19,18 +19,18 @@ class PublicController extends BasePublicController
      *
      * @return \Illuminate\Http\Response | \Illuminate\Http\RedirectResponse
      */
-    public function uri($page = null)
+    public function uri($uri = null)
     {
-        if (!$page) {
-            abort('404');
-        }
+        $page = $this->findPageByUri($uri);
+
+        abort_if(!$page, '404');
 
         if ($page->private && !Auth::check()) {
             abort('403');
         }
 
-        if ($page->redirect && $firstChildPage = $page->children->first()) {
-            $childUri = $firstChildPage->uri();
+        if ($page->redirect && $page->children->count()) {
+            $childUri = $page->children->first()->uri();
 
             return redirect($childUri);
         }
@@ -50,13 +50,38 @@ class PublicController extends BasePublicController
     }
 
     /**
+     * Find page by URI.
+     *
+     * @return TypiCMS\Modules\Pages\Models\Page
+     */
+    private function findPageByUri($uri)
+    {
+        if ($uri === null) {
+            return $this->repository->findBy('is_home', 1);
+        }
+
+        // Only locale in url
+        if (
+            in_array($uri, locales()) &&
+            (
+                config('app.fallback_locale') != $uri ||
+                config('typicms.main_locale_in_url')
+            )
+        ) {
+            return $this->repository->findBy('is_home', 1);
+        }
+
+        return $this->repository->getFirstByUri($uri, config('app.locale'));
+    }
+
+    /**
      * Get browser language or default locale and redirect to homepage.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToHomepage()
     {
-        $homepage = $this->repository->getFirstBy('is_home', 1);
+        $homepage = $this->repository->findBy('is_home', 1);
         $locale = $this->getBrowserLanguageOrDefault();
 
         return redirect($homepage->uri($locale));
@@ -71,7 +96,7 @@ class PublicController extends BasePublicController
     {
         if ($browserLanguage = getenv('HTTP_ACCEPT_LANGUAGE')) {
             $browserLocale = substr($browserLanguage, 0, 2);
-            if (in_array($browserLocale, TypiCMS::getOnlineLocales())) {
+            if (in_array($browserLocale, TypiCMS::enabledLocales())) {
                 return $browserLocale;
             }
         }
@@ -82,12 +107,16 @@ class PublicController extends BasePublicController
     /**
      * Display the lang chooser.
      *
-     * @return void
+     * @return null
      */
     public function langChooser()
     {
-        $homepage = $this->repository->getFirstBy('is_home', 1);
-        $locales = TypiCMS::getOnlineLocales();
+        $homepage = $this->repository->findBy('is_home', 1);
+        if (!$homepage) {
+            app('log')->error('No homepage found.');
+            abort(404);
+        }
+        $locales = TypiCMS::enabledLocales();
 
         return view('core::public.lang-chooser')
             ->with(compact('homepage', 'locales'));

@@ -1,25 +1,24 @@
 @extends('core::admin.master')
 
-@section('title', trans('pages::global.name'))
+@section('title', __('Pages'))
 
-@section('main')
+@section('content')
 
-<div ng-app="typicms" ng-cloak ng-controller="ListController">
+<div ng-cloak ng-controller="ListController">
 
     @include('core::admin._button-create', ['module' => 'pages'])
 
     <h1>
-        <span>Pages</span>
+        <span>{{ __('Pages') }}</span>
     </h1>
 
     <div class="btn-toolbar">
-        @include('core::admin._lang-switcher')
+        @include('core::admin._lang-switcher-for-list')
     </div>
 
-    <!-- Nested node template -->
     <div ui-tree="treeOptions">
         <ul ui-tree-nodes="" data-max-depth="3" ng-model="models" id="tree-root">
-            <li ng-repeat="model in models" ui-tree-node ng-include="'/views/partials/listItemPage.html'"></li>
+            <li ng-repeat="model in models" ui-tree-node collapsed="treeOptions.collapsed(this)" ng-include="'/views/partials/listItemPage.html'"></li>
         </ul>
     </div>
 

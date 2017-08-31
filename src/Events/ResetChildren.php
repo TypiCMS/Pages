@@ -13,17 +13,14 @@ class ResetChildren
      *
      * @param Page $page
      *
-     * @return void
+     * @return null
      */
     public function resetChildrenUri(Page $page)
     {
         foreach ($page->children as $childPage) {
-            foreach (config('translatable.locales') as $locale) {
-                if (is_null($page->translate($locale)->uri)) {
-                    $childPage->translate($locale)->uri = null;
-                } else {
-                    $childPage->translate($locale)->uri = '';
-                }
+            $uris = $childPage->getTranslations('uri');
+            foreach ($uris as $locale => $uri) {
+                $childPage->forgetTranslation('uri', $locale);
             }
             $childPage->save();
             $this->resetChildrenUri($childPage);
