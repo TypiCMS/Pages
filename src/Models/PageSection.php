@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Pages\Models;
 
+use Exception;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
@@ -73,7 +74,7 @@ class PageSection extends Base
     {
         try {
             return route('admin::edit-page_section', [$this->page_id, $this->id]);
-        } catch (InvalidArgumentException $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }
@@ -87,7 +88,7 @@ class PageSection extends Base
     {
         try {
             return route('admin::edit-page', $this->page_id);
-        } catch (InvalidArgumentException $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
         }
     }
