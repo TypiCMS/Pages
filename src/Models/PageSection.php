@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Pages\Models;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
