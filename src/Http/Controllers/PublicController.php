@@ -56,8 +56,10 @@ class PublicController extends BasePublicController
      */
     private function findPageByUri($uri)
     {
-        if ($uri === null) {
-            return $this->repository->findBy('is_home', 1);
+        $repository = $this->repository->with('files');
+
+        if ($uri === '/') {
+            return $repository->findBy('is_home', 1);
         }
 
         // Only locale in url
@@ -68,10 +70,10 @@ class PublicController extends BasePublicController
                 config('typicms.main_locale_in_url')
             )
         ) {
-            return $this->repository->findBy('is_home', 1);
+            return $repository->findBy('is_home', 1);
         }
 
-        return $this->repository->getFirstByUri($uri, config('app.locale'));
+        return $repository->getFirstByUri($uri, config('app.locale'));
     }
 
     /**
