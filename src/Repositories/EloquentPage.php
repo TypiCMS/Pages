@@ -85,7 +85,7 @@ class EloquentPage extends EloquentRepository
         return [
             'position' => $position,
             'parent_id' => $item['parent_id'],
-            'private'   => $item['private'],
+            'private' => $item['private'],
         ];
     }
 
