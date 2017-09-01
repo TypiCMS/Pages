@@ -74,7 +74,9 @@ class Page extends Base
      */
     public function getImageAttribute()
     {
-        return $this->files->first();
+        if ($this->relationLoaded('files')) {
+            return $this->files->first();
+        }
     }
 
     /**
