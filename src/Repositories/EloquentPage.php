@@ -16,19 +16,16 @@ class EloquentPage extends EloquentRepository
      * Get a page by its uri.
      *
      * @param string $uri
-     * @param string $locale
-     * @param array  $with
      *
-     * @return TypiCMS\Modules\Models\Page $model
+     * @return TypiCMS\Modules\Models\Page
      */
-    public function getFirstByUri($uri, $locale, array $with = [])
+    public function getFirstByUri($uri)
     {
-        $repository = $this->with($with);
         if (!request('preview')) {
-            $repository->where(column('status'), '1');
+            $this->where(column('status'), '1');
         }
 
-        return $repository->findBy(column('uri'), $uri);
+        return $this->findBy(column('uri'), $uri);
     }
 
     /**

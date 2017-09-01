@@ -73,7 +73,7 @@ class PublicController extends BasePublicController
             return $repository->findBy('is_home', 1);
         }
 
-        return $repository->getFirstByUri($uri, config('app.locale'));
+        return $repository->getFirstByUri($uri);
     }
 
     /**
