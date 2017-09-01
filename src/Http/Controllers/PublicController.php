@@ -56,7 +56,7 @@ class PublicController extends BasePublicController
      */
     private function findPageByUri($uri)
     {
-        $repository = $this->repository->with('files');
+        $repository = $this->repository->with('files', 'publishedSections');
 
         if ($uri === '/') {
             return $repository->findBy('is_home', 1);
