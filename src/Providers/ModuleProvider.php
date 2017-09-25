@@ -35,10 +35,10 @@ class ModuleProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../resources/views' => base_path('resources/views/vendor/pages'),
-        ], 'views');
+        ], 'typicms-views');
         $this->publishes([
             __DIR__.'/../../public' => public_path(),
-        ], 'assets');
+        ], 'typicms-assets');
 
         AliasLoader::getInstance()->alias('Pages', Pages::class);
         AliasLoader::getInstance()->alias('PageSections', PageSections::class);
