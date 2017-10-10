@@ -58,7 +58,7 @@ class PublicController extends BasePublicController
     {
         $repository = $this->repository->with('files', 'publishedSections');
 
-        if ($uri === '/') {
+        if ($uri === null) {
             return $repository->findBy('is_home', 1);
         }
 
