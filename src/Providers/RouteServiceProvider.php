@@ -56,22 +56,24 @@ class RouteServiceProvider extends ServiceProvider
             /*
              * Front office routes
              */
-            if (config('typicms.main_locale_in_url')) {
-                if (config('typicms.lang_chooser')) {
-                    $router->get('/', 'PublicController@langChooser');
-                } else {
-                    $router->get('/', 'PublicController@redirectToHomepage');
+            $router->middleware('public')->group(function (Router $router) {
+                if (config('typicms.main_locale_in_url')) {
+                    if (config('typicms.lang_chooser')) {
+                        $router->get('/', 'PublicController@langChooser');
+                    } else {
+                        $router->get('/', 'PublicController@redirectToHomepage');
+                    }
                 }
-            }
-            foreach (locales() as $locale) {
-                if (
-                    config('app.fallback_locale') != $locale ||
-                    config('typicms.main_locale_in_url')
-                ) {
-                    $router->get('{uri}', ['prefix' => $locale, 'uses' => 'PublicController@uri'])->where('uri', '(.*)');
+                foreach (locales() as $locale) {
+                    if (
+                        config('app.fallback_locale') != $locale ||
+                        config('typicms.main_locale_in_url')
+                    ) {
+                        $router->prefix($locale)->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
+                    }
                 }
-            }
-            $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
+                $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
+            });
         });
     }
 }
