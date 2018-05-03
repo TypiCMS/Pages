@@ -17,7 +17,7 @@ class ResetChildren
      */
     public function resetChildrenUri(Page $page)
     {
-        foreach ($page->children as $childPage) {
+        foreach ($page->subpages as $childPage) {
             $uris = $childPage->getTranslations('uri');
             foreach ($uris as $locale => $uri) {
                 $childPage->forgetTranslation('uri', $locale);

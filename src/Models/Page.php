@@ -120,11 +120,11 @@ class Page extends Base
     }
 
     /**
-     * A page can have children.
+     * A page can have subpages.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function children()
+    public function subpages()
     {
         return $this->hasMany(self::class, 'parent_id')->order();
     }

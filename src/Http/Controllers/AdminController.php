@@ -32,7 +32,12 @@ class AdminController extends BaseAdminController
             'module',
             'slug',
             'uri',
-        ])->nest();
+        ])->map(function($item){
+            $item->data = $item->toArray();
+            $item->isLeaf = $item->module === null ? false : true;
+            return $item;
+        })->childrenName('children')->nest();
+
         app('JavaScript')->put('models', $models);
 
         return view('pages::admin.index');
