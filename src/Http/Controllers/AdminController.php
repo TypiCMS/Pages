@@ -32,9 +32,10 @@ class AdminController extends BaseAdminController
             'module',
             'slug',
             'uri',
-        ])->map(function($item){
+        ])->map(function ($item) {
             $item->data = $item->toArray();
             $item->isLeaf = $item->module === null ? false : true;
+
             return $item;
         })->childrenName('children')->nest();
 
