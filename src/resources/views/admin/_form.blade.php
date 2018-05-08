@@ -31,18 +31,18 @@
                 {!! TranslatableBootForm::text(__('Title'), 'title') !!}
             </div>
             @foreach ($locales as $lang)
-            <div class="col-md-6 form-group form-group-translation @if ($errors->has('slug.'.$lang))has-error @endif">
+            <div class="col-md-6 form-group form-group-translation">
                 <label class="control-label" for="slug[{{ $lang }}]"><span>{{ __('Url') }}</span> ({{ $lang }})</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">{{ $model->present()->parentUri($lang) }}</span>
                     </div>
-                    <input class="form-control" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
+                    <input class="form-control @if($errors->has('slug.'.$lang))is-invalid @endif" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
                     <span class="input-group-append">
-                        <button class="btn btn-outline-secondary btn-slug @if ($errors->has('slug.'.$lang))btn-danger @endif" type="button">{{ __('Generate') }}</button>
+                        <button class="btn btn-outline-secondary btn-slug" type="button">{{ __('Generate') }}</button>
                     </span>
+                    {!! $errors->first('slug.'.$lang, '<div class="invalid-feedback">:message</div>') !!}
                 </div>
-                {!! $errors->first('slug.'.$lang, '<p class="help-block">:message</p>') !!}
             </div>
             @endforeach
         </div>
@@ -72,7 +72,7 @@
 
             <div class="table-responsive">
 
-                <table st-persist="pageSectionsTable" st-table="displayedModels" st-safe-src="models" st-order st-filter class="table table-condensed table-main">
+                <table st-persist="pageSectionsTable" st-table="displayedModels" st-safe-src="models" st-order st-filter class="table table-main">
                     <thead>
                         <tr>
                             <th class="delete"></th>
