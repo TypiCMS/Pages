@@ -6,7 +6,7 @@
     <div ng-if="model.private" class="fa fa-lock"></div>
     <div class="title" ui-tree-handle>{{ model.title_translated }}</div>
     <div ng-if="model.redirect" class="fa fa-level-down text-muted" title="Redirect to first child"></div>
-    <div class="label label-warning" href="{{ model.module }}" ng-if="model.module">{{ model.module }}</div>
+    <div class="badge badge-secondary" href="{{ model.module }}" ng-if="model.module">{{ model.module }}</div>
 </div>
 <ul ui-tree-nodes="" ng-class="{hidden: collapsed}" ng-model="model.items">
     <li ng-repeat="model in model.items" ui-tree-node collapsed="treeOptions.collapsed(this)" ng-include="'/views/partials/listItemPage.html'"></li>
