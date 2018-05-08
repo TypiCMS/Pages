@@ -25,7 +25,7 @@
         <div class="news-container">
             <h2>@lang('db.Latest news')</h2>
             @include('news::public._list', ['items' => $latestNews])
-            <a href="{{ route($lang.'::index-news') }}" class="btn btn-default btn-xs">@lang('db.All news')</a>
+            <a href="{{ route($lang.'::index-news') }}" class="btn btn-light btn-xs">@lang('db.All news')</a>
         </div>
     @endif
 --}}
@@ -35,7 +35,7 @@
         <div class="events-container">
             <h3>@lang('db.Incoming events')</h3>
             @include('events::public._list', ['items' => $upcomingEvents])
-            <a href="{{ route($lang.'::index-events') }}" class="btn btn-default btn-xs">@lang('db.All events')</a>
+            <a href="{{ route($lang.'::index-events') }}" class="btn btn-light btn-xs">@lang('db.All events')</a>
         </div>
     @endif
 --}}

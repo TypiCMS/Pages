@@ -12,20 +12,20 @@
 @include('files::admin._files-selector')
 
 <ul class="nav nav-tabs">
-    <li class="active">
-        <a href="#tab-content" data-target="#tab-content" data-toggle="tab">{{ __('Content') }}</a>
+    <li class="nav-item">
+        <a class="nav-link active" href="#tab-content" data-target="#tab-content" data-toggle="tab">{{ __('Content') }}</a>
     </li>
-    <li>
-        <a href="#tab-meta" data-target="#tab-meta" data-toggle="tab">{{ __('Meta') }}</a>
+    <li class="nav-item">
+        <a class="nav-link" href="#tab-meta" data-target="#tab-meta" data-toggle="tab">{{ __('Meta') }}</a>
     </li>
-    <li>
-        <a href="#tab-options" data-target="#tab-options" data-toggle="tab">{{ __('Options') }}</a>
+    <li class="nav-item">
+        <a class="nav-link" href="#tab-options" data-target="#tab-options" data-toggle="tab">{{ __('Options') }}</a>
     </li>
 </ul>
 
 <div class="tab-content">
 
-    <div class="tab-pane fade in active" id="tab-content">
+    <div class="tab-pane fade show active" id="tab-content">
         <div class="row">
             <div class="col-md-6">
                 {!! TranslatableBootForm::text(__('Title'), 'title') !!}
@@ -34,10 +34,12 @@
             <div class="col-md-6 form-group form-group-translation @if ($errors->has('slug.'.$lang))has-error @endif">
                 <label class="control-label" for="slug[{{ $lang }}]"><span>{{ __('Url') }}</span> ({{ $lang }})</label>
                 <div class="input-group">
-                    <span class="input-group-addon">{{ $model->present()->parentUri($lang) }}</span>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ $model->present()->parentUri($lang) }}</span>
+                    </div>
                     <input class="form-control" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default btn-slug @if ($errors->has('slug.'.$lang))btn-danger @endif" type="button">{{ __('Generate') }}</button>
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-secondary btn-slug @if ($errors->has('slug.'.$lang))btn-danger @endif" type="button">{{ __('Generate') }}</button>
                     </span>
                 </div>
                 {!! $errors->first('slug.'.$lang, '<p class="help-block">:message</p>') !!}
@@ -45,8 +47,10 @@
             @endforeach
         </div>
         {!! TranslatableBootForm::hidden('uri') !!}
-        {!! TranslatableBootForm::hidden('status')->value(0) !!}
-        {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
+        <div class="form-group">
+            {!! TranslatableBootForm::hidden('status')->value(0) !!}
+            {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
+        </div>
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
 
         @can ('see-all-page_sections')
@@ -89,7 +93,7 @@
                             </td>
                             <td typi-btn-status action="toggleStatus(model)" model="model"></td>
                             <td>
-                                <input class="form-control input-sm" min="0" type="number" name="position" ng-model="model.position" ng-change="update(model, 'position')">
+                                <input class="form-control form-control-sm" min="0" type="number" name="position" ng-model="model.position" ng-change="update(model, 'position')">
                             </td>
                             <td>@{{ model.title_translated }}</td>
                         </tr>
@@ -110,13 +114,15 @@
     </div>
 
     <div class="tab-pane fade" id="tab-options">
-        {!! BootForm::hidden('is_home')->value(0) !!}
-        {!! BootForm::checkbox(__('Is home'), 'is_home') !!}
-        {!! BootForm::hidden('private')->value(0) !!}
-        {!! BootForm::checkbox(__('Private'), 'private') !!}
-        {!! BootForm::hidden('redirect')->value(0) !!}
-        {!! BootForm::checkbox(__('Redirect to first child'), 'redirect') !!}
-        {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disable($model->children->count())->helpBlock($model->children->count() ? __('A page with children cannot be linked to a module') : '') !!}
+        <div class="form-group">
+            {!! BootForm::hidden('is_home')->value(0) !!}
+            {!! BootForm::checkbox(__('Is home'), 'is_home') !!}
+            {!! BootForm::hidden('private')->value(0) !!}
+            {!! BootForm::checkbox(__('Private'), 'private') !!}
+            {!! BootForm::hidden('redirect')->value(0) !!}
+            {!! BootForm::checkbox(__('Redirect to first child'), 'redirect') !!}
+        </div>
+        {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disable($model->subpages->count())->helpBlock($model->subpages->count() ? __('A page containing subpages cannot be linked to a module') : '') !!}
         {!! BootForm::select(__('Template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir()) !!}
         @if (!$model->id)
         {!! BootForm::select(__('Add to menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('name', 'id')->all(), null, array('class' => 'form-control')) !!}
