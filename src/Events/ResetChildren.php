@@ -8,8 +8,8 @@ use TypiCMS\Modules\Pages\Models\Page;
 class ResetChildren
 {
     /**
-     * Recursive method for emptying children’s uri
-     * UriObserver will rebuild uris.
+     * Recursive method for emptying subpages URI
+     * UriObserver will rebuild URIs.
      *
      * @param Page $page
      *
@@ -17,13 +17,13 @@ class ResetChildren
      */
     public function resetChildrenUri(Page $page)
     {
-        foreach ($page->children as $childPage) {
-            $uris = $childPage->getTranslations('uri');
+        foreach ($page->subpages as $subpage) {
+            $uris = $subpage->getTranslations('uri');
             foreach ($uris as $locale => $uri) {
-                $childPage->forgetTranslation('uri', $locale);
+                $subpage->forgetTranslation('uri', $locale);
             }
-            $childPage->save();
-            $this->resetChildrenUri($childPage);
+            $subpage->save();
+            $this->resetChildrenUri($subpage);
         }
     }
 
