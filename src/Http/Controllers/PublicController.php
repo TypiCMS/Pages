@@ -29,8 +29,8 @@ class PublicController extends BasePublicController
             abort('403');
         }
 
-        if ($page->redirect && $page->children->count()) {
-            $childUri = $page->children->first()->uri();
+        if ($page->redirect && $page->subpages->count()) {
+            $childUri = $page->subpages->first()->uri();
 
             return redirect($childUri);
         }
