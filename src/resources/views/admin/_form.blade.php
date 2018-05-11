@@ -30,21 +30,23 @@
             <div class="col-md-6">
                 {!! TranslatableBootForm::text(__('Title'), 'title') !!}
             </div>
+            <div class="col-md-6">
             @foreach ($locales as $lang)
-            <div class="col-md-6 form-group form-group-translation">
-                <label class="control-label" for="slug[{{ $lang }}]"><span>{{ __('Url') }}</span> ({{ $lang }})</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">{{ $model->present()->parentUri($lang) }}</span>
+                <div class="form-group form-group-translation">
+                    <label class="control-label" for="slug[{{ $lang }}]"><span>{{ __('Url') }}</span> ({{ $lang }})</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">{{ $model->present()->parentUri($lang) }}</span>
+                        </div>
+                        <input class="form-control @if($errors->has('slug.'.$lang))is-invalid @endif" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
+                        <span class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-slug" type="button">{{ __('Generate') }}</button>
+                        </span>
+                        {!! $errors->first('slug.'.$lang, '<div class="invalid-feedback">:message</div>') !!}
                     </div>
-                    <input class="form-control @if($errors->has('slug.'.$lang))is-invalid @endif" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
-                    <span class="input-group-append">
-                        <button class="btn btn-outline-secondary btn-slug" type="button">{{ __('Generate') }}</button>
-                    </span>
-                    {!! $errors->first('slug.'.$lang, '<div class="invalid-feedback">:message</div>') !!}
                 </div>
-            </div>
             @endforeach
+            </div>
         </div>
         {!! TranslatableBootForm::hidden('uri') !!}
         <div class="form-group">
