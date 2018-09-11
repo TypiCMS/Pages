@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
+use Illuminate\Http\Request;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Pages\Http\Requests\FormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
@@ -19,27 +20,29 @@ class AdminController extends BaseAdminController
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $models = $this->repository->orderBy('position')->findAll([
-            'id',
-            'parent_id',
-            'title',
-            'position',
-            'status',
-            'private',
-            'redirect',
-            'module',
-            'slug',
-            'uri',
-        ])->map(function ($item) {
-            $item->data = $item->toArray();
-            $item->isLeaf = $item->module === null ? false : true;
+        if ($request->wantsJson()) {
+            $models = $this->repository->orderBy('position')->findAll([
+                'id',
+                'parent_id',
+                'title',
+                'position',
+                'status',
+                'private',
+                'redirect',
+                'module',
+                'slug',
+                'uri',
+            ])->map(function ($item) {
+                $item->data = $item->toArray();
+                $item->isLeaf = $item->module === null ? false : true;
 
-            return $item;
-        })->childrenName('children')->nest();
+                return $item;
+            })->childrenName('children')->nest();
 
-        app('JavaScript')->put('models', $models);
+            return $models;
+        }
 
         return view('pages::admin.index');
     }
