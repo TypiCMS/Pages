@@ -56,8 +56,9 @@ class RouteServiceProvider extends ServiceProvider
              * API routes
              */
             $router->middleware('api')->prefix('api')->group(function (Router $router) {
-                $router->get('pages/{page}/files', 'ApiController@files')->name('admin::edit-page-files');
-                $router->delete('pages/{page}/files/{file}', 'ApiController@detachFile')->name('admin::edit-page-detach-file');
+                $router->get('pages', 'ApiController@index')->name('api::index-pages');
+                $router->get('pages/{page}/files', 'ApiController@files')->name('api::edit-page-files');
+                $router->delete('pages/{page}/files/{file}', 'ApiController@detachFile')->name('api::edit-page-detach-file');
 
                 $router->get('pages/{page}/sections', 'SectionsApiController@index')->name('api::index-page_sections');
                 $router->patch('pages/{page}/sections/{section}', 'SectionsApiController@update')->name('api::update-page_section');

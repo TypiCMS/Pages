@@ -12,7 +12,7 @@
         <span>{{ __('Pages') }}</span>
     </h1>
 
-    <item-list-tree url="{{ route('admin::index-pages') }}">
+    <item-list-tree url="{{ route('api::index-pages') }}">
 
         <template slot="buttons">
             @include('core::admin._lang-switcher-for-list')
