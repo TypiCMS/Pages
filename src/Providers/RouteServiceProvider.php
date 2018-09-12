@@ -33,7 +33,6 @@ class RouteServiceProvider extends ServiceProvider
                 $router->get('pages', 'AdminController@index')->name('admin::index-pages')->middleware('can:see-all-pages');
                 $router->get('pages/create', 'AdminController@create')->name('admin::create-page')->middleware('can:create-page');
                 $router->get('pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page')->middleware('can:update-page');
-                $router->get('pages/{page}/files', 'AdminController@files')->name('admin::edit-page-files')->middleware('can:update-page');
                 $router->post('pages', 'AdminController@store')->name('admin::store-page')->middleware('can:create-page');
                 $router->put('pages/{page}', 'AdminController@update')->name('admin::update-page')->middleware('can:update-page');
                 $router->post('pages/sort', 'AdminController@sort')->name('admin::sort-pages')->middleware('can:update-page');
@@ -51,6 +50,18 @@ class RouteServiceProvider extends ServiceProvider
                 $router->delete('sections/{section}', 'SectionsAdminController@destroyMultiple')->name('admin::destroy-page_section')->middleware('can:delete-page_section');
 
                 $router->get('page_sections/{section}/files', 'SectionsAdminController@files')->name('admin::edit-page_section-files')->middleware('can:update-page_section');
+            });
+
+            /*
+             * API routes
+             */
+            $router->middleware('api')->prefix('api')->group(function (Router $router) {
+                $router->get('pages/{page}/files', 'ApiController@files')->name('admin::edit-page-files');
+                $router->delete('pages/{page}/files/{file}', 'ApiController@detachFile')->name('admin::edit-page-detach-file');
+
+                $router->get('pages/{page}/sections', 'SectionsApiController@index')->name('api::index-page_sections');
+                $router->patch('pages/{page}/sections/{section}', 'SectionsApiController@update')->name('api::update-page_section');
+                $router->delete('pages/{page}/sections/{section}', 'SectionsApiController@destroy')->name('api::destroy-page_section');
             });
 
             /*

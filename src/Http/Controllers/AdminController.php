@@ -22,28 +22,6 @@ class AdminController extends BaseAdminController
      */
     public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            $models = $this->repository->orderBy('position')->findAll([
-                'id',
-                'parent_id',
-                'title',
-                'position',
-                'status',
-                'private',
-                'redirect',
-                'module',
-                'slug',
-                'uri',
-            ])->map(function ($item) {
-                $item->data = $item->toArray();
-                $item->isLeaf = $item->module === null ? false : true;
-
-                return $item;
-            })->childrenName('children')->nest();
-
-            return $models;
-        }
-
         return view('pages::admin.index');
     }
 
@@ -124,17 +102,5 @@ class AdminController extends BaseAdminController
         return response()->json([
             'error' => !$deleted,
         ]);
-    }
-
-    /**
-     * get files.
-     */
-    public function files(Page $page)
-    {
-        $data = [
-            'models' => $page->files,
-        ];
-
-        return response()->json($data, 200);
     }
 }
