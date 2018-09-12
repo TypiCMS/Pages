@@ -6,11 +6,11 @@
 
 <div>
 
-    @include('core::admin._button-create', ['module' => 'pages'])
-
-    <h1>
+    <h2>
         <span>{{ __('Pages') }}</span>
-    </h1>
+    </h2>
+
+    @include('core::admin._button-create', ['module' => 'pages'])
 
     <item-list-tree url="{{ route('api::index-pages') }}">
 
