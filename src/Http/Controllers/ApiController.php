@@ -3,7 +3,6 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Models\Page;
