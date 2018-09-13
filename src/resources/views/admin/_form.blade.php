@@ -26,7 +26,6 @@
     <div class="tab-pane fade show active" id="tab-content">
 
         <filepicker :options="{ modal: true, dropzone: false, multiple: true }"></filepicker>
-        <filepicker :options="{ modal: true, dropzone: false, multiple: false, single: true }" id="filepicker-single"></filepicker>
         <files related-table="{{ $model->getTable() }}" related-id="{{ $model->id }}"></files>
 
         <div class="row">
