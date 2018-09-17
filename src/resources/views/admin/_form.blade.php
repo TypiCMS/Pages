@@ -73,10 +73,6 @@
                 @include('core::admin._button-create', ['url' => route('admin::create-page_section', $model->id), 'module' => 'page_sections'])
             </template>
 
-            <template slot="buttons">
-                @include('core::admin._lang-switcher-for-list')
-            </template>
-
             <template slot="columns" slot-scope="{ sortArray }">
                 <item-list-column-header name="checkbox"></item-list-column-header>
                 <item-list-column-header name="edit"></item-list-column-header>
