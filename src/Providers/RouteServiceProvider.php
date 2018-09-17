@@ -35,9 +35,6 @@ class RouteServiceProvider extends ServiceProvider
                 $router->get('pages/{page}/edit', 'AdminController@edit')->name('admin::edit-page')->middleware('can:update-page');
                 $router->post('pages', 'AdminController@store')->name('admin::store-page')->middleware('can:create-page');
                 $router->put('pages/{page}', 'AdminController@update')->name('admin::update-page')->middleware('can:update-page');
-                $router->post('pages/sort', 'AdminController@sort')->name('admin::sort-pages')->middleware('can:update-page');
-                $router->patch('pages/{ids}', 'AdminController@ajaxUpdate')->name('admin::update-page-ajax')->middleware('can:update-page');
-                $router->delete('pages/{page}', 'AdminController@destroy')->name('admin::destroy-page')->middleware('can:delete-page');
 
                 $router->get('pages/{page}/sections/create', 'SectionsAdminController@create')->name('admin::create-page_section')->middleware('can:create-page_section');
                 $router->get('pages/{page}/sections/{section}/edit', 'SectionsAdminController@edit')->name('admin::edit-page_section')->middleware('can:update-page_section');
@@ -57,6 +54,10 @@ class RouteServiceProvider extends ServiceProvider
              */
             $router->middleware('api')->prefix('api')->group(function (Router $router) {
                 $router->get('pages', 'ApiController@index')->name('api::index-pages');
+                $router->patch('pages/{page}', 'ApiController@update')->name('api::update-page');
+                $router->post('pages/sort', 'ApiController@sort')->name('api::sort-pages');
+                $router->delete('pages/{page}', 'ApiController@destroy')->name('api::destroy-page');
+
                 $router->get('pages/{page}/files', 'ApiController@files')->name('api::edit-page-files');
                 $router->delete('pages/{page}/files/{file}', 'ApiController@detachFile')->name('api::edit-page-detach-file');
 

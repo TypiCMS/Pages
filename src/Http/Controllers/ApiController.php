@@ -72,14 +72,21 @@ class ApiController extends BaseApiController
         ]);
     }
 
+    public function sort()
+    {
+        $this->repository->sort(request()->all());
+
+        return response()->json([
+            'error' => false,
+            'message' => __('Items sorted'),
+        ], 200);
+    }
+
     public function detachFile(Page $page, File $file)
     {
         return $this->repository->detachFile($page, $file);
     }
 
-    /**
-     * get files.
-     */
     public function files(Page $page)
     {
         $data = [
@@ -88,4 +95,5 @@ class ApiController extends BaseApiController
 
         return response()->json($data, 200);
     }
+
 }

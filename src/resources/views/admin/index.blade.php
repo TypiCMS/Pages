@@ -12,7 +12,7 @@
 
     @include('core::admin._button-create', ['module' => 'pages'])
 
-    <item-list-tree url="{{ route('api::index-pages') }}">
+    <item-list-tree url-base="{{ route('api::index-pages') }}">
 
         <template slot="buttons">
             @include('core::admin._lang-switcher-for-list')
