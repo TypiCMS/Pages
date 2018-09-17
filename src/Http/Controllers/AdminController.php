@@ -87,20 +87,4 @@ class AdminController extends BaseAdminController
 
         return $this->redirect($request, $page);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \TypiCMS\Modules\Pages\Models\Page $page
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy(Page $page)
-    {
-        $deleted = $this->repository->delete($page);
-
-        return response()->json([
-            'error' => !$deleted,
-        ]);
-    }
 }
