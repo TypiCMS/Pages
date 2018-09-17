@@ -95,5 +95,4 @@ class ApiController extends BaseApiController
 
         return response()->json($data, 200);
     }
-
 }
