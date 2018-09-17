@@ -6,9 +6,9 @@
 
 <div>
 
-    <h2>
+    <h1>
         <span>{{ __('Pages') }}</span>
-    </h2>
+    </h1>
 
     @include('core::admin._button-create', ['module' => 'pages'])
 
