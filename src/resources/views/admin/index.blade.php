@@ -4,22 +4,19 @@
 
 @section('content')
 
-<div>
+<item-list-tree
+    url-base="{{ route('api::index-pages') }}"
+    title="Pages"
+>
 
-    <h1>
-        <span>{{ __('Pages') }}</span>
-    </h1>
+    <template slot="add-button">
+        @include('core::admin._button-create', ['url' => route('admin::create-page'), 'module' => 'pages'])
+    </template>
 
-    @include('core::admin._button-create', ['module' => 'pages'])
+    <template slot="buttons">
+        @include('core::admin._lang-switcher-for-list')
+    </template>
 
-    <item-list-tree url-base="{{ route('api::index-pages') }}">
-
-        <template slot="buttons">
-            @include('core::admin._lang-switcher-for-list')
-        </template>
-
-    </item-list-tree>
-
-</div>
+</item-list-tree>
 
 @endsection
