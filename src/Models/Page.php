@@ -32,7 +32,7 @@ class Page extends Base
         'meta_description',
     ];
 
-    protected $appends = ['image', 'thumb', 'title_translated'];
+    protected $appends = ['image', 'thumb'];
 
     /**
      * Get front office uri.
@@ -53,18 +53,6 @@ class Page extends Base
         }
 
         return $uri ?: '/';
-    }
-
-    /**
-     * Append title_translated attribute.
-     *
-     * @return string
-     */
-    public function getTitleTranslatedAttribute()
-    {
-        $locale = config('app.locale');
-
-        return $this->translate('title', config('typicms.content_locale', $locale));
     }
 
     /**
