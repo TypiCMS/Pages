@@ -17,6 +17,8 @@ class ApiController extends BaseApiController
 
     public function index(Request $request)
     {
+        $userPreferences = $request->user()->preferences;
+
         $models = $this->repository->orderBy('position')->findAll([
             'id',
             'parent_id',
@@ -28,9 +30,10 @@ class ApiController extends BaseApiController
             'module',
             'slug',
             'uri',
-        ])->map(function ($item) {
+        ])->map(function ($item) use ($userPreferences) {
             $item->data = $item->toArray();
             $item->isLeaf = $item->module === null ? false : true;
+            $item->isExpanded = !array_get($userPreferences, 'Pages_'.$item->id.'_collapsed', false);
 
             return $item;
         })->childrenName('children')->nest();
