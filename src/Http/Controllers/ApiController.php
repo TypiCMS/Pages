@@ -41,7 +41,7 @@ class ApiController extends BaseApiController
         return $models;
     }
 
-    protected function update(Page $page, Request $request)
+    protected function updatePartial(Page $page, Request $request)
     {
         $data = [];
         foreach ($request->all() as $column => $content) {

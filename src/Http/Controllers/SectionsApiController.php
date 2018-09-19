@@ -28,7 +28,7 @@ class SectionsApiController extends BaseApiController
         return $models;
     }
 
-    protected function update(Page $page, PageSection $section, Request $request)
+    protected function updatePartial(Page $page, PageSection $section, Request $request)
     {
         $data = [];
         foreach ($request->all() as $column => $content) {

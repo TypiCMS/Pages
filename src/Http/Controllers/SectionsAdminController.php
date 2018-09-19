@@ -98,23 +98,6 @@ class SectionsAdminController extends BaseAdminController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param \TypiCMS\Modules\Pages\Models\Page        $page
-     * @param \TypiCMS\Modules\Pages\Models\PageSection $section
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy(Page $page, PageSection $section)
-    {
-        $deleted = $this->repository->delete($section);
-
-        return response()->json([
-            'error' => !$deleted,
-        ]);
-    }
-
-    /**
      * get files.
      */
     public function files(PageSection $section)
