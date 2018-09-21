@@ -20,7 +20,7 @@ class SectionsApiController extends BaseApiController
     {
         $models = QueryBuilder::for(PageSection::class)
             ->allowedFilters('date')
-            ->translated(explode(',', $request->input('translatable_fields')))
+            ->translated($request->input('translatable_fields'))
             ->with('files')
             ->where('page_id', $page->id)
             ->paginate($request->input('per_page'));
