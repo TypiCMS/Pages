@@ -62,9 +62,7 @@ class Page extends Base
      */
     public function getImageAttribute()
     {
-        if ($this->relationLoaded('files')) {
-            return $this->files->first();
-        }
+        return $this->files->where('type', 'i')->first();
     }
 
     /**

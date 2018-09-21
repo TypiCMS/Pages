@@ -5,7 +5,7 @@
 @section('content')
 
 <item-list-tree
-    url-base="{{ route('api::index-pages') }}"
+    url-base="/api/pages"
     title="Pages"
 >
 

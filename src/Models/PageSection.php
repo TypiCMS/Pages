@@ -30,7 +30,7 @@ class PageSection extends Base
         'body',
     ];
 
-    protected $appends = ['image'];
+    protected $appends = ['image', 'thumb'];
 
     /**
      * Append image attribute.
@@ -39,7 +39,17 @@ class PageSection extends Base
      */
     public function getImageAttribute()
     {
-        return $this->files->first();
+        return $this->files->where('type', 'i')->first();
+    }
+
+    /**
+     * Append thumb attribute.
+     *
+     * @return string
+     */
+    public function getThumbAttribute()
+    {
+        return $this->present()->thumbSrc(null, 22);
     }
 
     /**

@@ -9,6 +9,9 @@
 {!! BootForm::hidden('page_id')->value($page->id) !!}
 {!! BootForm::hidden('position') !!}
 
+<filepicker related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></filepicker>
+<files related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></files>
+
 @include('core::form._title-and-slug')
 <div class="form-group">
     {!! TranslatableBootForm::hidden('status')->value(0) !!}

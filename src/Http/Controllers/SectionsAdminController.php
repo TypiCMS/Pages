@@ -17,19 +17,6 @@ class SectionsAdminController extends BaseAdminController
     }
 
     /**
-     * List models.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index(Page $page)
-    {
-        $id = request('page_id');
-        $models = $this->repository->where('page_id', $id)->findAll();
-
-        return response()->json($models, 200);
-    }
-
-    /**
      * Create form for a new resource.
      *
      * @param \TypiCMS\Modules\Pages\Models\Page $page
@@ -95,17 +82,5 @@ class SectionsAdminController extends BaseAdminController
         Pages::forgetCache();
 
         return $this->redirect($request, $section);
-    }
-
-    /**
-     * get files.
-     */
-    public function files(PageSection $section)
-    {
-        $data = [
-            'models' => $section->files,
-        ];
-
-        return response()->json($data, 200);
     }
 }

@@ -60,7 +60,7 @@
         @can('see-all-page_sections')
         @if($model->id)
         <item-list
-            url-base="{{ route('api::index-page_sections', $model->id) }}"
+            url-base="/api/pages/{{ $model->id }}/sections"
             locale="{{ config('typicms.content_locale') }}"
             fields="id,page_id,position"
             translatable-fields="status,title"

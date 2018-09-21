@@ -5,6 +5,7 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
+use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageSection;
 use TypiCMS\Modules\Pages\Repositories\EloquentPageSection;
@@ -60,5 +61,20 @@ class SectionsApiController extends BaseApiController
         return response()->json([
             'error' => !$deleted,
         ]);
+    }
+
+    public function files(PageSection $section)
+    {
+        return $section->files;
+    }
+
+    public function attachFiles(PageSection $section, Request $request)
+    {
+        return $this->repository->attachFiles($section, $request);
+    }
+
+    public function detachFile(PageSection $section, File $file)
+    {
+        return $this->repository->detachFile($section, $file);
     }
 }

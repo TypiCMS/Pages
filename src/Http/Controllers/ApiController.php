@@ -66,15 +66,6 @@ class ApiController extends BaseApiController
         ]);
     }
 
-    public function destroy(Page $page)
-    {
-        $deleted = $this->repository->delete($page);
-
-        return response()->json([
-            'error' => !$deleted,
-        ]);
-    }
-
     public function sort()
     {
         $this->repository->sort(request()->all());
@@ -85,17 +76,27 @@ class ApiController extends BaseApiController
         ], 200);
     }
 
-    public function detachFile(Page $page, File $file)
+    public function destroy(Page $page)
     {
-        return $this->repository->detachFile($page, $file);
+        $deleted = $this->repository->delete($page);
+
+        return response()->json([
+            'error' => !$deleted,
+        ]);
     }
 
     public function files(Page $page)
     {
-        $data = [
-            'models' => $page->files,
-        ];
+        return $page->files;
+    }
 
-        return response()->json($data, 200);
+    public function attachFiles(Page $page, Request $request)
+    {
+        return $this->repository->attachFiles($page, $request);
+    }
+
+    public function detachFile(Page $page, File $file)
+    {
+        return $this->repository->detachFile($page, $file);
     }
 }
