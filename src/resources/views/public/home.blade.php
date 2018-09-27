@@ -6,7 +6,7 @@
 
 @section('page')
 
-    @if($page->image)
+    @if ($page->image)
         {!! $page->present()->thumb(200, 200) !!}
     @endif
 
