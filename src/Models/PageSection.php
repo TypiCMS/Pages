@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Log;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
-use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Files\Traits\HasFiles;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
