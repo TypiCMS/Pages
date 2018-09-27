@@ -8,12 +8,14 @@ use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Files\Models\File;
+use TypiCMS\Modules\Files\Traits\HasFiles;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
 use TypiCMS\Modules\Pages\Traits\SortableSectionTrait;
 
 class PageSection extends Base
 {
+    use HasFiles;
     use HasTranslations;
     use Historable;
     use PresentableTrait;
@@ -88,16 +90,5 @@ class PageSection extends Base
     public function page()
     {
         return $this->belongsTo(Page::class);
-    }
-
-    /**
-     * A page can have many files.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function files()
-    {
-        return $this->morphToMany(File::class, 'model', 'model_has_files', 'model_id', 'file_id')
-            ->orderBy('model_has_files.position');
     }
 }
