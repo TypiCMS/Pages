@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Models\Page;
@@ -19,24 +20,19 @@ class ApiController extends BaseApiController
     {
         $userPreferences = $request->user()->preferences;
 
-        $models = $this->repository->orderBy('position')->findAll([
-            'id',
-            'parent_id',
-            'title',
-            'position',
-            'status',
-            'private',
-            'redirect',
-            'module',
-            'slug',
-            'uri',
-        ])->map(function ($item) use ($userPreferences) {
-            $item->data = $item->toArray();
-            $item->isLeaf = $item->module === null ? false : true;
-            $item->isExpanded = !array_get($userPreferences, 'Pages_'.$item->id.'_collapsed', false);
+        $models = QueryBuilder::for(Page::class)
+            ->translated($request->input('translatable_fields'))
+            ->orderBy('position')
+            ->get()
+            ->map(function ($item) use ($userPreferences) {
+                $item->data = $item->toArray();
+                $item->isLeaf = $item->module === null ? false : true;
+                $item->isExpanded = !array_get($userPreferences, 'Pages_'.$item->id.'_collapsed', false);
 
-            return $item;
-        })->childrenName('children')->nest();
+                return $item;
+            })
+            ->childrenName('children')
+            ->nest();
 
         return $models;
     }
