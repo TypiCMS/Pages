@@ -40,7 +40,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">{{ $model->present()->parentUri($lang) }}</span>
                         </div>
-                        <input class="form-control @if($errors->has('slug.'.$lang))is-invalid @endif" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
+                        <input class="form-control @if ($errors->has('slug.'.$lang))is-invalid @endif" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
                         <span class="input-group-append">
                             <button class="btn btn-outline-secondary btn-slug" type="button">{{ __('Generate') }}</button>
                         </span>
@@ -58,7 +58,7 @@
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
 
         @can('see-all-page_sections')
-        @if($model->id)
+        @if ($model->id)
         <item-list
             url-base="/api/pages/{{ $model->id }}/sections"
             locale="{{ config('typicms.content_locale') }}"
