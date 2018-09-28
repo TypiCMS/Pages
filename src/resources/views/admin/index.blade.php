@@ -4,24 +4,19 @@
 
 @section('content')
 
-<div ng-cloak ng-controller="ListController">
+<item-list-tree
+    locale="{{ config('typicms.content_locale') }}"
+    url-base="/api/pages"
+    fields="id,position,parent_id,module,redirect,is_home,private"
+    translatable-fields="status,title,slug,uri"
+    table="pages"
+    title="Pages"
+>
 
-    @include('core::admin._button-create', ['module' => 'pages'])
+    <template slot="add-button">
+        @include('core::admin._button-create', ['url' => route('admin::create-page'), 'module' => 'pages'])
+    </template>
 
-    <h1>
-        <span>{{ __('Pages') }}</span>
-    </h1>
-
-    <div class="btn-toolbar">
-        @include('core::admin._lang-switcher-for-list')
-    </div>
-
-    <div ui-tree="treeOptions">
-        <ul ui-tree-nodes="" data-max-depth="3" ng-model="models" id="tree-root">
-            <li ng-repeat="model in models" ui-tree-node collapsed="treeOptions.collapsed(this)" ng-include="'/views/partials/listItemPage.html'"></li>
-        </ul>
-    </div>
-
-</div>
+</item-list-tree>
 
 @endsection

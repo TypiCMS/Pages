@@ -9,8 +9,6 @@
 {!! BootForm::hidden('position')->value($model->position ?: 0) !!}
 {!! BootForm::hidden('parent_id') !!}
 
-@include('files::admin._files-selector')
-
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" href="#tab-content" data-target="#tab-content" data-toggle="tab">{{ __('Content') }}</a>
@@ -26,6 +24,10 @@
 <div class="tab-content">
 
     <div class="tab-pane fade show active" id="tab-content">
+
+        <filepicker related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></filepicker>
+        <files related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></files>
+
         <div class="row">
             <div class="col-md-6">
                 {!! TranslatableBootForm::text(__('Title'), 'title') !!}
@@ -38,7 +40,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">{{ $model->present()->parentUri($lang) }}</span>
                         </div>
-                        <input class="form-control @if($errors->has('slug.'.$lang))is-invalid @endif" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
+                        <input class="form-control @if ($errors->has('slug.'.$lang))is-invalid @endif" type="text" name="slug[{{ $lang }}]" id="slug[{{ $lang }}]" value="{{ $model->translate('slug', $lang) }}" data-slug="title[{{ $lang }}]" data-language="{{ $lang }}">
                         <span class="input-group-append">
                             <button class="btn btn-outline-secondary btn-slug" type="button">{{ __('Generate') }}</button>
                         </span>
@@ -55,56 +57,41 @@
         </div>
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
 
-        @can ('see-all-page_sections')
+        @can('see-all-page_sections')
         @if ($model->id)
+        <item-list
+            url-base="/api/pages/{{ $model->id }}/sections"
+            locale="{{ config('typicms.content_locale') }}"
+            fields="id,page_id,position"
+            translatable-fields="status,title"
+            table="page_sections"
+            title="sections"
+            :searchable="['title']"
+            :sorting="['position']">
 
-        <a href="{{ route('admin::create-page_section', $model->id) }}" title="{{ __('New page section') }}" class="btn-back">
-            <span class="fa fa-plus-circle"></span><span class="sr-only">{{ __('New page section') }}</span>
-        </a>
+            <template slot="add-button">
+                @include('core::admin._button-create', ['url' => route('admin::create-page_section', $model->id), 'module' => 'page_sections'])
+            </template>
 
-        <h1>@{{ models.length }} @lang('Page sections')</h1>
+            <template slot="columns" slot-scope="{ sortArray }">
+                <item-list-column-header name="checkbox"></item-list-column-header>
+                <item-list-column-header name="edit"></item-list-column-header>
+                <item-list-column-header name="status_translated" sortable :sort-array="sortArray" :label="$t('Status')"></item-list-column-header>
+                <item-list-column-header name="position" sortable :sort-array="sortArray" :label="$t('Position')"></item-list-column-header>
+                <item-list-column-header name="image" :label="$t('Image')"></item-list-column-header>
+                <item-list-column-header name="title_translated" sortable :sort-array="sortArray" :label="$t('Title')"></item-list-column-header>
+            </template>
 
-        <div ng-cloak ng-controller="ListController">
+            <template slot="table-row" slot-scope="{ model, checkedModels, loading }">
+                <td class="checkbox"><item-list-checkbox :model="model" :checked-models-prop="checkedModels" :loading="loading"></item-list-checkbox></td>
+                <td>@include('core::admin._button-edit', ['segment' => 'sections', 'module' => 'page_sections'])</td>
+                <td><item-list-status-button :model="model"></item-list-status-button></td>
+                <td><item-list-position-input :model="model"></item-list-position-input></td>
+                <td><img :src="model.thumb" alt=""></td>
+                <td>@{{ model.title_translated }}</td>
+            </template>
 
-            <div class="btn-toolbar">
-                @include('core::admin._button-select')
-                @include('core::admin._button-actions')
-                @include('core::admin._lang-switcher-for-list')
-            </div>
-
-            <div class="table-responsive">
-
-                <table st-persist="pageSectionsTable" st-table="displayedModels" st-safe-src="models" st-order st-filter class="table table-main">
-                    <thead>
-                        <tr>
-                            <th class="delete"></th>
-                            <th class="edit"></th>
-                            <th st-sort="status_translated" class="status st-sort">{{ __('Status') }}</th>
-                            <th st-sort="position" st-sort-default="true" class="position st-sort">{{ __('Position') }}</th>
-                            <th st-sort="title_translated" class="title_translated st-sort">{{ __('Title') }}</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="model in displayedModels">
-                            <td>
-                                <input type="checkbox" checklist-model="checked.models" checklist-value="model">
-                            </td>
-                            <td>
-                                @include('core::admin._button-edit', ['permission' => 'update-page_section', 'module' => 'sections'])
-                            </td>
-                            <td typi-btn-status action="toggleStatus(model)" model="model"></td>
-                            <td>
-                                <input class="form-control form-control-sm" min="0" type="number" name="position" ng-model="model.position" ng-change="update(model, 'position')">
-                            </td>
-                            <td>@{{ model.title_translated }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
-        </div>
+        </item-list>
         @endif
         @endcan
 
@@ -124,7 +111,7 @@
             {!! BootForm::hidden('redirect')->value(0) !!}
             {!! BootForm::checkbox(__('Redirect to first child'), 'redirect') !!}
         </div>
-        {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disable($model->subpages->count())->helpBlock($model->subpages->count() ? __('A page containing subpages cannot be linked to a module') : '') !!}
+        {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disable($model->subpages->count() > 0)->helpBlock($model->subpages->count() ? __('A page containing subpages cannot be linked to a module') : '') !!}
         {!! BootForm::select(__('Template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir()) !!}
         @if (!$model->id)
         {!! BootForm::select(__('Add to menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('name', 'id')->all(), null, array('class' => 'form-control')) !!}

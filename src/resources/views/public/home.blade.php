@@ -6,22 +6,23 @@
 
 @section('page')
 
-    @if($page->image)
+    @if ($page->image)
         {!! $page->present()->thumb(200, 200) !!}
     @endif
 
     {!! $page->present()->body !!}
 
-    @include('files::public._files', ['model' => $page])
+    @include('files::public._documents', ['model' => $page])
+    @include('files::public._images', ['model' => $page])
 
 {{--
-    @if ($slides = Slides::all() and $slides->count())
+    @if ($slides = Slides::all() and $slides->count() > 0)
         @include('slides::public._slider', ['items' => $slides])
     @endif
 --}}
 
 {{--
-    @if ($latestNews = News::latest(3) and $latestNews->count())
+    @if ($latestNews = News::latest(3) and $latestNews->count() > 0)
         <div class="news-container">
             <h2>@lang('db.Latest news')</h2>
             @include('news::public._list', ['items' => $latestNews])
@@ -31,7 +32,7 @@
 --}}
 
 {{--
-    @if ($upcomingEvents = Events::upcoming() and $upcomingEvents->count())
+    @if ($upcomingEvents = Events::upcoming() and $upcomingEvents->count() > 0)
         <div class="events-container">
             <h3>@lang('db.Incoming events')</h3>
             @include('events::public._list', ['items' => $upcomingEvents])
@@ -41,7 +42,7 @@
 --}}
 
 {{--
-    @if ($partners = Partners::allBy('homepage', 1) and $partners->count())
+    @if ($partners = Partners::allBy('homepage', 1) and $partners->count() > 0)
         <div class="partners-container">
             <h2><a href="{{ route($lang.'::index-partners') }}">@lang('db.Partners')</a></h2>
             @include('partners::public._list', ['items' => $partners])

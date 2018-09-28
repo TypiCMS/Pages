@@ -17,19 +17,6 @@ class SectionsAdminController extends BaseAdminController
     }
 
     /**
-     * List models.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index(Page $page)
-    {
-        $id = request('page_id');
-        $models = $this->repository->where('page_id', $id)->findAll();
-
-        return response()->json($models, 200);
-    }
-
-    /**
      * Create form for a new resource.
      *
      * @param \TypiCMS\Modules\Pages\Models\Page $page
@@ -39,7 +26,6 @@ class SectionsAdminController extends BaseAdminController
     public function create(Page $page)
     {
         $model = $this->repository->createModel();
-        app('JavaScript')->put('model', $model);
 
         return view('pages::admin.create-section')
             ->with(compact('model', 'page'));
@@ -55,8 +41,6 @@ class SectionsAdminController extends BaseAdminController
      */
     public function edit(Page $page, PageSection $section)
     {
-        app('JavaScript')->put('model', $section);
-
         return view('pages::admin.edit-section')
             ->with([
                 'model' => $section,
@@ -95,34 +79,5 @@ class SectionsAdminController extends BaseAdminController
         Pages::forgetCache();
 
         return $this->redirect($request, $section);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \TypiCMS\Modules\Pages\Models\Page        $page
-     * @param \TypiCMS\Modules\Pages\Models\PageSection $section
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy(Page $page, PageSection $section)
-    {
-        $deleted = $this->repository->delete($section);
-
-        return response()->json([
-            'error' => !$deleted,
-        ]);
-    }
-
-    /**
-     * get files.
-     */
-    public function files(PageSection $section)
-    {
-        $data = [
-            'models' => $section->files,
-        ];
-
-        return response()->json($data, 200);
     }
 }

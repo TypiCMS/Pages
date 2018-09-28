@@ -5,7 +5,7 @@ namespace TypiCMS\Modules\Pages\Models;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
-use TypiCMS\Modules\Files\Models\File;
+use TypiCMS\Modules\Files\Traits\HasFiles;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Menus\Models\Menulink;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
@@ -13,6 +13,7 @@ use TypiCMS\NestableTrait;
 
 class Page extends Base
 {
+    use HasFiles;
     use HasTranslations;
     use Historable;
     use NestableTrait;
@@ -32,7 +33,7 @@ class Page extends Base
         'meta_description',
     ];
 
-    protected $appends = ['image', 'thumb', 'title_translated'];
+    protected $appends = ['image', 'thumb'];
 
     /**
      * Get front office uri.
@@ -56,27 +57,13 @@ class Page extends Base
     }
 
     /**
-     * Append title_translated attribute.
-     *
-     * @return string
-     */
-    public function getTitleTranslatedAttribute()
-    {
-        $locale = config('app.locale');
-
-        return $this->translate('title', config('typicms.content_locale', $locale));
-    }
-
-    /**
      * Append image attribute.
      *
      * @return string
      */
     public function getImageAttribute()
     {
-        if ($this->relationLoaded('files')) {
-            return $this->files->first();
-        }
+        return $this->files->where('type', 'i')->first();
     }
 
     /**
@@ -137,16 +124,5 @@ class Page extends Base
     public function parent()
     {
         return $this->belongsTo(self::class, 'parent_id');
-    }
-
-    /**
-     * A page can have many files.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function files()
-    {
-        return $this->morphToMany(File::class, 'model', 'model_has_files', 'model_id', 'file_id')
-            ->orderBy('model_has_files.position');
     }
 }
