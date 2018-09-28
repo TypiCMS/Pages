@@ -19,14 +19,14 @@ class SectionsApiController extends BaseApiController
 
     public function index(Page $page, Request $request)
     {
-        $models = QueryBuilder::for(PageSection::class)
+        $data = QueryBuilder::for(PageSection::class)
             ->allowedFilters('date')
             ->translated($request->input('translatable_fields'))
             ->with('files')
             ->where('page_id', $page->id)
             ->paginate($request->input('per_page'));
 
-        return $models;
+        return $data;
     }
 
     protected function updatePartial(Page $page, PageSection $section, Request $request)
