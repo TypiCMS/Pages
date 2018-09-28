@@ -26,7 +26,6 @@ class SectionsAdminController extends BaseAdminController
     public function create(Page $page)
     {
         $model = $this->repository->createModel();
-        app('JavaScript')->put('model', $model);
 
         return view('pages::admin.create-section')
             ->with(compact('model', 'page'));
@@ -42,8 +41,6 @@ class SectionsAdminController extends BaseAdminController
      */
     public function edit(Page $page, PageSection $section)
     {
-        app('JavaScript')->put('model', $section);
-
         return view('pages::admin.edit-section')
             ->with([
                 'model' => $section,
