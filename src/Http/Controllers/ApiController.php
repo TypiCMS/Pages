@@ -20,7 +20,7 @@ class ApiController extends BaseApiController
     {
         $userPreferences = $request->user()->preferences;
 
-        $models = QueryBuilder::for(Page::class)
+        $data = QueryBuilder::for(Page::class)
             ->translated($request->input('translatable_fields'))
             ->orderBy('position')
             ->get()
@@ -34,7 +34,7 @@ class ApiController extends BaseApiController
             ->childrenName('children')
             ->nest();
 
-        return $models;
+        return $data;
     }
 
     protected function updatePartial(Page $page, Request $request)
