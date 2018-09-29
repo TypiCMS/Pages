@@ -37,7 +37,7 @@ class ModuleProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->publishes([
-            __DIR__.'/../resources/views' => base_path('resources/views/vendor/pages'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/pages'),
         ], 'typicms-views');
         $this->publishes([
             __DIR__.'/../../public' => public_path(),
