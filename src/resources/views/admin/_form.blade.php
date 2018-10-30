@@ -66,6 +66,7 @@
             translatable-fields="status,title"
             table="page_sections"
             title="sections"
+            include="images"
             :searchable="['title']"
             :sorting="['position']">
 

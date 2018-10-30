@@ -3,7 +3,9 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\Filter;
 use Spatie\QueryBuilder\QueryBuilder;
+use TypiCMS\Modules\Core\Filters\FilterOr;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Models\Page;
@@ -20,9 +22,11 @@ class SectionsApiController extends BaseApiController
     public function index(Page $page, Request $request)
     {
         $data = QueryBuilder::for(PageSection::class)
-            ->allowedFilters('date')
+            ->allowedFilters([
+                Filter::custom('title', FilterOr::class),
+            ])
+            ->allowedIncludes('files', 'images')
             ->translated($request->input('translatable_fields'))
-            ->with('files')
             ->where('page_id', $page->id)
             ->paginate($request->input('per_page'));
 
