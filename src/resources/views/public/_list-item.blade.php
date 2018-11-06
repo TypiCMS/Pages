@@ -5,7 +5,7 @@
     @if ($child->items)
         <ul class="pages-item-children">
             @foreach ($child->items as $childPage)
-                @include('pages::public._list-item', array('child' => $childPage))
+                @include('pages::public._list-item', ['child' => $childPage])
             @endforeach
         </ul>
     @endif
