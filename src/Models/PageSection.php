@@ -2,8 +2,7 @@
 
 namespace TypiCMS\Modules\Pages\Models;
 
-use Exception;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
@@ -60,11 +59,12 @@ class PageSection extends Base
      */
     public function editUrl()
     {
-        try {
-            return route('admin::edit-page_section', [$this->page_id, $this->id]);
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
+        $route = 'admin::edit-page_section';
+        if (Route::has($route)) {
+            return route($route, [$this->page_id, $this->id]);
         }
+
+        return route('dashboard');
     }
 
     /**
@@ -74,11 +74,12 @@ class PageSection extends Base
      */
     public function indexUrl()
     {
-        try {
-            return route('admin::edit-page', $this->page_id);
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
+        $route = 'admin::edit-page';
+        if (Route::has($route)) {
+            return route($route, $this->page_id);
         }
+
+        return route('dashboard');
     }
 
     /**
