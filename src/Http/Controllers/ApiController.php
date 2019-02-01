@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Files\Models\File;
@@ -27,7 +28,7 @@ class ApiController extends BaseApiController
             ->map(function ($item) use ($userPreferences) {
                 $item->data = $item->toArray();
                 $item->isLeaf = $item->module === null ? false : true;
-                $item->isExpanded = !array_get($userPreferences, 'Pages_'.$item->id.'_collapsed', false);
+                $item->isExpanded = !Arr::get($userPreferences, 'Pages_'.$item->id.'_collapsed', false);
 
                 return $item;
             })
