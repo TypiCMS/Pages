@@ -34,7 +34,7 @@
 {{--
     @if ($upcomingEvents = Events::upcoming() and $upcomingEvents->count() > 0)
         <div class="events-container">
-            <h3><a href="{{ Route::has($lang.'::index-events') ? route($lang.'::index-events') : '/' }}">@lang('db.Incoming events')</a></h3>
+            <h3><a href="{{ Route::has($lang.'::index-events') ? route($lang.'::index-events') : '/' }}">@lang('db.Upcoming events')</a></h3>
             @include('events::public._list', ['items' => $upcomingEvents])
             <a href="{{ Route::has($lang.'::index-events') ? route($lang.'::index-events') : '/' }}" class="btn btn-light btn-xs">@lang('db.All events')</a>
         </div>
