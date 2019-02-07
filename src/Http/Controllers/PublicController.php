@@ -26,7 +26,7 @@ class PublicController extends BasePublicController
         abort_if(!$page, '404');
 
         if ($page->private && !Auth::check()) {
-            abort('403');
+            return redirect()->guest(route('login'));
         }
 
         if ($page->redirect && $page->subpages->count() > 0) {
