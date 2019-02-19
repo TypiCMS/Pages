@@ -53,6 +53,18 @@ class PageSection extends Base
     }
 
     /**
+     * Get public uri.
+     *
+     * @return string
+     */
+    public function uri($locale = null)
+    {
+        $uri = $this->page->uri($locale).'#'.$this->position.'-'.$this->translate('slug', $locale);
+
+        return $uri;
+    }
+
+    /**
      * Get edit url of model.
      *
      * @return string|void
