@@ -8,6 +8,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Filters\FilterOr;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Files\Models\File;
+use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageSection;
 use TypiCMS\Modules\Pages\Repositories\EloquentPageSection;
@@ -52,6 +53,7 @@ class SectionsApiController extends BaseApiController
         $saved = $section->save();
 
         $this->repository->forgetCache();
+        Pages::forgetCache();
 
         return response()->json([
             'error' => !$saved,
@@ -61,6 +63,7 @@ class SectionsApiController extends BaseApiController
     public function destroy(Page $page, PageSection $section)
     {
         $deleted = $this->repository->delete($section);
+        Pages::forgetCache();
 
         return response()->json([
             'error' => !$deleted,
