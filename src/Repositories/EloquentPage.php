@@ -64,7 +64,7 @@ class EloquentPage extends EloquentRepository
      */
     public function getForRoutes()
     {
-        $pages = $this->where('module', '!=', '')
+        $pages = $this->where('module', '!=', null)
             ->findAll()
             ->all();
 
