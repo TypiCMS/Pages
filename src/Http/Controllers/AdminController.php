@@ -83,6 +83,7 @@ class AdminController extends BaseAdminController
         $data['parent_id'] = $data['parent_id'] ?: null;
         $this->repository->update($page->id, $data);
         event('page.resetChildrenUri', [$page]);
+        Menulinks::forgetCache();
 
         return $this->redirect($request, $page);
     }
