@@ -88,7 +88,7 @@
                 <td>@include('core::admin._button-edit', ['segment' => 'sections', 'module' => 'page_sections'])</td>
                 <td><item-list-status-button :model="model"></item-list-status-button></td>
                 <td><item-list-position-input :model="model"></item-list-position-input></td>
-                <td><img :src="model.thumb" alt=""></td>
+                <td><img :src="model.thumb" alt="" height="22"></td>
                 <td>@{{ model.title_translated }}</td>
             </template>
 
