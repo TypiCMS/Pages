@@ -32,8 +32,6 @@ class CreatePagesTable extends Migration
             $table->text('js')->nullable();
             $table->string('module')->nullable();
             $table->string('template')->nullable();
-            $table->string('meta_robots_no_index')->default(0);
-            $table->string('meta_robots_no_follow')->default(0);
             $table->timestamps();
             $table->foreign('parent_id')->references('id')->on('pages')->onDelete('cascade');
         });
