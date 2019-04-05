@@ -16,6 +16,7 @@ class CreatePageSectionsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('page_id')->unsigned();
+            $table->integer('image_id')->unsigned()->nullable();
             $table->integer('position')->unsigned()->default(0);
             $table->json('status');
             $table->json('title');
