@@ -26,6 +26,7 @@
     <div class="tab-pane fade show active" id="tab-content">
 
         <filepicker related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></filepicker>
+        <file-field type="image" field="image_id" data="{{ $model->image }}"></file-field>
         <files related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></files>
 
         <div class="row">
@@ -62,11 +63,11 @@
         <item-list
             url-base="/api/pages/{{ $model->id }}/sections"
             locale="{{ config('typicms.content_locale') }}"
-            fields="id,page_id,position"
+            fields="id,image_id,page_id,position"
             translatable-fields="status,title"
             table="page_sections"
             title="sections"
-            include="images"
+            include="image"
             :searchable="['title']"
             :sorting="['position']">
 

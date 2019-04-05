@@ -5,6 +5,7 @@ namespace TypiCMS\Modules\Pages\Models;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Models\Base;
+use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Files\Traits\HasFiles;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Menus\Models\Menulink;
@@ -23,6 +24,8 @@ class Page extends Base
 
     protected $guarded = ['id', 'exit', 'add_to_menu'];
 
+    protected $appends = ['thumb'];
+
     public $translatable = [
         'title',
         'slug',
@@ -32,8 +35,6 @@ class Page extends Base
         'meta_keywords',
         'meta_description',
     ];
-
-    protected $appends = ['image', 'thumb'];
 
     /**
      * Get front office uri.
@@ -57,23 +58,13 @@ class Page extends Base
     }
 
     /**
-     * Append image attribute.
-     *
-     * @return string
-     */
-    public function getImageAttribute()
-    {
-        return $this->images->first();
-    }
-
-    /**
      * Append thumb attribute.
      *
      * @return string
      */
     public function getThumbAttribute()
     {
-        return $this->present()->thumbSrc(null, 22);
+        return $this->present()->thumbSrc(null, 44);
     }
 
     /**
@@ -124,5 +115,15 @@ class Page extends Base
     public function parent()
     {
         return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    /**
+     * This model belongs to one image.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function image()
+    {
+        return $this->belongsTo(File::class, 'image_id');
     }
 }

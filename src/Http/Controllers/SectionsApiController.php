@@ -26,7 +26,7 @@ class SectionsApiController extends BaseApiController
             ->allowedFilters([
                 Filter::custom('title', FilterOr::class),
             ])
-            ->allowedIncludes('files', 'images')
+            ->allowedIncludes('image')
             ->translated($request->input('translatable_fields'))
             ->where('page_id', $page->id)
             ->paginate($request->input('per_page'));
