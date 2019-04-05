@@ -7,7 +7,7 @@
 @section('page')
 
     @if ($page->image)
-        <img src="{!! $page->present()->image(200, 200) !!}" alt="">
+        <img class="page-image" src="{!! $page->present()->image(200, 200) !!}" alt="">
     @endif
 
     {!! $page->present()->body !!}
