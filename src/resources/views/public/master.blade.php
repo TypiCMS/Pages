@@ -5,7 +5,7 @@
 @section('description', $page->meta_description)
 @section('keywords', $page->meta_keywords)
 @if ($page->image)
-@section('image', url($page->present()->thumbSrc()))
+@section('image', url($page->present()->image()))
 @endif
 @section('bodyClass', 'body-page body-page-'.$page->id)
 

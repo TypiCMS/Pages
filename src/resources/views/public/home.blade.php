@@ -7,7 +7,7 @@
 @section('page')
 
     @if ($page->image)
-        {!! $page->present()->thumb(200, 200) !!}
+        <img src="{!! $page->present()->image(200, 200) !!}" alt="">
     @endif
 
     {!! $page->present()->body !!}
