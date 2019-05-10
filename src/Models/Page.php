@@ -64,7 +64,7 @@ class Page extends Base
      */
     public function getThumbAttribute()
     {
-        return $this->present()->image(null, 44);
+        return $this->present()->image(null, 54);
     }
 
     /**
