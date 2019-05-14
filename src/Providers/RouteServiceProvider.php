@@ -88,9 +88,11 @@ class RouteServiceProvider extends ServiceProvider
                         config('typicms.main_locale_in_url')
                     ) {
                         $router->prefix($locale)->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
+                        $router->get($locale, 'PublicController@uri')->where('uri', $locale);
+                    } elseif (TypiCMS::mainLocale() === $locale && !config('typicms.main_locale_in_url')) {
+                        $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
                     }
                 }
-                $router->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');
             });
         });
     }
