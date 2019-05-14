@@ -5,6 +5,7 @@ namespace TypiCMS\Modules\Pages\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use TypiCMS\Modules\Core\Facades\TypiCMS;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -83,7 +84,7 @@ class RouteServiceProvider extends ServiceProvider
                 }
                 foreach (locales() as $locale) {
                     if (
-                        config('app.fallback_locale') != $locale ||
+                        TypiCMS::mainLocale() !== $locale ||
                         config('typicms.main_locale_in_url')
                     ) {
                         $router->prefix($locale)->get('{uri}', 'PublicController@uri')->where('uri', '(.*)');

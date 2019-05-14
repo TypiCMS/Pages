@@ -3,7 +3,7 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use TypiCMS;
+use TypiCMS\Modules\Core\Facades\TypiCMS;
 use TypiCMS\Modules\Core\Http\Controllers\BasePublicController;
 use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
@@ -66,7 +66,7 @@ class PublicController extends BasePublicController
         if (
             in_array($uri, locales()) &&
             (
-                config('app.fallback_locale') != $uri ||
+                TypiCMS::mainLocale() !== $uri ||
                 config('typicms.main_locale_in_url')
             )
         ) {

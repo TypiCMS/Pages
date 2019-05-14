@@ -4,6 +4,7 @@ namespace TypiCMS\Modules\Pages\Models;
 
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
+use TypiCMS\Modules\Core\Facades\TypiCMS;
 use TypiCMS\Modules\Core\Models\Base;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Files\Traits\HasFiles;
@@ -48,7 +49,7 @@ class Page extends Base
         $locale = $locale ?: config('app.locale');
         $uri = $this->translate('uri', $locale);
         if (
-            config('app.fallback_locale') != $locale ||
+            TypiCMS::mainLocale() !== $locale ||
             config('typicms.main_locale_in_url')
         ) {
             $uri = $uri ? $locale.'/'.$uri : $locale;
