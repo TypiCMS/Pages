@@ -23,30 +23,30 @@
 
 {{--
     @if ($latestNews = News::latest(3) and $latestNews->count() > 0)
-        <div class="news-container">
-            <h3><a href="{{ Route::has($lang.'::index-news') ? route($lang.'::index-news') : '/' }}">@lang('db.Latest news')</a></h3>
+        <div class="news-list-container">
+            <h3 class="news-list-title"><a href="{{ Route::has($lang.'::index-news') ? route($lang.'::index-news') : '/' }}">@lang('db.Latest news')</a></h3>
             @include('news::public._list', ['items' => $latestNews])
-            <a href="{{ Route::has($lang.'::index-news') ? route($lang.'::index-news') : '/' }}" class="btn btn-light btn-xs">@lang('db.All news')</a>
+            <a class="news-list-btn-more btn btn-light btn-sm" href="{{ Route::has($lang.'::index-news') ? route($lang.'::index-news') : '/' }}">@lang('db.All news')</a>
         </div>
     @endif
 --}}
 
 {{--
     @if ($upcomingEvents = Events::upcoming() and $upcomingEvents->count() > 0)
-        <div class="events-container">
-            <h3><a href="{{ Route::has($lang.'::index-events') ? route($lang.'::index-events') : '/' }}">@lang('db.Upcoming events')</a></h3>
+        <div class="event-list-container">
+            <h3 class="event-list-title"><a href="{{ Route::has($lang.'::index-events') ? route($lang.'::index-events') : '/' }}">@lang('db.Upcoming events')</a></h3>
             @include('events::public._list', ['items' => $upcomingEvents])
-            <a href="{{ Route::has($lang.'::index-events') ? route($lang.'::index-events') : '/' }}" class="btn btn-light btn-xs">@lang('db.All events')</a>
+            <a class="event-list-btn-more btn btn-light btn-sm" href="{{ Route::has($lang.'::index-events') ? route($lang.'::index-events') : '/' }}">@lang('db.All events')</a>
         </div>
     @endif
 --}}
 
 {{--
     @if ($partners = Partners::allBy('homepage', 1) and $partners->count() > 0)
-        <div class="partners-container">
-            <h3><a href="{{ Route::has($lang.'::index-partners') ? route($lang.'::index-partners') : '/' }}">@lang('db.Partners')</a></h3>
+        <div class="partner-list-container">
+            <h3 class="partner-list-title"><a href="{{ Route::has($lang.'::index-partners') ? route($lang.'::index-partners') : '/' }}">@lang('db.Partners')</a></h3>
             @include('partners::public._list', ['items' => $partners])
-            <a href="{{ Route::has($lang.'::index-partners') ? route($lang.'::index-partners') : '/' }}" class="btn btn-light btn-xs">@lang('db.All partners')</a>
+            <a class="partner-list-btn-more btn btn-light btn-sm" href="{{ Route::has($lang.'::index-partners') ? route($lang.'::index-partners') : '/' }}">@lang('db.All partners')</a>
         </div>
     @endif
 --}}
