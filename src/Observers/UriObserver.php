@@ -33,6 +33,7 @@ class UriObserver
     {
         $slugs = $model->getTranslations('slug');
         $parentUris = $this->getParentUris($model);
+        $uris = [];
 
         foreach ($slugs as $locale => $slug) {
             $parentUri = $parentUris[$locale] ?? '';
@@ -45,8 +46,9 @@ class UriObserver
                 $uri = $slug;
             }
             $uri = $this->incrementWhileExists($model, $uri, $locale, $model->id);
-            $model->setTranslation('uri', $locale, $uri);
+            $uris[$locale] = $uri;
         }
+        $model->uri = $uris;
     }
 
     /**
