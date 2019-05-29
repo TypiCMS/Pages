@@ -60,8 +60,8 @@ class UriObserver
      */
     private function getParentUris(Page $model)
     {
-        if ($parentPage = $model->parent) {
-            return $parentPage->getTranslations('uri');
+        if ($model->parent !== null) {
+            return $model->parent->getTranslations('uri');
         }
     }
 
