@@ -3,7 +3,6 @@
 namespace TypiCMS\Modules\Pages\Repositories;
 
 use TypiCMS\Modules\Core\Repositories\EloquentRepository;
-use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Models\Page;
 
 class EloquentPage extends EloquentRepository
