@@ -43,7 +43,7 @@ class EloquentPage extends EloquentRepository
             }
         }
 
-        $repository = Pages::where(column('uri'), '!=', $uri);
+        $repository = $this->where(column('uri'), '!=', $uri);
 
         if (!$all) {
             $repository->where(column('status'), '1');
