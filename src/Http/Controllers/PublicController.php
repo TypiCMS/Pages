@@ -56,7 +56,14 @@ class PublicController extends BasePublicController
      */
     private function findPageByUri($uri)
     {
-        $repository = $this->repository->with('images', 'documents', 'publishedSections');
+        $repository = $this->repository->with([
+            'image',
+            'images',
+            'documents',
+            'publishedSections.image',
+            'publishedSections.images',
+            'publishedSections.documents',
+        ]);
 
         if ($uri === null) {
             return $repository->findBy('is_home', 1);
