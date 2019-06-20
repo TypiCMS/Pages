@@ -1,6 +1,5 @@
 <?php
 
-
 class PagesControllerTest extends TestCase
 {
     public function testRoot()
