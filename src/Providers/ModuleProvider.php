@@ -13,8 +13,6 @@ use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
 use TypiCMS\Modules\Pages\Observers\SortObserver;
 use TypiCMS\Modules\Pages\Observers\UriObserver;
-use TypiCMS\Modules\Pages\Repositories\EloquentPage;
-use TypiCMS\Modules\Pages\Repositories\EloquentPageSection;
 
 class ModuleProvider extends ServiceProvider
 {
@@ -69,7 +67,7 @@ class ModuleProvider extends ServiceProvider
          */
         $app->events->subscribe(new ResetChildren());
 
-        $app->bind('Pages', EloquentPage::class);
-        $app->bind('PageSections', EloquentPageSection::class);
+        $app->bind('Pages', Page::class);
+        $app->bind('PageSections', PageSection::class);
     }
 }

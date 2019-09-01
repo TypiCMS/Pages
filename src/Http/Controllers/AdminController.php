@@ -7,15 +7,9 @@ use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Menus\Facades\Menulinks;
 use TypiCMS\Modules\Pages\Http\Requests\FormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
-use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
 class AdminController extends BaseAdminController
 {
-    public function __construct(EloquentPage $page)
-    {
-        parent::__construct($page);
-    }
-
     /**
      * List models.
      *
@@ -33,7 +27,7 @@ class AdminController extends BaseAdminController
      */
     public function create()
     {
-        $model = $this->repository->createModel();
+        $model = new;
 
         return view('pages::admin.create')
             ->with(compact('model'));
@@ -63,7 +57,7 @@ class AdminController extends BaseAdminController
     {
         $data = $request->all();
         $data['parent_id'] = null;
-        $page = $this->repository->create($data);
+        $page = ::create($data);
         Menulinks::forgetCache();
 
         return $this->redirect($request, $page);
@@ -81,7 +75,7 @@ class AdminController extends BaseAdminController
     {
         $data = $request->all();
         $data['parent_id'] = $data['parent_id'] ?: null;
-        $this->repository->update($page->id, $data);
+        ::update($page->id, $data);
         event('page.resetChildrenUri', [$page]);
         Menulinks::forgetCache();
 

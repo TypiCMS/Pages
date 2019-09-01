@@ -58,6 +58,26 @@ class Page extends Base
         return $uri ?: '/';
     }
 
+    public function getSubMenu()
+    {
+        $rootUriArray = explode('/', $this->uri);
+        $uri = $rootUriArray[0];
+        if (in_array($uri, locales())) {
+            if (isset($rootUriArray[1])) {
+                $uri .= '/'.$rootUriArray[1]; // add next part of uri in locale
+            }
+        }
+
+        $nestedCollection = $this->where(column('uri'), '!=', $uri)
+            ->orderBy('position', 'asc')
+            ->where(column('uri'), 'LIKE', $uri.'%')
+            ->get()
+            ->noCleaning()
+            ->nest();
+
+        return $nestedCollection;
+    }
+
     /**
      * Append thumb attribute.
      *

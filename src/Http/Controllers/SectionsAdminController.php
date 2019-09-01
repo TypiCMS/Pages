@@ -7,15 +7,9 @@ use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Http\Requests\PageSectionFormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageSection;
-use TypiCMS\Modules\Pages\Repositories\EloquentPageSection;
 
 class SectionsAdminController extends BaseAdminController
 {
-    public function __construct(EloquentPageSection $section)
-    {
-        parent::__construct($section);
-    }
-
     /**
      * Create form for a new resource.
      *
@@ -25,7 +19,7 @@ class SectionsAdminController extends BaseAdminController
      */
     public function create(Page $page)
     {
-        $model = $this->repository->createModel();
+        $model = new;
 
         return view('pages::admin.create-section')
             ->with(compact('model', 'page'));
@@ -58,7 +52,7 @@ class SectionsAdminController extends BaseAdminController
      */
     public function store(Page $page, PageSectionFormRequest $request)
     {
-        $section = $this->repository->create($request->all());
+        $section = ::create($request->all());
         Pages::forgetCache();
 
         return $this->redirect($request, $section);
@@ -75,7 +69,7 @@ class SectionsAdminController extends BaseAdminController
      */
     public function update(Page $page, PageSection $section, PageSectionFormRequest $request)
     {
-        $this->repository->update($request->id, $request->all());
+        ::update($request->id, $request->all());
         Pages::forgetCache();
 
         return $this->redirect($request, $section);

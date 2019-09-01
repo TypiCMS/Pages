@@ -5,15 +5,10 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use TypiCMS\Modules\Core\Facades\TypiCMS;
 use TypiCMS\Modules\Core\Http\Controllers\BasePublicController;
-use TypiCMS\Modules\Pages\Repositories\EloquentPage;
+use TypiCMS\Modules\Pages\Models\Page;
 
 class PublicController extends BasePublicController
 {
-    public function __construct(EloquentPage $page)
-    {
-        parent::__construct($page);
-    }
-
     /**
      * Page uri : lang/slug.
      *
@@ -36,7 +31,7 @@ class PublicController extends BasePublicController
         }
 
         // get submenu
-        $children = $this->repository->getSubMenu($page->uri);
+        $children = $page->getSubMenu();
 
         $templateDir = 'pages::'.config('typicms.template_dir', 'public').'.';
         $template = $page->template ?: 'default';
@@ -46,7 +41,7 @@ class PublicController extends BasePublicController
             $template = 'default';
         }
 
-        return response()->view($templateDir.$template, compact('children', 'page'));
+        return view($templateDir.$template, compact('children', 'page'));
     }
 
     /**
@@ -56,7 +51,7 @@ class PublicController extends BasePublicController
      */
     private function findPageByUri($uri)
     {
-        $repository = $this->repository->with([
+        $query = Page::with([
             'image',
             'images',
             'documents',
@@ -66,7 +61,7 @@ class PublicController extends BasePublicController
         ]);
 
         if ($uri === null) {
-            return $repository->findBy('is_home', 1);
+            return $query->where('is_home', 1)->firstOrFail();
         }
 
         // Only locale in url
@@ -77,10 +72,16 @@ class PublicController extends BasePublicController
                 config('typicms.main_locale_in_url')
             )
         ) {
-            return $repository->findBy('is_home', 1);
+            return $query->where('is_home', 1)->firstOrFail();
         }
 
-        return $repository->getFirstByUri($uri);
+        if (!request('preview')) {
+            $query->where(column('status'), '1');
+        }
+
+        $query->where(column('uri'), $uri);
+
+        return $query->firstOrFail($uri);
     }
 
     /**
@@ -90,7 +91,7 @@ class PublicController extends BasePublicController
      */
     public function redirectToHomepage()
     {
-        $homepage = $this->repository->findBy('is_home', 1);
+        $homepage = Page::where('is_home', 1)->firstOrFail();
         $locale = $this->getBrowserLanguageOrDefault();
 
         return redirect($homepage->uri($locale));
@@ -120,7 +121,7 @@ class PublicController extends BasePublicController
      */
     public function langChooser()
     {
-        $homepage = $this->repository->findBy('is_home', 1);
+        $homepage = Page::where('is_home', 1)->first();
         if (!$homepage) {
             app('log')->error('No homepage found.');
             abort(404);

@@ -8,15 +8,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Models\Page;
-use TypiCMS\Modules\Pages\Repositories\EloquentPage;
 
 class ApiController extends BaseApiController
 {
-    public function __construct(EloquentPage $page)
-    {
-        parent::__construct($page);
-    }
-
     public function index(Request $request)
     {
         $userPreferences = $request->user()->preferences;
@@ -56,7 +50,7 @@ class ApiController extends BaseApiController
         }
         $saved = $page->save();
 
-        $this->repository->forgetCache();
+        $this->model->forgetCache();
 
         return response()->json([
             'error' => !$saved,
@@ -65,7 +59,7 @@ class ApiController extends BaseApiController
 
     public function sort()
     {
-        $this->repository->sort(request()->all());
+        $this->model->sort(request()->all());
 
         return response()->json([
             'error' => false,
@@ -75,7 +69,7 @@ class ApiController extends BaseApiController
 
     public function destroy(Page $page)
     {
-        $deleted = $this->repository->delete($page);
+        $deleted = $page->delete();
 
         return response()->json([
             'error' => !$deleted,
@@ -89,11 +83,11 @@ class ApiController extends BaseApiController
 
     public function attachFiles(Page $page, Request $request)
     {
-        return $this->repository->attachFiles($page, $request);
+        return $this->model->attachFiles($page, $request);
     }
 
     public function detachFile(Page $page, File $file)
     {
-        return $this->repository->detachFile($page, $file);
+        return $this->model->detachFile($page, $file);
     }
 }

@@ -11,15 +11,9 @@ use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageSection;
-use TypiCMS\Modules\Pages\Repositories\EloquentPageSection;
 
 class SectionsApiController extends BaseApiController
 {
-    public function __construct(EloquentPageSection $section)
-    {
-        parent::__construct($section);
-    }
-
     public function index(Page $page, Request $request)
     {
         $data = QueryBuilder::for(PageSection::class)
@@ -52,7 +46,7 @@ class SectionsApiController extends BaseApiController
         }
         $saved = $section->save();
 
-        $this->repository->forgetCache();
+        $this->model->forgetCache();
         Pages::forgetCache();
 
         return response()->json([
@@ -62,7 +56,7 @@ class SectionsApiController extends BaseApiController
 
     public function destroy(Page $page, PageSection $section)
     {
-        $deleted = $this->repository->delete($section);
+        $deleted = $section->delete();
         Pages::forgetCache();
 
         return response()->json([
@@ -77,11 +71,11 @@ class SectionsApiController extends BaseApiController
 
     public function attachFiles(PageSection $section, Request $request)
     {
-        return $this->repository->attachFiles($section, $request);
+        return $this->model->attachFiles($section, $request);
     }
 
     public function detachFile(PageSection $section, File $file)
     {
-        return $this->repository->detachFile($section, $file);
+        return $this->model->detachFile($section, $file);
     }
 }
