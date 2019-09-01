@@ -81,7 +81,7 @@ class PublicController extends BasePublicController
 
         $query->where(column('uri'), $uri);
 
-        return $query->firstOrFail($uri);
+        return $query->firstOrFail();
     }
 
     /**
