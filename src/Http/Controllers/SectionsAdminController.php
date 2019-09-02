@@ -5,7 +5,6 @@ namespace TypiCMS\Modules\Pages\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
-use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Http\Requests\PageSectionFormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageSection;
@@ -14,7 +13,7 @@ class SectionsAdminController extends BaseAdminController
 {
     public function create(Page $page): View
     {
-        $model = new PageSection;
+        $model = new PageSection();
 
         return view('pages::admin.create-section')
             ->with(compact('model', 'page'));

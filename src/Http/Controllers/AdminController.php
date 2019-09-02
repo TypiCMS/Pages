@@ -3,10 +3,8 @@
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
-use TypiCMS\Modules\Menus\Facades\Menulinks;
 use TypiCMS\Modules\Pages\Http\Requests\FormRequest;
 use TypiCMS\Modules\Pages\Models\Page;
 
@@ -19,7 +17,7 @@ class AdminController extends BaseAdminController
 
     public function create(): View
     {
-        $model = new Page;
+        $model = new Page();
 
         return view('pages::admin.create')
             ->with(compact('model'));
