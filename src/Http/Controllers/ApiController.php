@@ -2,16 +2,19 @@
 
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
 use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Models\Page;
+use TypiCMS\NestableCollection;
 
 class ApiController extends BaseApiController
 {
-    public function index(Request $request)
+    public function index(Request $request): NestableCollection
     {
         $userPreferences = $request->user()->preferences;
 
@@ -32,7 +35,7 @@ class ApiController extends BaseApiController
         return $data;
     }
 
-    protected function updatePartial(Page $page, Request $request)
+    protected function updatePartial(Page $page, Request $request): JsonResponse
     {
         $data = [];
         foreach ($request->all() as $column => $content) {
@@ -50,16 +53,29 @@ class ApiController extends BaseApiController
         }
         $saved = $page->save();
 
-        $this->model->forgetCache();
-
         return response()->json([
             'error' => !$saved,
         ]);
     }
 
-    public function sort()
+    public function sort(Request $request): JsonResponse
     {
-        $this->model->sort(request()->all());
+        $data = $request->all();
+        foreach ($data['item'] as $position => $item) {
+            $page = Page::find($item['id']);
+
+            $sortData = [
+                'position' => (int) $position + 1,
+                'parent_id' => $item['parent_id'],
+                'private' => $item['private'],
+            ];
+
+            $page->update($sortData);
+
+            if ($data['moved'] === $item['id']) {
+                event('page.resetChildrenUri', [$page]);
+            }
+        }
 
         return response()->json([
             'error' => false,
@@ -67,7 +83,7 @@ class ApiController extends BaseApiController
         ], 200);
     }
 
-    public function destroy(Page $page)
+    public function destroy(Page $page): JsonResponse
     {
         $deleted = $page->delete();
 
@@ -76,18 +92,18 @@ class ApiController extends BaseApiController
         ]);
     }
 
-    public function files(Page $page)
+    public function files(Page $page): Collection
     {
         return $page->files;
     }
 
-    public function attachFiles(Page $page, Request $request)
+    public function attachFiles(Page $page, Request $request): JsonResponse
     {
-        return $this->model->attachFiles($page, $request);
+        return $page->attachFiles($request);
     }
 
-    public function detachFile(Page $page, File $file)
+    public function detachFile(Page $page, File $file): array
     {
-        return $this->model->detachFile($page, $file);
+        return $page->detachFile($file);
     }
 }

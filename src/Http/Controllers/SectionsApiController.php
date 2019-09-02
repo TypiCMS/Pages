@@ -2,7 +2,9 @@
 
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\Filter;
 use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Filters\FilterOr;
@@ -14,7 +16,7 @@ use TypiCMS\Modules\Pages\Models\PageSection;
 
 class SectionsApiController extends BaseApiController
 {
-    public function index(Page $page, Request $request)
+    public function index(Page $page, Request $request): LengthAwarePaginator
     {
         $data = QueryBuilder::for(PageSection::class)
             ->allowedFilters([
@@ -28,7 +30,7 @@ class SectionsApiController extends BaseApiController
         return $data;
     }
 
-    protected function updatePartial(Page $page, PageSection $section, Request $request)
+    protected function updatePartial(Page $page, PageSection $section, Request $request): JsonResponse
     {
         $data = [];
         foreach ($request->all() as $column => $content) {
@@ -46,36 +48,32 @@ class SectionsApiController extends BaseApiController
         }
         $saved = $section->save();
 
-        $this->model->forgetCache();
-        Pages::forgetCache();
-
         return response()->json([
             'error' => !$saved,
         ]);
     }
 
-    public function destroy(Page $page, PageSection $section)
+    public function destroy(Page $page, PageSection $section): JsonResponse
     {
         $deleted = $section->delete();
-        Pages::forgetCache();
 
         return response()->json([
             'error' => !$deleted,
         ]);
     }
 
-    public function files(PageSection $section)
+    public function files(PageSection $section): JsonResponse
     {
         return $section->files;
     }
 
-    public function attachFiles(PageSection $section, Request $request)
+    public function attachFiles(PageSection $section, Request $request): JsonResponse
     {
-        return $this->model->attachFiles($section, $request);
+        return $section->attachFiles($request);
     }
 
-    public function detachFile(PageSection $section, File $file)
+    public function detachFile(PageSection $section, File $file): array
     {
-        return $this->model->detachFile($section, $file);
+        return $section->detachFile($file);
     }
 }

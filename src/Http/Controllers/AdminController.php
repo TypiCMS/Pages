@@ -2,7 +2,9 @@
 
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use TypiCMS\Modules\Core\Http\Controllers\BaseAdminController;
 use TypiCMS\Modules\Menus\Facades\Menulinks;
 use TypiCMS\Modules\Pages\Http\Requests\FormRequest;
@@ -10,74 +12,40 @@ use TypiCMS\Modules\Pages\Models\Page;
 
 class AdminController extends BaseAdminController
 {
-    /**
-     * List models.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index(Request $request)
+    public function index(): View
     {
         return view('pages::admin.index');
     }
 
-    /**
-     * Create form for a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
+    public function create(): View
     {
-        $model = new;
+        $model = new Page;
 
         return view('pages::admin.create')
             ->with(compact('model'));
     }
 
-    /**
-     * Edit form for the specified resource.
-     *
-     * @param \TypiCMS\Modules\Pages\Models\Page $page
-     *
-     * @return \Illuminate\View\View
-     */
-    public function edit(Page $page)
+    public function edit(Page $page): View
     {
         return view('pages::admin.edit')
             ->with(['model' => $page]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \TypiCMS\Modules\Pages\Http\Requests\FormRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(FormRequest $request)
+    public function store(FormRequest $request): RedirectResponse
     {
         $data = $request->all();
         $data['parent_id'] = null;
-        $page = ::create($data);
-        Menulinks::forgetCache();
+        $page = Page::create($data);
 
         return $this->redirect($request, $page);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \TypiCMS\Modules\Pages\Models\Page               $page
-     * @param \TypiCMS\Modules\Pages\Http\Requests\FormRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Page $page, FormRequest $request)
+    public function update(Page $page, FormRequest $request): RedirectResponse
     {
         $data = $request->all();
         $data['parent_id'] = $data['parent_id'] ?: null;
-        ::update($page->id, $data);
+        $page->update($data);
         event('page.resetChildrenUri', [$page]);
-        Menulinks::forgetCache();
 
         return $this->redirect($request, $page);
     }
