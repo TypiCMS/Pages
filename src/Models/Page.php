@@ -58,15 +58,6 @@ class Page extends Base
         return $uri ?: '/';
     }
 
-    public function getForRoutes()
-    {
-        $pages = $this->where('module', '!=', null)
-            ->with('files')
-            ->get();
-
-        return $pages;
-    }
-
     public function allForSelect()
     {
         $pages = $this->get()
