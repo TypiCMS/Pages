@@ -51,14 +51,15 @@ class PublicController extends BasePublicController
      */
     private function findPageByUri($uri)
     {
-        $query = Page::with([
-            'image',
-            'images',
-            'documents',
-            'publishedSections.image',
-            'publishedSections.images',
-            'publishedSections.documents',
-        ]);
+        $query = Page::published()
+            ->with([
+                'image',
+                'images',
+                'documents',
+                'publishedSections.image',
+                'publishedSections.images',
+                'publishedSections.documents',
+            ]);
 
         if ($uri === null) {
             return $query->where('is_home', 1)->firstOrFail();
@@ -91,7 +92,7 @@ class PublicController extends BasePublicController
      */
     public function redirectToHomepage()
     {
-        $homepage = Page::where('is_home', 1)->firstOrFail();
+        $homepage = Page::published()->where('is_home', 1)->firstOrFail();
         $locale = $this->getBrowserLanguageOrDefault();
 
         return redirect($homepage->uri($locale));
@@ -121,7 +122,7 @@ class PublicController extends BasePublicController
      */
     public function langChooser()
     {
-        $homepage = Page::where('is_home', 1)->first();
+        $homepage = Page::published()->where('is_home', 1)->first();
         if (!$homepage) {
             app('log')->error('No homepage found.');
             abort(404);
