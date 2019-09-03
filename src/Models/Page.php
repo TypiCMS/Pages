@@ -2,6 +2,8 @@
 
 namespace TypiCMS\Modules\Pages\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
 use TypiCMS\Modules\Core\Facades\TypiCMS;
@@ -11,6 +13,7 @@ use TypiCMS\Modules\Files\Traits\HasFiles;
 use TypiCMS\Modules\History\Traits\Historable;
 use TypiCMS\Modules\Menus\Models\Menulink;
 use TypiCMS\Modules\Pages\Presenters\ModulePresenter;
+use TypiCMS\NestableCollection;
 use TypiCMS\NestableTrait;
 
 class Page extends Base
@@ -37,14 +40,7 @@ class Page extends Base
         'meta_description',
     ];
 
-    /**
-     * Get front office uri.
-     *
-     * @param string $locale
-     *
-     * @return string
-     */
-    public function uri($locale = null)
+    public function uri($locale = null): string
     {
         $locale = $locale ?: config('app.locale');
         $uri = $this->translate('uri', $locale);
@@ -58,7 +54,7 @@ class Page extends Base
         return $uri ?: '/';
     }
 
-    public function allForSelect()
+    public function allForSelect(): array
     {
         $pages = $this->get()
             ->nest()
@@ -67,7 +63,7 @@ class Page extends Base
         return ['' => ''] + $pages;
     }
 
-    public function getSubMenu()
+    public function getSubMenu(): NestableCollection
     {
         $rootUriArray = explode('/', $this->uri);
         $uri = $rootUriArray[0];
@@ -87,72 +83,37 @@ class Page extends Base
         return $nestedCollection;
     }
 
-    /**
-     * Append thumb attribute.
-     *
-     * @return string
-     */
-    public function getThumbAttribute()
+    public function getThumbAttribute(): string
     {
         return $this->present()->image(null, 54);
     }
 
-    /**
-     * A page has many sections.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function sections()
+    public function sections(): HasMany
     {
         return $this->hasMany(PageSection::class)->order();
     }
 
-    /**
-     * Get all published sections.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function publishedSections()
+    public function publishedSections(): HasMany
     {
         return $this->sections()->published();
     }
 
-    /**
-     * A page can have menulinks.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function menulinks()
+    public function menulinks(): HasMany
     {
         return $this->hasMany(Menulink::class);
     }
 
-    /**
-     * A page can have subpages.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function subpages()
+    public function subpages(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id')->order();
     }
 
-    /**
-     * A page can have a parent.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
     }
 
-    /**
-     * This model belongs to one image.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function image()
+    public function image(): BelongsTo
     {
         return $this->belongsTo(File::class, 'image_id');
     }

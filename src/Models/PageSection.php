@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Pages\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Route;
 use Laracasts\Presenter\PresentableTrait;
 use Spatie\Translatable\HasTranslations;
@@ -33,34 +34,19 @@ class PageSection extends Base
         'body',
     ];
 
-    /**
-     * Append thumb attribute.
-     *
-     * @return string
-     */
-    public function getThumbAttribute()
+    public function getThumbAttribute(): string
     {
         return $this->present()->image(null, 54);
     }
 
-    /**
-     * Get public uri.
-     *
-     * @return string
-     */
-    public function uri($locale = null)
+    public function uri($locale = null): string
     {
         $uri = $this->page->uri($locale).'#'.$this->position.'-'.$this->translate('slug', $locale);
 
         return $uri;
     }
 
-    /**
-     * Get edit url of model.
-     *
-     * @return string|void
-     */
-    public function editUrl()
+    public function editUrl(): string
     {
         $route = 'admin::edit-page_section';
         if (Route::has($route)) {
@@ -70,12 +56,7 @@ class PageSection extends Base
         return route('dashboard');
     }
 
-    /**
-     * Get back office’s index of models url.
-     *
-     * @return string|void
-     */
-    public function indexUrl()
+    public function indexUrl(): string
     {
         $route = 'admin::edit-page';
         if (Route::has($route)) {
@@ -85,22 +66,12 @@ class PageSection extends Base
         return route('dashboard');
     }
 
-    /**
-     * A section belongs to a page.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function page()
+    public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
     }
 
-    /**
-     * This model belongs to one image.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function image()
+    public function image(): BelongsTo
     {
         return $this->belongsTo(File::class, 'image_id');
     }
