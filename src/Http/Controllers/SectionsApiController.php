@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -61,7 +62,7 @@ class SectionsApiController extends BaseApiController
         ]);
     }
 
-    public function files(PageSection $section): JsonResponse
+    public function files(PageSection $section): Collection
     {
         return $section->files;
     }
@@ -71,8 +72,8 @@ class SectionsApiController extends BaseApiController
         return $section->attachFiles($request);
     }
 
-    public function detachFile(PageSection $section, File $file): array
+    public function detachFile(PageSection $section, File $file): void
     {
-        return $section->detachFile($file);
+        $section->detachFile($file);
     }
 }
