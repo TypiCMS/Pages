@@ -76,11 +76,9 @@ class PublicController extends BasePublicController
             return $query->where('is_home', 1)->firstOrFail();
         }
 
-        if (!request('preview')) {
-            $query->where(column('status'), '1');
-        }
+        $query->published();
 
-        $query->where(column('uri'), $uri);
+        $query->whereUriIs($uri);
 
         return $query->firstOrFail();
     }

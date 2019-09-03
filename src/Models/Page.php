@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Pages\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laracasts\Presenter\PresentableTrait;
@@ -54,6 +55,36 @@ class Page extends Base
         return $uri ?: '/';
     }
 
+    public function scopeWhereUriIs($query, $uri): Builder
+    {
+        $field = 'uri';
+        if (in_array($field, (array) $this->translatable)) {
+            $field .= '->'.config('app.locale');
+        }
+
+        return $query->where($field, $uri);
+    }
+
+    public function scopeWhereUriIsNot($query, $uri): Builder
+    {
+        $field = 'uri';
+        if (in_array($field, (array) $this->translatable)) {
+            $field .= '->'.config('app.locale');
+        }
+
+        return $query->where($field, '!=', $uri);
+    }
+
+    public function scopeWhereUriIsLike($query, $uri): Builder
+    {
+        $field = 'uri';
+        if (in_array($field, (array) $this->translatable)) {
+            $field .= '->'.config('app.locale');
+        }
+
+        return $query->where($field, 'LIKE', $uri);
+    }
+
     public function allForSelect(): array
     {
         $pages = $this->get()
@@ -73,9 +104,9 @@ class Page extends Base
             }
         }
 
-        $nestedCollection = $this->where(column('uri'), '!=', $uri)
+        $nestedCollection = $this->whereUriIsNot($uri)
             ->orderBy('position', 'asc')
-            ->where(column('uri'), 'LIKE', $uri.'%')
+            ->whereUriIsLike($uri.'%')
             ->get()
             ->noCleaning()
             ->nest();
