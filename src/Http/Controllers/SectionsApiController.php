@@ -22,7 +22,7 @@ class SectionsApiController extends BaseApiController
             ->selectFields($request->input('fields.page_sections'))
             ->allowedSorts(['status_translated', 'position', 'title_translated'])
             ->allowedFilters([
-                AllowedFilter::custom('title', new FilterOr),
+                AllowedFilter::custom('title', new FilterOr()),
             ])
             ->allowedIncludes(['image'])
             ->where('page_id', $page->id)
