@@ -19,7 +19,7 @@ class ApiController extends BaseApiController
         $userPreferences = $request->user()->preferences;
 
         $data = QueryBuilder::for(Page::class)
-            ->translated($request->input('translatable_fields'))
+            ->selectFields($request->input('fields.pages'))
             ->orderBy('position')
             ->get()
             ->map(function ($item) use ($userPreferences) {

@@ -63,8 +63,7 @@
         <item-list
             url-base="/api/pages/{{ $model->id }}/sections"
             locale="{{ config('typicms.content_locale') }}"
-            fields="id,image_id,page_id,position"
-            translatable-fields="status,title"
+            fields="id,image_id,page_id,position,status,title"
             table="page_sections"
             title="sections"
             include="image"
