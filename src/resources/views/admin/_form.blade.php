@@ -67,6 +67,7 @@
             table="page_sections"
             title="sections"
             include="image"
+            appends="thumb"
             :searchable="['title']"
             :sorting="['position']">
 
