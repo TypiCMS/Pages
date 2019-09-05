@@ -29,8 +29,6 @@ class Page extends Base
 
     protected $guarded = ['id', 'exit', 'add_to_menu'];
 
-    protected $appends = ['thumb'];
-
     public $translatable = [
         'title',
         'slug',
@@ -112,11 +110,6 @@ class Page extends Base
             ->nest();
 
         return $nestedCollection;
-    }
-
-    public function getThumbAttribute(): string
-    {
-        return $this->present()->image(null, 54);
     }
 
     public function sections(): HasMany
