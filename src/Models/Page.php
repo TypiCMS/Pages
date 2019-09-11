@@ -85,7 +85,8 @@ class Page extends Base
 
     public function allForSelect(): array
     {
-        $pages = $this->get()
+        $pages = $this->order()
+            ->get()
             ->nest()
             ->listsFlattened();
 
