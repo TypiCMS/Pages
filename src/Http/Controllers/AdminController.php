@@ -33,7 +33,9 @@ class AdminController extends BaseAdminController
     {
         $data = $request->all();
         $data['parent_id'] = null;
-        $page = Page::create($data);
+        $page = new Page();
+        $page->fill($data);
+        $page->save();
 
         return $this->redirect($request, $page);
     }
