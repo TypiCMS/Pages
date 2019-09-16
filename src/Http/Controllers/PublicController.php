@@ -24,8 +24,8 @@ class PublicController extends BasePublicController
             return redirect()->guest(route(app()->getLocale().'::login'));
         }
 
-        if ($page->redirect && $page->subpages->count() > 0) {
-            $childUri = $page->subpages->first()->uri();
+        if ($page->redirect && $page->publishedSubpages->count() > 0) {
+            $childUri = $page->publishedSubpages->first()->uri();
 
             return redirect($childUri);
         }

@@ -133,6 +133,11 @@ class Page extends Base
         return $this->hasMany(self::class, 'parent_id')->order();
     }
 
+    public function publishedSubpages(): HasMany
+    {
+        return $this->subpages()->published();
+    }
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
