@@ -13,8 +13,8 @@ class FormRequest extends AbstractFormRequest
             'image_id' => 'nullable|integer',
             'module' => 'nullable|max:255',
             'template' => 'nullable|max:255',
-            'slug.*' => 'nullable|alpha_dash|max:255',
             'title.*' => 'nullable|max:255',
+            'slug.*' => 'nullable|alpha_dash|max:255|required_with:title.*',
             'meta_keywords.*' => 'nullable|max:255',
             'meta_description.*' => 'nullable|max:255',
         ];
