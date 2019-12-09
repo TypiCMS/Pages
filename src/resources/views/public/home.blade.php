@@ -10,7 +10,7 @@
         <img class="page-image" src="{!! $page->present()->image(200, 200) !!}" alt="">
     @endif
 
-    {!! $page->present()->body !!}
+    <div class="rich-content">{!! $page->present()->body !!}</div>
 
     @include('files::public._documents', ['model' => $page])
     @include('files::public._images', ['model' => $page])
