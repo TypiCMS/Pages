@@ -2,7 +2,7 @@
 
 @section('page')
 
-    @if ($children)
+    @if ($children->count() > 0)
     <ul class="nav nav-subpages">
         @foreach ($children as $child)
         @include('pages::public._list-item', ['child' => $child])
@@ -10,15 +10,21 @@
     </ul>
     @endif
 
+    @isset($page->body)
     <div class="rich-content">{!! $page->present()->body !!}</div>
+    @endisset
 
     @include('files::public._documents', ['model' => $page])
     @include('files::public._images', ['model' => $page])
 
-    @foreach ($page->publishedSections as $section)
-        <div id="{{ $section->position.'-'.$section->slug }}">
-        {!! $section->present()->body !!}
+    @if ($page->publishedSections->count() > 0)
+    <div class="page-sections">
+        @foreach ($page->publishedSections as $section)
+        <div class="page-section" id="{{ $section->position.'-'.$section->slug }}">
+            <h2 class="page-section-title">{{ $section->title }}</h2>
+            {!! $section->present()->body !!}
         </div>
-    @endforeach
-
+        @endforeach
+    </div>
+    @endif
 @endsection
