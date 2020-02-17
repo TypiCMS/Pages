@@ -10,9 +10,9 @@
     </ul>
     @endif
 
-    @isset($page->body)
+    @empty(!$page->body)
     <div class="rich-content">{!! $page->present()->body !!}</div>
-    @endisset
+    @endempty
 
     @include('files::public._documents', ['model' => $page])
     @include('files::public._images', ['model' => $page])
