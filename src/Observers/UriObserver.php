@@ -100,7 +100,7 @@ class UriObserver
         $i = 0;
         // Check if uri is unique
         while ($this->uriExists($model, $uri, $locale, $id)) {
-            ++$i;
+            $i++;
             // increment uri if it exists
             $uri = $originalUri.'-'.$i;
         }
