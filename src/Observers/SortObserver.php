@@ -9,8 +9,6 @@ class SortObserver
     /**
      * On update, update children uris.
      *
-     * @param Page $model
-     *
      * @return null
      */
     public function updating(Page $model)

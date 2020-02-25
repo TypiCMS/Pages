@@ -9,8 +9,6 @@ class UriObserver
     /**
      * On create, update uri.
      *
-     * @param Page $model
-     *
      * @return null
      */
     public function creating(Page $model)
@@ -24,8 +22,6 @@ class UriObserver
 
     /**
      * On update, change uri.
-     *
-     * @param Page $model
      *
      * @return null
      */
@@ -54,8 +50,6 @@ class UriObserver
     /**
      * Get the URIs of the parent page.
      *
-     * @param Page $model
-     *
      * @return array|null
      */
     private function getParentUris(Page $model)
@@ -68,7 +62,6 @@ class UriObserver
     /**
      * Check if the uri exists.
      *
-     * @param Page   $model
      * @param string $uri
      * @param int    $id
      *
@@ -91,7 +84,6 @@ class UriObserver
     /**
      * Add '-x' on uri if it exists in page_translations table.
      *
-     * @param Page   $model
      * @param string $uri
      * @param int    $id
      *
@@ -108,7 +100,7 @@ class UriObserver
         $i = 0;
         // Check if uri is unique
         while ($this->uriExists($model, $uri, $locale, $id)) {
-            $i++;
+            ++$i;
             // increment uri if it exists
             $uri = $originalUri.'-'.$i;
         }
