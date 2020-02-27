@@ -8,8 +8,6 @@ class SortObserver
 {
     /**
      * On update, update children uris.
-     *
-     * @return null
      */
     public function updating(Page $model)
     {

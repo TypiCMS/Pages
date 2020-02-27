@@ -10,8 +10,6 @@ class ResetChildren
     /**
      * Recursive method for emptying subpages URI
      * UriObserver will rebuild URIs.
-     *
-     * @return null
      */
     public function resetChildrenUri(Page $page)
     {

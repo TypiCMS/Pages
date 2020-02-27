@@ -7,8 +7,6 @@ class CreatePageSectionsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return null
      */
     public function up()
     {
@@ -29,8 +27,6 @@ class CreatePageSectionsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return null
      */
     public function down()
     {

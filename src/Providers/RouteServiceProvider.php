@@ -20,8 +20,6 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define the routes for the application.
-     *
-     * @return null
      */
     public function map()
     {

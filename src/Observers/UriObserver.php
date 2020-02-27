@@ -8,8 +8,6 @@ class UriObserver
 {
     /**
      * On create, update uri.
-     *
-     * @return null
      */
     public function creating(Page $model)
     {
@@ -22,8 +20,6 @@ class UriObserver
 
     /**
      * On update, change uri.
-     *
-     * @return null
      */
     public function updating(Page $model)
     {
@@ -100,7 +96,7 @@ class UriObserver
         $i = 0;
         // Check if uri is unique
         while ($this->uriExists($model, $uri, $locale, $id)) {
-            $i++;
+            ++$i;
             // increment uri if it exists
             $uri = $originalUri.'-'.$i;
         }
