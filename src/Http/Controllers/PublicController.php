@@ -21,7 +21,7 @@ class PublicController extends BasePublicController
         abort_if(!$page, '404');
 
         if ($page->private && !Auth::check()) {
-            return redirect()->guest(route(app()->getLocale() . '::login'));
+            return redirect()->guest(route(app()->getLocale().'::login'));
         }
 
         if ($page->redirect && $page->publishedSubpages->count() > 0) {
@@ -33,15 +33,15 @@ class PublicController extends BasePublicController
         // get submenu
         $children = $page->getSubMenu();
 
-        $templateDir = 'pages::' . config('typicms.template_dir', 'public') . '.';
+        $templateDir = 'pages::'.config('typicms.template_dir', 'public').'.';
         $template = $page->template ?: 'default';
 
-        if (!view()->exists($templateDir . $template)) {
-            info('Template ' . $template . ' not found, switching to default template.');
+        if (!view()->exists($templateDir.$template)) {
+            info('Template '.$template.' not found, switching to default template.');
             $template = 'default';
         }
 
-        return view($templateDir . $template, compact('children', 'page'));
+        return view($templateDir.$template, compact('children', 'page'));
     }
 
     /**
