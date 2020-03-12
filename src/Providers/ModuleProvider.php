@@ -19,26 +19,26 @@ class ModuleProvider extends ServiceProvider
     public function boot()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/config.php',
+            __DIR__.'/../config/config.php',
             'typicms.pages'
         );
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/config-sections.php',
+            __DIR__.'/../config/config-sections.php',
             'typicms.page_sections'
         );
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/permissions.php',
+            __DIR__.'/../config/permissions.php',
             'typicms.permissions'
         );
 
         $modules = $this->app['config']['typicms']['modules'];
         $this->app['config']->set('typicms.modules', array_merge(['pages' => []], $modules));
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'pages');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadViewsFrom(__DIR__.'/../resources/views/', 'pages');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/pages'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/pages'),
         ], 'views');
 
         AliasLoader::getInstance()->alias('Pages', Pages::class);
