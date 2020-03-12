@@ -25,7 +25,7 @@ class ApiController extends BaseApiController
             ->map(function ($item) use ($userPreferences) {
                 $item->data = $item->toArray();
                 $item->isLeaf = $item->module === null ? false : true;
-                $item->isExpanded = !Arr::get($userPreferences, 'Pages_'.$item->id.'_collapsed', false);
+                $item->isExpanded = !Arr::get($userPreferences, 'Pages_' . $item->id . '_collapsed', false);
 
                 return $item;
             })
@@ -41,7 +41,7 @@ class ApiController extends BaseApiController
         foreach ($request->all() as $column => $content) {
             if (is_array($content)) {
                 foreach ($content as $key => $value) {
-                    $data[$column.'->'.$key] = $value;
+                    $data[$column . '->' . $key] = $value;
                 }
             } else {
                 $data[$column] = $content;

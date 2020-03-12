@@ -37,7 +37,7 @@ class SectionsApiController extends BaseApiController
         foreach ($request->all() as $column => $content) {
             if (is_array($content)) {
                 foreach ($content as $key => $value) {
-                    $data[$column.'->'.$key] = $value;
+                    $data[$column . '->' . $key] = $value;
                 }
             } else {
                 $data[$column] = $content;

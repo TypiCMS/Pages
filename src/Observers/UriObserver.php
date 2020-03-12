@@ -32,7 +32,7 @@ class UriObserver
             if ($parentUri !== '') {
                 $uri = $parentUri;
                 if ($slug) {
-                    $uri .= '/'.$slug;
+                    $uri .= '/' . $slug;
                 }
             } else {
                 $uri = $slug;
@@ -65,7 +65,7 @@ class UriObserver
      */
     private function uriExists(Page $model, $uri, $locale, $id)
     {
-        $query = $model->where('uri->'.$locale, $uri);
+        $query = $model->where('uri->' . $locale, $uri);
         if ($id) {
             $query->where('id', '!=', $id);
         }
@@ -98,7 +98,7 @@ class UriObserver
         while ($this->uriExists($model, $uri, $locale, $id)) {
             ++$i;
             // increment uri if it exists
-            $uri = $originalUri.'-'.$i;
+            $uri = $originalUri . '-' . $i;
         }
 
         return $uri;
