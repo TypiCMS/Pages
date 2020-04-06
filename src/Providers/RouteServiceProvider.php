@@ -50,6 +50,7 @@ class RouteServiceProvider extends ServiceProvider
             $router->middleware('api')->prefix('api')->group(function (Router $router) {
                 $router->middleware('auth:api')->group(function (Router $router) {
                     $router->get('pages', 'ApiController@index')->middleware('can:see-all-pages');
+                    $router->get('pages/links-for-editor', 'ApiController@linksForEditor')->middleware('can:see-all-pages');
                     $router->patch('pages/{page}', 'ApiController@updatePartial')->middleware('can:update-page');
                     $router->post('pages/sort', 'ApiController@sort')->middleware('can:update-page');
                     $router->delete('pages/{page}', 'ApiController@destroy')->middleware('can:delete-page');

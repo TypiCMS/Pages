@@ -35,6 +35,23 @@ class ApiController extends BaseApiController
         return $data;
     }
 
+    public function linksForEditor(Request $request)
+    {
+        app()->setLocale(config('typicms.admin_locale'));
+
+        $data = Page::order()
+            ->get()
+            ->nest()
+            ->listsFlattened();
+
+        $pages = [];
+        foreach ($data as $id => $title) {
+            $pages[] = [$title, "{!! page:{$id} !!}"];
+        }
+
+        return $pages;
+    }
+
     protected function updatePartial(Page $page, Request $request): JsonResponse
     {
         $data = [];
