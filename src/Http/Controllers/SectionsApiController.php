@@ -63,16 +63,25 @@ class SectionsApiController extends BaseApiController
         ]);
     }
 
+    /**
+     * @deprecated
+     */
     public function files(PageSection $section): Collection
     {
         return $section->files;
     }
 
+    /**
+     * @deprecated
+     */
     public function attachFiles(PageSection $section, Request $request): JsonResponse
     {
         return $section->attachFiles($request);
     }
 
+    /**
+     * @deprecated
+     */
     public function detachFile(PageSection $section, File $file): void
     {
         $section->detachFile($file);
