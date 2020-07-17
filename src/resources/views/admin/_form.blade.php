@@ -26,9 +26,9 @@
 
     <div class="tab-pane fade show active" id="tab-content">
 
-        <filepicker related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></filepicker>
+        <file-manager related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></file-manager>
         <file-field type="image" field="image_id" data="{{ $model->image }}"></file-field>
-        <files related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></files>
+        <files-field related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></files-field>
 
         <div class="row">
             <div class="col-md-6">
