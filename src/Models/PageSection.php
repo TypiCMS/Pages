@@ -39,6 +39,7 @@ class PageSection extends Base
 
     public function uri($locale = null): string
     {
+        $locale = $locale ?: config('app.locale');
         $uri = $this->page->uri($locale).'#'.$this->position.'-'.$this->translate('slug', $locale);
 
         return $uri;
