@@ -31,7 +31,7 @@ class SectionsApiController extends BaseApiController
         return $data;
     }
 
-    protected function updatePartial(Page $page, PageSection $section, Request $request): JsonResponse
+    protected function updatePartial(Page $page, PageSection $section, Request $request)
     {
         $data = [];
         foreach ($request->all() as $column => $content) {
@@ -45,22 +45,14 @@ class SectionsApiController extends BaseApiController
         }
 
         foreach ($data as $key => $value) {
-            $section->$key = $value;
+            $section->{$key} = $value;
         }
-        $saved = $section->save();
-
-        return response()->json([
-            'error' => !$saved,
-        ]);
+        $section->save();
     }
 
-    public function destroy(Page $page, PageSection $section): JsonResponse
+    public function destroy(Page $page, PageSection $section)
     {
-        $deleted = $section->delete();
-
-        return response()->json([
-            'error' => !$deleted,
-        ]);
+        $section->delete();
     }
 
     /**

@@ -52,7 +52,7 @@ class ApiController extends BaseApiController
         return $pages;
     }
 
-    protected function updatePartial(Page $page, Request $request): JsonResponse
+    protected function updatePartial(Page $page, Request $request)
     {
         $data = [];
         foreach ($request->all() as $column => $content) {
@@ -66,16 +66,12 @@ class ApiController extends BaseApiController
         }
 
         foreach ($data as $key => $value) {
-            $page->$key = $value;
+            $page->{$key} = $value;
         }
-        $saved = $page->save();
-
-        return response()->json([
-            'error' => !$saved,
-        ]);
+        $page->save();
     }
 
-    public function sort(Request $request): JsonResponse
+    public function sort(Request $request)
     {
         $data = $request->all();
         foreach ($data['item'] as $position => $item) {
@@ -93,20 +89,11 @@ class ApiController extends BaseApiController
                 event('page.resetChildrenUri', [$page]);
             }
         }
-
-        return response()->json([
-            'error' => false,
-            'message' => __('Items sorted'),
-        ], 200);
     }
 
-    public function destroy(Page $page): JsonResponse
+    public function destroy(Page $page)
     {
-        $deleted = $page->delete();
-
-        return response()->json([
-            'error' => !$deleted,
-        ]);
+        $page->delete();
     }
 
     /**
