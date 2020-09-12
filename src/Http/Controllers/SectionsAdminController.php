@@ -30,16 +30,14 @@ class SectionsAdminController extends BaseAdminController
 
     public function store(Page $page, PageSectionFormRequest $request): RedirectResponse
     {
-        $data = $request->except('file_ids');
-        $section = PageSection::create($data);
+        $section = PageSection::create($request->validated());
 
         return $this->redirect($request, $section);
     }
 
     public function update(Page $page, PageSection $section, PageSectionFormRequest $request): RedirectResponse
     {
-        $data = $request->except('file_ids');
-        $section->update($data);
+        $section->update($request->validated());
 
         return $this->redirect($request, $section);
     }

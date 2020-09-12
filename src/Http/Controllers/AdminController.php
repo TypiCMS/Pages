@@ -31,18 +31,14 @@ class AdminController extends BaseAdminController
 
     public function store(FormRequest $request): RedirectResponse
     {
-        $data = $request->except('file_ids');
-        $data['parent_id'] = null;
-        $page = Page::create($data);
+        $page = Page::create($request->validated());
 
         return $this->redirect($request, $page);
     }
 
     public function update(Page $page, FormRequest $request): RedirectResponse
     {
-        $data = $request->except('file_ids');
-        $data['parent_id'] = $data['parent_id'] ?: null;
-        $page->update($data);
+        $page->update($request->validated());
         event('page.resetChildrenUri', [$page]);
 
         return $this->redirect($request, $page);
