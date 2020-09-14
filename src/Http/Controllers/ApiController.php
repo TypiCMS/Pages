@@ -73,7 +73,7 @@ class ApiController extends BaseApiController
 
     public function sort(Request $request)
     {
-        $data = $request->all();
+        $data = $request->only('moved', 'item');
         foreach ($data['item'] as $position => $item) {
             $page = Page::find($item['id']);
 
