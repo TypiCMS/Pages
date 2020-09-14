@@ -33,20 +33,16 @@ class SectionsApiController extends BaseApiController
 
     protected function updatePartial(Page $page, PageSection $section, Request $request)
     {
-        $data = [];
-        foreach ($request->all() as $column => $content) {
-            if (is_array($content)) {
-                foreach ($content as $key => $value) {
-                    $data[$column.'->'.$key] = $value;
+        foreach ($request->only('status', 'position') as $key => $content) {
+            if ($section->isTranslatableAttribute($key)) {
+                foreach ($content as $lang => $value) {
+                    $section->setTranslation($key, $lang, $value);
                 }
             } else {
-                $data[$column] = $content;
+                $section->{$key} = $content;
             }
         }
 
-        foreach ($data as $key => $value) {
-            $section->{$key} = $value;
-        }
         $section->save();
     }
 
