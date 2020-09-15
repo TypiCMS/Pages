@@ -6,6 +6,7 @@
 @component('core::admin._buttons-form', ['model' => $model])
 @endcomponent
 
+{!! BootForm::hidden('id') !!}
 {!! BootForm::hidden('page_id')->value($page->id) !!}
 
 <file-manager related-table="{{ $model->getTable() }}" :related-id="{{ $model->id ?? 0 }}"></file-manager>

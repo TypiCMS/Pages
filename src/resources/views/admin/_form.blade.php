@@ -6,6 +6,8 @@
 @component('core::admin._buttons-form', ['model' => $model])
 @endcomponent
 
+{!! BootForm::hidden('id') !!}
+
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" href="#tab-content" data-target="#tab-content" data-toggle="tab">{{ __('Content') }}</a>
