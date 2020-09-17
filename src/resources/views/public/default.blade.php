@@ -22,7 +22,7 @@
         @foreach ($page->publishedSections as $section)
         <div class="page-section" id="{{ $section->position.'-'.$section->slug }}">
             <h2 class="page-section-title">{{ $section->title }}</h2>
-            {!! $section->present()->body !!}
+            <div class="rich-content">{!! $section->present()->body !!}</div>
         </div>
         @endforeach
     </div>
