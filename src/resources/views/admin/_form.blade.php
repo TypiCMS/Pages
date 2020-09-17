@@ -57,7 +57,7 @@
         </div>
         {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor-full') !!}
 
-        @can('see-all-page_sections')
+        @can('read page_sections')
         @if ($model->id)
         <item-list
             url-base="/api/pages/{{ $model->id }}/sections"

@@ -2,15 +2,15 @@
 
 return [
     'pages' => [
-        'see-all-pages' => 'View list',
-        'create-page' => 'Create',
-        'update-page' => 'Edit',
-        'delete-page' => 'Delete',
+        'read pages' => 'Read',
+        'create pages' => 'Create',
+        'update pages' => 'Edit',
+        'delete pages' => 'Delete',
     ],
     'page sections' => [
-        'see-all-page_sections' => 'View list',
-        'create-page_section' => 'Create',
-        'update-page_section' => 'Edit',
-        'delete-page_section' => 'Delete',
+        'read page_sections' => 'Read',
+        'create page_sections' => 'Create',
+        'update page_sections' => 'Edit',
+        'delete page_sections' => 'Delete',
     ],
 ];
