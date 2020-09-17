@@ -2,15 +2,12 @@
 
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Filters\FilterOr;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
-use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageSection;
 
@@ -49,29 +46,5 @@ class SectionsApiController extends BaseApiController
     public function destroy(Page $page, PageSection $section)
     {
         $section->delete();
-    }
-
-    /**
-     * @deprecated
-     */
-    public function files(PageSection $section): Collection
-    {
-        return $section->files;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function attachFiles(PageSection $section, Request $request): JsonResponse
-    {
-        return $section->attachFiles($request);
-    }
-
-    /**
-     * @deprecated
-     */
-    public function detachFile(PageSection $section, File $file): void
-    {
-        $section->detachFile($file);
     }
 }

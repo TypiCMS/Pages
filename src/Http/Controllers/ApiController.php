@@ -2,13 +2,10 @@
 
 namespace TypiCMS\Modules\Pages\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Spatie\QueryBuilder\QueryBuilder;
 use TypiCMS\Modules\Core\Http\Controllers\BaseApiController;
-use TypiCMS\Modules\Files\Models\File;
 use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\NestableCollection;
 
@@ -90,29 +87,5 @@ class ApiController extends BaseApiController
     public function destroy(Page $page)
     {
         $page->delete();
-    }
-
-    /**
-     * @deprecated
-     */
-    public function files(Page $page): Collection
-    {
-        return $page->files;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function attachFiles(Page $page, Request $request): JsonResponse
-    {
-        return $page->attachFiles($request);
-    }
-
-    /**
-     * @deprecated
-     */
-    public function detachFile(Page $page, File $file): void
-    {
-        $page->detachFile($file);
     }
 }
