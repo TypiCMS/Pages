@@ -60,6 +60,7 @@ class UriObserver
      *
      * @param string $uri
      * @param int    $id
+     * @param mixed  $locale
      *
      * @return bool
      */
@@ -82,6 +83,7 @@ class UriObserver
      *
      * @param string $uri
      * @param int    $id
+     * @param mixed  $locale
      *
      * @return string
      */

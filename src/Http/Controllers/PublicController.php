@@ -12,6 +12,8 @@ class PublicController extends BasePublicController
     /**
      * Page uri : lang/slug.
      *
+     * @param mixed|null $uri
+     *
      * @return \Illuminate\Http\Response | \Illuminate\Http\RedirectResponse
      */
     public function uri($uri = null)
@@ -46,6 +48,8 @@ class PublicController extends BasePublicController
 
     /**
      * Find page by URI.
+     *
+     * @param mixed $uri
      *
      * @return TypiCMS\Modules\Pages\Models\Page
      */
@@ -104,7 +108,7 @@ class PublicController extends BasePublicController
     private function getBrowserLanguageOrDefault()
     {
         if ($browserLanguage = getenv('HTTP_ACCEPT_LANGUAGE')) {
-            $browserLocale = substr($browserLanguage, 0, 2);
+            $browserLocale = mb_substr($browserLanguage, 0, 2);
             if (in_array($browserLocale, TypiCMS::enabledLocales())) {
                 return $browserLocale;
             }
