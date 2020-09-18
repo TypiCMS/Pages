@@ -27,7 +27,10 @@ class ModuleProvider extends ServiceProvider
         $this->app['config']->set('typicms.modules', array_merge(['pages' => []], $modules));
 
         $this->loadViewsFrom(__DIR__.'/../resources/views/', 'pages');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        $this->publishes([
+            __DIR__.'/../database/migrations/create_pages_tables.php.stub' => getMigrationFileName('create_pages_tables'),
+        ], 'migrations');
 
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/pages'),
