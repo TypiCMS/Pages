@@ -20,7 +20,7 @@
     @if ($page->publishedSections->count() > 0)
     <div class="page-sections">
         @foreach ($page->publishedSections as $section)
-        <div class="page-section" id="{{ $section->position.'-'.$section->slug }}">
+        <div class="page-section" id="{{ $section->slug.'-'.$section->id }}">
             <h2 class="page-section-title">{{ $section->title }}</h2>
             <div class="rich-content">{!! $section->present()->body !!}</div>
         </div>
