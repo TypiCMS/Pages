@@ -12,7 +12,7 @@
     title="Pages"
 >
 
-    <template slot="add-button">
+    <template slot="add-button" v-if="$can('create pages')">
         @include('core::admin._button-create', ['url' => route('admin::create-page'), 'module' => 'pages'])
     </template>
 
