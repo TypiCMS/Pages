@@ -26,12 +26,12 @@ class RouteServiceProvider extends ServiceProvider
             $router->middleware('admin')->prefix('admin')->group(function (Router $router) {
                 $router->get('pages', [AdminController::class, 'index'])->name('admin::index-pages')->middleware('can:read pages');
                 $router->get('pages/create', [AdminController::class, 'create'])->name('admin::create-page')->middleware('can:create pages');
-                $router->get('pages/{page}/edit', [AdminController::class, 'edit'])->name('admin::edit-page')->middleware('can:update pages');
+                $router->get('pages/{page}/edit', [AdminController::class, 'edit'])->name('admin::edit-page')->middleware('can:read pages');
                 $router->post('pages', [AdminController::class, 'store'])->name('admin::store-page')->middleware('can:create pages');
                 $router->put('pages/{page}', [AdminController::class, 'update'])->name('admin::update-page')->middleware('can:update pages');
 
                 $router->get('pages/{page}/sections/create', [SectionsAdminController::class, 'create'])->name('admin::create-page_section')->middleware('can:create page_sections');
-                $router->get('pages/{page}/sections/{section}/edit', [SectionsAdminController::class, 'edit'])->name('admin::edit-page_section')->middleware('can:update page_sections');
+                $router->get('pages/{page}/sections/{section}/edit', [SectionsAdminController::class, 'edit'])->name('admin::edit-page_section')->middleware('can:read page_sections');
                 $router->post('pages/{page}/sections', [SectionsAdminController::class, 'store'])->name('admin::store-page_section')->middleware('can:create page_sections');
                 $router->put('pages/{page}/sections/{section}', [SectionsAdminController::class, 'update'])->name('admin::update-page_section')->middleware('can:update page_sections');
                 $router->post('pages/{page}/sections/sort', [SectionsAdminController::class, 'sort'])->name('admin::sort-page_sections');
