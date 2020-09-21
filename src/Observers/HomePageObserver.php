@@ -21,4 +21,14 @@ class HomePageObserver
             $query->update(['is_home' => 0]);
         }
     }
+
+    /**
+     * If there is no homepage, set the first page as homepage.
+     */
+    public function saved(Page $model)
+    {
+        if (Page::where('is_home', 1)->count() === 0) {
+            Page::whereNull('parent_id')->orderBy('position')->take(1)->update(['is_home' => 1]);
+        }
+    }
 }
