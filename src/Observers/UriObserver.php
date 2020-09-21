@@ -46,11 +46,13 @@ class UriObserver
     /**
      * Get the URIs of the parent page.
      */
-    private function getParentUris(Page $model): ?array
+    private function getParentUris(Page $model): array
     {
         if ($model->parent !== null) {
             return $model->parent->getTranslations('uri');
         }
+
+        return [];
     }
 
     /**
