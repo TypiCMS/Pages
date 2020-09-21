@@ -28,7 +28,7 @@
         <file-field type="image" field="image_id" data="{{ $model->image }}"></file-field>
         <files-field :init-files="{{ $model->files }}"></files-field>
 
-        <div class="row">
+        <div class="form-row">
             <div class="col-md-6">
                 {!! TranslatableBootForm::text(__('Title'), 'title') !!}
             </div>
