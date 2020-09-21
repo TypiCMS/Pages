@@ -82,7 +82,7 @@ class UriObserver
     /**
      * Check if the uri exists.
      */
-    private function uriExists(Page $page, string $uri, string $locale, ?int $id): bool
+    private function uriExists(Page $page, string $uri, string $locale, int $id = null): bool
     {
         $query = $page->where('uri->'.$locale, $uri);
         if ($id) {
@@ -99,7 +99,7 @@ class UriObserver
     /**
      * Add '-x' on uri if it exists in pages table.
      */
-    private function incrementWhileExists(Page $page, string $uri, string $locale, ?int $id = null): string
+    private function incrementWhileExists(Page $page, string $uri, string $locale, int $id = null): string
     {
         if (!$uri) {
             return '';
