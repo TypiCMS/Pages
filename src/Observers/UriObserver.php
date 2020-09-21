@@ -9,22 +9,22 @@ class UriObserver
     /**
      * On create, update uri.
      */
-    public function creating(Page $model)
+    public function creating(Page $page)
     {
-        $slugs = $model->getTranslations('slug');
+        $slugs = $page->getTranslations('slug');
         foreach ($slugs as $locale => $slug) {
-            $uri = $this->incrementWhileExists($model, $slug, $locale);
-            $model->setTranslation('uri', $locale, $uri);
+            $uri = $this->incrementWhileExists($page, $slug, $locale);
+            $page->setTranslation('uri', $locale, $uri);
         }
     }
 
     /**
      * On update, change uri.
      */
-    public function updating(Page $model)
+    public function updating(Page $page)
     {
-        $slugs = $model->getTranslations('slug');
-        $parentUris = $this->getParentUris($model);
+        $slugs = $page->getTranslations('slug');
+        $parentUris = $this->getParentUris($page);
         $uris = [];
 
         foreach ($slugs as $locale => $slug) {
@@ -37,19 +37,43 @@ class UriObserver
             } else {
                 $uri = $slug;
             }
-            $uri = $this->incrementWhileExists($model, $uri, $locale, $model->id);
+            $uri = $this->incrementWhileExists($page, $uri, $locale, $page->id);
             $uris[$locale] = $uri;
         }
-        $model->uri = $uris;
+        $page->uri = $uris;
+    }
+
+    /**
+     * On updated, empty child uri.
+     */
+    public function updated(Page $page)
+    {
+        $this->emptySubpagesUris($page);
+    }
+
+    /**
+     * Recursive method for emptying subpages URIs
+     * UriObserver will rebuild the URIs.
+     */
+    private function emptySubpagesUris(Page $page): void
+    {
+        foreach ($page->subpages as $subpage) {
+            $uris = $subpage->getTranslations('uri');
+            foreach ($uris as $locale => $uri) {
+                $subpage->setTranslation('uri', $locale, null);
+            }
+            $subpage->save();
+            $this->emptySubpagesUris($subpage);
+        }
     }
 
     /**
      * Get the URIs of the parent page.
      */
-    private function getParentUris(Page $model): array
+    private function getParentUris(Page $page): array
     {
-        if ($model->parent !== null) {
-            return $model->parent->getTranslations('uri');
+        if ($page->parent !== null) {
+            return $page->parent->getTranslations('uri');
         }
 
         return [];
@@ -58,9 +82,9 @@ class UriObserver
     /**
      * Check if the uri exists.
      */
-    private function uriExists(Page $model, string $uri, string $locale, int $id): bool
+    private function uriExists(Page $page, string $uri, string $locale, ?int $id): bool
     {
-        $query = $model->where('uri->'.$locale, $uri);
+        $query = $page->where('uri->'.$locale, $uri);
         if ($id) {
             $query->where('id', '!=', $id);
         }
@@ -75,7 +99,7 @@ class UriObserver
     /**
      * Add '-x' on uri if it exists in pages table.
      */
-    private function incrementWhileExists(Page $model, string $uri, string $locale, int $id = null): string
+    private function incrementWhileExists(Page $page, string $uri, string $locale, ?int $id = null): string
     {
         if (!$uri) {
             return '';
@@ -85,7 +109,7 @@ class UriObserver
 
         $i = 0;
         // Check if uri is unique
-        while ($this->uriExists($model, $uri, $locale, $id)) {
+        while ($this->uriExists($page, $uri, $locale, $id)) {
             ++$i;
             // increment uri if it exists
             $uri = $originalUri.'-'.$i;

@@ -5,7 +5,6 @@ namespace TypiCMS\Modules\Pages\Providers;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Pages\Composers\SidebarViewComposer;
-use TypiCMS\Modules\Pages\Events\ResetChildren;
 use TypiCMS\Modules\Pages\Facades\Pages;
 use TypiCMS\Modules\Pages\Facades\PageSections;
 use TypiCMS\Modules\Pages\Models\Page;
@@ -59,11 +58,6 @@ class ModuleServiceProvider extends ServiceProvider
          * Register route service provider
          */
         $app->register(RouteServiceProvider::class);
-
-        /*
-         * Events
-         */
-        $app->events->subscribe(new ResetChildren());
 
         $app->bind('Pages', Page::class);
         $app->bind('PageSections', PageSection::class);

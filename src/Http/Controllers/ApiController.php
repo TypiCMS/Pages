@@ -77,10 +77,6 @@ class ApiController extends BaseApiController
             ];
 
             $page->update($sortData);
-
-            if ($data['moved'] === $item['id']) {
-                event('page.resetChildrenUri', [$page]);
-            }
         }
     }
 

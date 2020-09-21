@@ -39,7 +39,6 @@ class AdminController extends BaseAdminController
     public function update(Page $page, FormRequest $request): RedirectResponse
     {
         $page->update($request->validated());
-        event('page.resetChildrenUri', [$page]);
 
         return $this->redirect($request, $page);
     }
