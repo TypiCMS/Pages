@@ -9,8 +9,6 @@ class AddToMenuObserver
 {
     /**
      * If a new homepage is defined, cancel previous homepage.
-     *
-     * @param Model $model eloquent
      */
     public function created(Page $model)
     {
