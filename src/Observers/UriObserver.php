@@ -29,9 +29,9 @@ class UriObserver
 
         foreach ($slugs as $locale => $slug) {
             $parentUri = $parentUris[$locale] ?? '';
-            if ($parentUri !== '') {
+            if (!empty($parentUri)) {
                 $uri = $parentUri;
-                if ($slug) {
+                if (!empty($slug)) {
                     $uri .= '/'.$slug;
                 }
             } else {
@@ -85,15 +85,11 @@ class UriObserver
     private function uriExists(Page $page, string $uri, string $locale, int $id = null): bool
     {
         $query = $page->where('uri->'.$locale, $uri);
-        if ($id) {
+        if ($id !== null) {
             $query->where('id', '!=', $id);
         }
 
-        if ($query->first()) {
-            return true;
-        }
-
-        return false;
+        return $query->count() > 0;
     }
 
     /**
@@ -101,7 +97,7 @@ class UriObserver
      */
     private function incrementWhileExists(Page $page, string $uri, string $locale, int $id = null): string
     {
-        if (!$uri) {
+        if (empty($uri)) {
             return '';
         }
 
