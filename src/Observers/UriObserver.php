@@ -45,10 +45,8 @@ class UriObserver
 
     /**
      * Get the URIs of the parent page.
-     *
-     * @return array|null
      */
-    private function getParentUris(Page $model)
+    private function getParentUris(Page $model): ?array
     {
         if ($model->parent !== null) {
             return $model->parent->getTranslations('uri');
@@ -57,14 +55,8 @@ class UriObserver
 
     /**
      * Check if the uri exists.
-     *
-     * @param string $uri
-     * @param int    $id
-     * @param mixed  $locale
-     *
-     * @return bool
      */
-    private function uriExists(Page $model, $uri, $locale, $id)
+    private function uriExists(Page $model, string $uri, string $locale, int $id): bool
     {
         $query = $model->where('uri->'.$locale, $uri);
         if ($id) {
@@ -79,15 +71,9 @@ class UriObserver
     }
 
     /**
-     * Add '-x' on uri if it exists in page_translations table.
-     *
-     * @param string $uri
-     * @param int    $id
-     * @param mixed  $locale
-     *
-     * @return string
+     * Add '-x' on uri if it exists in pages table.
      */
-    private function incrementWhileExists(Page $model, $uri, $locale, $id = null)
+    private function incrementWhileExists(Page $model, string $uri, string $locale, int $id = null): string
     {
         if (!$uri) {
             return '';
