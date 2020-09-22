@@ -19,7 +19,7 @@ class SidebarViewComposer
             $group->weight = 30;
             $group->addItem(__('Pages'), function (SidebarItem $item) {
                 $item->id = 'pages';
-                $item->icon = config('typicms.pages.sidebar.icon', 'icon fa fa-fw fa-file');
+                $item->icon = config('typicms.pages.sidebar.icon');
                 $item->weight = config('typicms.pages.sidebar.weight');
                 $item->route('admin::index-pages');
                 $item->append('admin::create-page');
