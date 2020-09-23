@@ -82,6 +82,12 @@ class ApiController extends BaseApiController
 
     public function destroy(Page $page)
     {
+        if ($page->isHome()) {
+            return response(['message' => 'The home page cannot be deleted.'], 403);
+        }
+        if ($page->subpages->count() > 0) {
+            return response(['message' => 'This item cannot be deleted because it has children.'], 403);
+        }
         $page->delete();
     }
 }
