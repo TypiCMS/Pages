@@ -53,6 +53,16 @@ class Page extends Base
         return $uri ?: '/';
     }
 
+    public function isHome()
+    {
+        return (bool) $this->is_home;
+    }
+
+    public function isPrivate()
+    {
+        return (bool) $this->private;
+    }
+
     public function scopeWhereUriIs($query, $uri): Builder
     {
         $field = 'uri';
