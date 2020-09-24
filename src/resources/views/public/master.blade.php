@@ -4,9 +4,9 @@
 @section('ogTitle', $page->title)
 @section('description', $page->meta_description)
 @section('keywords', $page->meta_keywords)
-@if ($page->image)
-@section('image', $page->present()->image(1200, 630))
-@endif
+@empty(!$page->image)
+@section('ogImage', $page->present()->image(1200, 630))
+@endempty
 @section('bodyClass', 'body-page body-page-'.$page->id)
 
 @if ($page->css)
