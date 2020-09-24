@@ -2,29 +2,42 @@
 
 @section('page')
 
-    @if ($children->count() > 0)
-    <ul class="nav nav-subpages">
-        @foreach ($children as $child)
-        @include('pages::public._list-item', ['child' => $child])
-        @endforeach
-    </ul>
-    @endif
+<div class="page-body">
 
-    @empty(!$page->body)
-    <div class="rich-content">{!! $page->present()->body !!}</div>
-    @endempty
+    <div class="page-body-container">
 
-    @include('files::public._documents', ['model' => $page])
-    @include('files::public._images', ['model' => $page])
+        @if ($children->count() > 0)
+        <ul class="nav nav-subpages">
+            @foreach ($children as $child)
+            @include('pages::public._list-item', ['child' => $child])
+            @endforeach
+        </ul>
+        @endif
 
-    @if ($page->publishedSections->count() > 0)
-    <div class="page-sections">
-        @foreach ($page->publishedSections as $section)
-        <div class="page-section" id="{{ $section->slug.'-'.$section->id }}">
-            <h2 class="page-section-title">{{ $section->title }}</h2>
-            <div class="rich-content">{!! $section->present()->body !!}</div>
+        @empty(!$page->image)
+            <img class="page-image" src="{!! $page->present()->image(200, 200) !!}" alt="">
+        @endempty
+
+        @empty(!$page->body)
+        <div class="rich-content">{!! $page->present()->body !!}</div>
+        @endempty
+
+        @include('files::public._documents', ['model' => $page])
+        @include('files::public._images', ['model' => $page])
+
+        @if ($page->publishedSections->count() > 0)
+        <div class="page-sections">
+            @foreach ($page->publishedSections as $section)
+            <div class="page-section" id="{{ $section->slug.'-'.$section->id }}">
+                <h2 class="page-section-title">{{ $section->title }}</h2>
+                <div class="rich-content">{!! $section->present()->body !!}</div>
+            </div>
+            @endforeach
         </div>
-        @endforeach
+        @endif
+
     </div>
-    @endif
+
+</div>
+
 @endsection
