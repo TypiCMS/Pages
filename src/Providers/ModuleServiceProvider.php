@@ -11,7 +11,6 @@ use TypiCMS\Modules\Pages\Models\Page;
 use TypiCMS\Modules\Pages\Models\PageSection;
 use TypiCMS\Modules\Pages\Observers\AddToMenuObserver;
 use TypiCMS\Modules\Pages\Observers\HomePageObserver;
-use TypiCMS\Modules\Pages\Observers\SortObserver;
 use TypiCMS\Modules\Pages\Observers\UriObserver;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -40,7 +39,6 @@ class ModuleServiceProvider extends ServiceProvider
 
         // Observers
         Page::observe(new HomePageObserver());
-        Page::observe(new SortObserver());
         Page::observe(new AddToMenuObserver());
         Page::observe(new UriObserver());
 
