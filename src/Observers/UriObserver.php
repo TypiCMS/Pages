@@ -27,7 +27,8 @@ class UriObserver
         $parentUris = $this->getParentUris($page);
         $uris = [];
 
-        foreach ($slugs as $locale => $slug) {
+        foreach (locales() as $locale) {
+            $slug = $page->getTranslation('slug', $locale);
             $parentUri = $parentUris[$locale] ?? '';
             if (!empty($parentUri)) {
                 $uri = $parentUri;
