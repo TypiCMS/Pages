@@ -35,7 +35,7 @@ class ModuleServiceProvider extends ServiceProvider
         ], 'views');
 
         $this->publishes([
-            __DIR__.'/../database/seeds/PageSeeder.php' => database_path('seeds/PageSeeder.php'),
+            __DIR__.'/../database/seeders/PageSeeder.php' => database_path('seeders/PageSeeder.php'),
         ], 'seeders');
 
         AliasLoader::getInstance()->alias('Pages', Pages::class);
