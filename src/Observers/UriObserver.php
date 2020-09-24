@@ -23,7 +23,6 @@ class UriObserver
      */
     public function updating(Page $page)
     {
-        $slugs = $page->getTranslations('slug');
         $parentUris = $this->getParentUris($page);
         $uris = [];
 
