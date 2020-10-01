@@ -22,6 +22,7 @@ class AddToMenuObserver
             foreach (locales() as $locale) {
                 $data['title'][$locale] = $model->translate('title', $locale);
                 $data['status'][$locale] = 0;
+                $data['description'][$locale] = null;
                 $data['url'][$locale] = '';
             }
             Menulink::create($data);
