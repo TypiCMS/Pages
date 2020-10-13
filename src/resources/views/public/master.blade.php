@@ -23,6 +23,7 @@
 
 @section('content')
 
+    @section('page-header')
     <header class="page-header">
 
         <div class="page-header-container">
@@ -30,6 +31,7 @@
         </div>
 
     </header>
+    @show
 
     @yield('page')
 
