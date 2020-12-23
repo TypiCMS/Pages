@@ -112,8 +112,8 @@
             {!! BootForm::hidden('redirect')->value(0) !!}
             {!! BootForm::checkbox(__('Redirect to first child'), 'redirect') !!}
         </div>
-        {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disable($model->subpages->count() > 0)->helpBlock($model->subpages->count() ? __('A page containing subpages cannot be linked to a module') : '')->addClass('custom-select') !!}
-        {!! BootForm::select(__('Template'), 'template', TypiCMS::templates())->helpBlock(TypiCMS::getTemplateDir())->addClass('custom-select') !!}
+        {!! BootForm::select(__('Module'), 'module', TypiCMS::getModulesForSelect())->disable($model->subpages->count() > 0)->formText($model->subpages->count() ? __('A page containing subpages cannot be linked to a module') : '')->addClass('custom-select') !!}
+        {!! BootForm::select(__('Template'), 'template', TypiCMS::templates())->formText(TypiCMS::getTemplateDir())->addClass('custom-select') !!}
         @if (!$model->id)
         {!! BootForm::select(__('Add to menu'), 'add_to_menu', ['' => ''] + Menus::all()->pluck('name', 'id')->all(), null, ['class' => 'form-control'])->addClass('custom-select') !!}
         @endif
