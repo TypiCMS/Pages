@@ -10,13 +10,13 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" href="#tab-content" data-target="#tab-content" data-toggle="tab">{{ __('Content') }}</a>
+        <a class="nav-link active" href="#tab-content" data-bs-toggle="tab">{{ __('Content') }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#tab-meta" data-target="#tab-meta" data-toggle="tab">{{ __('Meta') }}</a>
+        <a class="nav-link" href="#tab-meta" data-bs-toggle="tab">{{ __('Meta') }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#tab-options" data-target="#tab-options" data-toggle="tab">{{ __('Options') }}</a>
+        <a class="nav-link" href="#tab-options" data-bs-toggle="tab">{{ __('Options') }}</a>
     </li>
 </ul>
 
@@ -28,13 +28,13 @@
         <file-field type="image" field="image_id" :init-file="{{ $model->image ?? 'null' }}"></file-field>
         <files-field :init-files="{{ $model->files }}"></files-field>
 
-        <div class="form-row">
+        <div class="row gx-3">
             <div class="col-md-6">
                 {!! TranslatableBootForm::text(__('Title'), 'title') !!}
             </div>
             <div class="col-md-6">
             @foreach ($locales as $lang)
-                <div class="form-group form-group-translation">
+                <div class="mb-3 form-group-translation">
                     <label class="control-label" for="slug[{{ $lang }}]"><span>{{ __('Url') }}</span> ({{ $lang }})</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -51,7 +51,7 @@
             </div>
         </div>
         {!! TranslatableBootForm::hidden('uri') !!}
-        <div class="form-group">
+        <div class="mb-3">
             {!! TranslatableBootForm::hidden('status')->value(0) !!}
             {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
         </div>
@@ -104,7 +104,7 @@
     </div>
 
     <div class="tab-pane fade" id="tab-options">
-        <div class="form-group">
+        <div class="mb-3">
             {!! BootForm::hidden('is_home')->value(0) !!}
             {!! BootForm::checkbox(__('Is home'), 'is_home') !!}
             {!! BootForm::hidden('private')->value(0) !!}

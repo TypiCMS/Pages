@@ -14,7 +14,7 @@
 <files-field :init-files="{{ $model->files }}"></files-field>
 
 @include('core::form._title-and-slug')
-<div class="form-group">
+<div class="mb-3">
     {!! TranslatableBootForm::hidden('status')->value(0) !!}
     {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
 </div>
