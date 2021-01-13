@@ -22,7 +22,7 @@
         @include('files::public._images', ['model' => $page])
 
         {{--
-            @if ($slides = Slides::published()->get() and $slides->count() > 0)
+            @if ($slides = Slides::published()->order()->get() and $slides->count() > 0)
                 @include('slides::public._slider', ['items' => $slides])
             @endif
         --}}
