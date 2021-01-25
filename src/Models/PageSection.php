@@ -52,7 +52,7 @@ class PageSection extends Base
             return route($route, [$this->page_id, $this->id]);
         }
 
-        return route('dashboard');
+        return route('admin::dashboard');
     }
 
     public function indexUrl(): string
@@ -62,7 +62,7 @@ class PageSection extends Base
             return route($route, $this->page_id);
         }
 
-        return route('dashboard');
+        return route('admin::dashboard');
     }
 
     public function page(): BelongsTo
