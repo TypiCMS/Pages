@@ -100,7 +100,7 @@ class Page extends Base
             ->nest()
             ->listsFlattened();
 
-        return ['' => ''] + $pages;
+        return ['' => ''] + array_map('strip_tags', $items);
     }
 
     public function getSubMenu(): NestableCollection
