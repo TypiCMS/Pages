@@ -8,12 +8,8 @@ class ModulePresenter extends Presenter
 {
     /**
      * Get Uri without last segment.
-     *
-     * @param string $locale
-     *
-     * @return string URI without last segment
      */
-    public function parentUri($locale)
+    public function parentUri(string $locale): string
     {
         $parentUri = $this->entity->translate('uri', $locale) ?: '/';
         $parentUri = explode('/', $parentUri);
