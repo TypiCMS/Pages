@@ -71,7 +71,7 @@ class PublicController extends BasePublicController
 
         // Only locale in url
         if (
-            in_array($uri, locales()) &&
+            in_array($uri, TypiCMS::enabledLocales()) &&
             (
                 TypiCMS::mainLocale() !== $uri ||
                 config('typicms.main_locale_in_url')
