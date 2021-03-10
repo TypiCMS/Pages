@@ -24,18 +24,18 @@ class ModuleServiceProvider extends ServiceProvider
         $modules = $this->app['config']['typicms']['modules'];
         $this->app['config']->set('typicms.modules', array_merge(['pages' => []], $modules));
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views/', 'pages');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views/', 'pages');
 
         $this->publishes([
-            __DIR__.'/../database/migrations/create_pages_tables.php.stub' => getMigrationFileName('create_pages_tables'),
+            __DIR__.'/../../database/migrations/create_pages_tables.php.stub' => getMigrationFileName('create_pages_tables'),
         ], 'migrations');
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/pages'),
+            __DIR__.'/../../resources/views' => resource_path('views/vendor/pages'),
         ], 'views');
 
         $this->publishes([
-            __DIR__.'/../database/seeders/PageSeeder.php' => database_path('seeders/PageSeeder.php'),
+            __DIR__.'/../../database/seeders/PageSeeder.php' => database_path('seeders/PageSeeder.php'),
         ], 'seeders');
 
         AliasLoader::getInstance()->alias('Pages', Pages::class);
