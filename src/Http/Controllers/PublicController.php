@@ -12,15 +12,13 @@ class PublicController extends BasePublicController
     /**
      * Page uri : lang/slug.
      *
-     * @param mixed|null $uri
+     * @param null|mixed $uri
      *
-     * @return \Illuminate\Http\Response | \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function uri($uri = null)
     {
         $page = $this->findPageByUri($uri);
-
-        abort_if(!$page, '404');
 
         if ($page->private && !Auth::check()) {
             return redirect()->guest(route(app()->getLocale().'::login'));
@@ -48,12 +46,8 @@ class PublicController extends BasePublicController
 
     /**
      * Find page by URI.
-     *
-     * @param mixed $uri
-     *
-     * @return TypiCMS\Modules\Pages\Models\Page
      */
-    private function findPageByUri($uri)
+    private function findPageByUri(?string $uri): Page
     {
         $query = Page::published()
             ->with([
@@ -71,10 +65,10 @@ class PublicController extends BasePublicController
 
         // Only locale in url
         if (
-            in_array($uri, TypiCMS::enabledLocales()) &&
-            (
-                TypiCMS::mainLocale() !== $uri ||
-                config('typicms.main_locale_in_url')
+            in_array($uri, TypiCMS::enabledLocales())
+            && (
+                TypiCMS::mainLocale() !== $uri
+                || config('typicms.main_locale_in_url')
             )
         ) {
             return $query->where('is_home', 1)->firstOrFail();

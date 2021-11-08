@@ -9,7 +9,6 @@ class FormRequest extends AbstractFormRequest
     public function rules()
     {
         $rules = [
-            'template' => 'nullable|alpha_dash|max:255',
             'image_id' => 'nullable|integer',
             'module' => 'nullable|max:255',
             'template' => 'nullable|max:255',
