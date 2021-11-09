@@ -2,8 +2,8 @@
 
 namespace TypiCMS\Modules\Pages\Composers;
 
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 use Maatwebsite\Sidebar\SidebarGroup;
 use Maatwebsite\Sidebar\SidebarItem;
 

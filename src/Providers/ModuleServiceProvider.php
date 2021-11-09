@@ -3,6 +3,7 @@
 namespace TypiCMS\Modules\Pages\Providers;
 
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Modules\Pages\Composers\SidebarViewComposer;
 use TypiCMS\Modules\Pages\Facades\Pages;
@@ -15,14 +16,11 @@ use TypiCMS\Modules\Pages\Observers\UriObserver;
 
 class ModuleServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'typicms.pages');
         $this->mergeConfigFrom(__DIR__.'/../config/config-sections.php', 'typicms.page_sections');
         $this->mergeConfigFrom(__DIR__.'/../config/permissions.php', 'typicms.permissions');
-
-        $modules = $this->app['config']['typicms']['modules'];
-        $this->app['config']->set('typicms.modules', array_merge(['pages' => []], $modules));
 
         $this->loadViewsFrom(__DIR__.'/../../resources/views/', 'pages');
 
@@ -46,22 +44,14 @@ class ModuleServiceProvider extends ServiceProvider
         Page::observe(new AddToMenuObserver());
         Page::observe(new UriObserver());
 
-        /*
-         * Sidebar view composer
-         */
-        $this->app->view->composer('core::admin._sidebar', SidebarViewComposer::class);
+        View::composer('core::admin._sidebar', SidebarViewComposer::class);
     }
 
-    public function register()
+    public function register(): void
     {
-        $app = $this->app;
+        $this->app->register(RouteServiceProvider::class);
 
-        /*
-         * Register route service provider
-         */
-        $app->register(RouteServiceProvider::class);
-
-        $app->bind('Pages', Page::class);
-        $app->bind('PageSections', PageSection::class);
+        $this->app->bind('Pages', Page::class);
+        $this->app->bind('PageSections', PageSection::class);
     }
 }

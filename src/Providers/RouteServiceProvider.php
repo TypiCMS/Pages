@@ -14,7 +14,7 @@ use TypiCMS\Modules\Pages\Http\Controllers\SectionsApiController;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    public function map()
+    public function map(): void
     {
         /*
          * Admin routes
