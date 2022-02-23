@@ -114,6 +114,7 @@ class Page extends Base
         }
 
         $nestedCollection = $this->whereUriIsNot($uri)
+            ->published()
             ->orderBy('position', 'asc')
             ->whereUriIsLike($uri.'%')
             ->get()
