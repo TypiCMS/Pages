@@ -1,5 +1,4 @@
 # Pages
-[![SymfonyInsight](https://insight.symfony.com/projects/b8e4de59-5f81-41a1-98cd-22079ba835b6/mini.svg)](https://insight.symfony.com/projects/b8e4de59-5f81-41a1-98cd-22079ba835b6)
 
 Pages are nestable with drag and drop, on drop, URIs are generated and saved in the database.
 Each translation of a page has its own route.
